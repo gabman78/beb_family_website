@@ -1,0 +1,49 @@
+{% load static %}
+
+<section class="hero position-relative text-center text-white overflow-hidden" style="height: 100vh;">
+
+  <!-- CAROUSEL DI SFONDO -->
+  <div id="heroCarousel" 
+       class="carousel slide carousel-fade position-absolute top-0 start-0 w-100 h-100" 
+       data-bs-ride="carousel" 
+       data-bs-interval="4000">
+
+    <div class="carousel-inner h-100">
+
+      <div class="carousel-item active h-100">
+        <img src="/media/foto_portici/IMG_1721.jpg" 
+             class="w-100 h-100 object-fit-cover" 
+             alt="Family Room Portici">
+      </div>
+
+      <div class="carousel-item h-100">
+        <video class="w-100 h-100 object-fit-cover" autoplay muted loop playsinline>
+          <source src="/media/foto_portici/SnapInsta.to_AQO9HRXrVyscGPLu7AqvhzHmrqypsldzqDdKH-Ssu5TS1rhgXxn78dEW7B_4a_6SmY3GHMj8bfK2EzvbxiDuKJLE-bRoWEAFuQoN8bg.mp4" type="video/mp4">
+        </video>
+      </div>
+
+      <div class="carousel-item h-100">
+        <img src="/media/generali/prima.jpg" 
+             class="w-100 h-100 object-fit-cover" 
+             alt="Family Room Portici 3">
+      </div>
+
+      <div class="carousel-item h-100">
+        <video class="w-100 h-100 object-fit-cover" autoplay muted loop playsinline>
+          <source src="/media/foto_portici/SnapInsta.to_AQO9HRXrVyscGPLu7AqvhzHmrqypsldzqDdKH-Ssu5TS1rhgXxn78dEW7B_4a_6SmY3GHMj8bfK2EzvbxiDuKJLE-bRoWEAFuQoN8bg.mp4" type="video/mp4">
+        </video>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- OVERLAY SCURO E TESTO IN PRIMO PIANO -->
+  <div class="position-absolute top-0 start-0 w-100 h-100 bg-dark bg-opacity-50 
+              d-flex flex-column justify-content-center align-items-center" 
+       style="z-index: 2;">
+    <h1 class="display-3 fw-bold text-shadow">Family Room Portici</h1>
+    <h2 class="fs-4 mb-4 text-light">B&B e Casa Vacanze</h2>
+    <a href="{% url 'prenotazioni' %}" class="btn btn-light btn-lg px-5 shadow">Prenota Ora</a>
+  </div>
+
+</section>

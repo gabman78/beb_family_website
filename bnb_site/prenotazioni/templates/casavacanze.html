@@ -1,0 +1,325 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+
+<a href="{% url 'home' %}" 
+   class="btn btn-light position-fixed top-50 start-0 m-4 d-flex align-items-center justify-content-center shadow"
+   style="width:50px; height:50px; border-radius:50%; 
+       background-color:rgba(255,255,255,0.85); 
+       border:none; z-index:1000;
+       transform: translateY(-50%);">
+  <i class="fa-solid fa-arrow-left text-dark"></i>
+</a>
+
+
+<section class="d-flex align-items-center justify-content-center text-center" 
+         style="background-color:#f8f3ed; color:#4a4a4a; min-height:75vh;">
+  <div class="container">
+    <h1 class="fw-bold mb-4" 
+        style="font-family:'Poppins',sans-serif; color:#7a6652; font-size:2.8rem;">
+      {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Scopri la nostra Casa Vacanze{% else %}Discover our Holiday House{% endif %}
+    </h1>
+    <p class="lead mb-5" style="max-width:700px; margin:auto; color:#6c5b47;">
+      {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}
+        Un ambiente familiare ed accogliente con tutti i comfort necessari per un soggiorno indimenticabile, come a casa.
+      {% else %}
+        A family-friendly and welcoming environment with all the comforts needed for an unforgettable stay, just like at home.
+      {% endif %}
+    </p>
+
+    <form id="check-availability-form" class="availability-form row g-4 justify-content-center align-items-end bg-white p-5 rounded shadow-lg"
+      style="max-width:1200px; margin:auto;"
+      data-ical="{{ ical_link }}"
+      data-max-guests="6">
+
+    <div class="col-md-3">
+      <label class="form-label fw-semibold text-dark">Check-in</label>
+      <input type="date" name="checkin" id="checkin" class="form-control form-control-lg">
+    </div>
+
+    <div class="col-md-3">
+      <label class="form-label fw-semibold text-dark">Check-out</label>
+      <input type="date" name="checkout" id="checkout" class="form-control form-control-lg">
+    </div>
+
+    <div class="col-md-3">
+      <label class="form-label fw-semibold text-dark">{% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Ospiti{% else %}Guests{% endif %}</label>
+      <input type="number" name="guests" id="guests" class="form-control form-control-lg" min="1" value="2">
+    </div>
+
+    <div class="col-md-2">
+      <button type="submit" 
+              class="btn w-100 fw-bold text-white"
+              style="background-color:#7a6652; border:none;">
+        {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Verifica Disponibilità{% else %}Check Availability{% endif %}
+      </button>
+    </div>
+
+   
+    <div class="col-12 mt-3 availability-message"></div>
+
+  </form>
+  <script src="{% static 'js/check_availability.js' %}"></script>
+  </div>
+</section>
+
+
+<section class="text-dark text-center py-5"
+         style="background: linear-gradient(180deg, #fff9f0 0%, #f5ead6 100%); width:100vw; margin-left: calc(-50vw + 50%);">
+
+  <div class="container d-flex flex-column align-items-center">
+    <div class="bg-white bg-opacity-90 rounded-4 shadow-lg p-4"
+      style="width:100%; max-width:1250px; backdrop-filter: blur(6px);">
+
+      <iframe src="{% static 'calendars/casavacanze.html' %}"
+              id="calendar-frame"
+              style="width:100%; border:0; border-radius:12px; overflow:hidden;"
+              title="{% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Calendario Casa Vacanze{% else %}Holiday House Calendar{% endif %}"></iframe>
+
+
+      <script>
+        window.addEventListener("message", (event) => {
+          if (event.data && event.data.type === "resize-calendar") {
+            const iframe = document.getElementById("calendar-frame");
+            iframe.style.height = event.data.height + "px";
+          }
+        });
+      </script>
+
+    </div>
+
+    <p class="mt-4 text-secondary" style="font-size:0.95rem;">
+      {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}
+        Scorri il calendario per visualizzare le disponibilità aggiornate in tempo reale.
+      {% else %}
+        Scroll the calendar to view availability updated in real time.
+      {% endif %}
+    </p>
+  </div>
+</section>
+
+<a href="#galleria-camera" 
+   id="scroll-down-btn"
+   class="d-flex position-fixed top-50 end-0 align-items-center shadow"
+   style="z-index:1000; transform: translateY(-50%); text-decoration:none; display:none;">
+
+  <span style="color:#6c5b47;; font-weight:600; font-family:'Poppins',sans-serif; 
+               margin-right:8px; white-space:nowrap;">
+    {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Dettagli della Casa{% else %}House Details{% endif %}
+  </span>
+
+  <div class="d-flex align-items-center justify-content-center"
+       style="width:50px; height:50px; border-radius:50%; background-color:#6c5b47;;">
+    <i class="fa-solid fa-arrow-down fa-lg text-white"></i>
+  </div>
+
+</a>
+
+<section id="galleria-camera" class="container my-5 py-5">
+  <div class="text-center mb-5">
+    <h2 class="fw-bold" style="color:#7a6652; font-family:'Poppins',sans-serif; font-size:2.2rem;">
+      {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}La nostra Casa Vacanze{% else %}Our Holiday House{% endif %}
+    </h2>
+    <p class="mt-3" style="color:#4a4a4a; font-size:1.1rem; max-width:800px; margin:auto;">
+      {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}
+        <strong>Family Home Casa Vacanze</strong> è un appartamento accogliente e luminoso con ampio balcone, ideale per famiglie e gruppi fino a 6 persone.
+        Situato in posizione tranquilla, offre tutti i comfort per un soggiorno piacevole e rilassante.
+      {% else %}
+        <strong>Family Home Holiday House</strong> is a cozy and bright apartment with a large balcony, ideal for families and groups up to 6 people.
+        Located in a quiet position, it offers all the comforts for a pleasant and relaxing stay.
+      {% endif %}
+    </p>
+  </div>
+
+  <div class="row justify-content-center text-center g-4">
+
+    <div class="col-6 col-md-4 col-lg-2">
+      <i class="fa-solid fa-bed fa-3x mb-3" style="color:#8b7355;"></i>
+      <h5 class="fw-semibold">{% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Camera Matrimoniale{% else %}Double Bedroom{% endif %}</h5>
+      <p style="font-size:0.95rem; color:#4a4a4a;">
+        {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}
+          Letto matrimoniale comodo, armadio spazioso e accesso al balcone.
+        {% else %}
+          Comfortable double bed, spacious wardrobe, and balcony access.
+        {% endif %}
+      </p>
+    </div>
+
+    <div class="col-6 col-md-4 col-lg-2">
+      <i class="fa-solid fa-bed fa-3x mb-3" style="color:#8b7355;"></i>
+      <h5 class="fw-semibold">{% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Camera Doppia{% else %}Twin Bedroom{% endif %}</h5>
+      <p style="font-size:0.95rem; color:#4a4a4a;">
+        {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}
+          2 Letti singoli, perfetta per bambini o amici.
+        {% else %}
+          2 Single beds, perfect for children or friends.
+        {% endif %}
+      </p>
+    </div>
+
+    <div class="col-6 col-md-4 col-lg-2">
+      <i class="fa-solid fa-kitchen-set fa-3x mb-3" style="color:#8b7355;"></i>
+      <h5 class="fw-semibold">{% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Zona Giorno{% else %}Living Area{% endif %}</h5>
+      <p style="font-size:0.95rem; color:#4a4a4a;">
+        {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}
+          Open space con divano letto, TV, tavolo da pranzo e cucina attrezzata con forno, frigorifero, utensili e macchina da caffè.
+        {% else %}
+          Open space with sofa bed, TV, dining table, and fully equipped kitchen with oven, fridge, utensils, and coffee machine.
+        {% endif %}
+      </p>
+    </div>
+
+    <div class="col-6 col-md-4 col-lg-2">
+      <i class="fa-solid fa-bath fa-3x mb-3" style="color:#8b7355;"></i>
+      <h5 class="fw-semibold">{% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Bagno{% else %}Bathroom{% endif %}</h5>
+      <p style="font-size:0.95rem; color:#4a4a4a;">
+        {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}
+          Doccia spaziosa, bidet, asciugamani e kit di cortesia inclusi.
+        {% else %}
+          Spacious shower, bidet, towels, and courtesy kit included.
+        {% endif %}
+      </p>
+    </div>
+
+    <div class="col-6 col-md-4 col-lg-2">
+      <i class="fa-solid fa-sun fa-3x mb-3" style="color:#8b7355;"></i>
+      <h5 class="fw-semibold">{% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Ampio balcone{% else %}Large balcony{% endif %}</h5>
+      <p style="font-size:0.95rem; color:#4a4a4a;">
+        {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}
+          Perfetto per colazioni o pranzi all'aperto e momenti di relax per fumatori.
+        {% else %}
+          Perfect for outdoor breakfasts or lunches and relaxation moments for smokers.
+        {% endif %}
+      </p>
+    </div>
+
+  </div>
+
+</section>
+
+
+<section class="container my-5">
+  <h2 class="fw-bold text-center mb-4" style="color:#7a6652; font-family:'Poppins',sans-serif;">Photogallery</h2>
+
+  <div class="gallery-container d-flex overflow-auto gap-3 p-3" style="scroll-snap-type:x mandatory;">
+    {% for foto in fotos %}
+      <img src="{{ foto.url }}" alt="Foto Casa Vacanze" 
+           class="shadow rounded-4" 
+           style="height:280px; object-fit:cover; scroll-snap-align:center;">
+    {% endfor %}
+  </div>
+</section>
+
+
+<section class="container my-5">
+  <div class="row align-items-center justify-content-center g-4">
+    <h2 class="fw-bold mb-5" style="font-family:'Poppins',sans-serif; color:#7a6652; text-align: center;">
+      {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Dove siamo{% else %}Where we are{% endif %}
+    </h2>
+
+    <div class="col-12 col-md-6 d-flex justify-content-center">
+      <div class="shadow-lg rounded-4 overflow-hidden"
+          style="width:100%; max-width:500px; height:400px; border:3px solid #e6dccb;">
+        <iframe
+          src="https://www.google.com/maps/d/u/1/embed?mid=1_lr6E_GxQJ1ScwaE0IUk3UaRTunN3Os&ehbc=2E312F"
+          width="100%" height="100%"
+          style="border:0;"
+          allowfullscreen="" loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+      </div>
+    </div>
+
+    <div class="col-12 col-md-5 text-center text-md-start">
+      <p class="mb-4 fs-5" style="text-align: center;">
+        📍 Traversa della III trav. a dx di Via Libertà n.5,
+        <p class="mb-4 fs-5" style="text-align: center;">Portici (NA)</p>
+      </p>
+     
+      <a href="https://www.google.com/maps/place/Family+Home+Portici/@40.8154756,14.3434088,720m"
+        target="_blank"
+        class="d-inline-flex flex-row align-items-center justify-content-center shadow text-decoration-none"
+        style="width:500px; height:100px; background-color:#8b7355; color:white; border-radius:25px;
+                font-weight:600; font-size:1.1rem; gap:15px; white-space:nowrap;
+                transition:transform .2s ease, box-shadow .2s ease; align-items: center;">
+        <i class="fa-solid fa-map-location-dot fa-2x"></i>
+        <span>
+          {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Cerca Casa Vacanze Family Home su Maps{% else %}Search Family Home Holiday House on Maps{% endif %}
+        </span>
+      </a>
+    </div>
+  </div>
+</section>
+
+
+
+<section class="py-5 text-center text-dark" style="background:linear-gradient(180deg, #f0e6d2, #e9dcc9);">
+  <div class="container">
+    <h2 class="fw-bold mb-3" style="font-family:'Poppins',sans-serif; color:#6b573d;">
+      {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Chiama Ora{% else %}Call Now{% endif %}
+    </h2>
+    <p class="mb-4 fs-5" style="color:#4a4a4a;">
+      {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Per prenotare o per ulteriori informazioni{% else %}To book or for further information{% endif %}
+    </p>
+
+    <a href="tel:+393929093515"
+       class="btn shadow-lg d-inline-flex align-items-center justify-content-center gap-2"
+       style="background-color:#8b7355; color:white; font-weight:bold; font-size:1.3rem; padding:15px 45px; border-radius:50px;">
+       <i class="fa-solid fa-phone-volume fa-lg"></i>
+       392 9093515
+    </a>
+
+    <p class="mt-4 text-muted" style="font-size:0.95rem;">
+      {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Oppure scrivici su WhatsApp per una risposta immediata.{% else %}Or message us on WhatsApp for an immediate reply.{% endif %}
+    </p>
+
+    <a href="https://wa.me/393929093515" target="_blank"
+       class="btn btn-outline-secondary mt-2 d-inline-flex align-items-center justify-content-center gap-2"
+       style="font-weight:600; border-radius:50px; color:#6b573d; border-color:#8b7355;">
+       <i class="fa-brands fa-whatsapp fa-lg text-success"></i>
+       {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Chatta su WhatsApp{% else %}Chat on WhatsApp{% endif %}
+    </a>
+  </div>
+</section>
+
+{% if request.GET.checkin and request.GET.checkout %}
+  <div class="alert alert-light mt-4" style="border:1px solid #e6dccb; color:#6b573d;">
+    <strong>{% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Date selezionate:{% else %}Selected dates:{% endif %}</strong> 
+    {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}dal{% else %}from{% endif %} {{ request.GET.checkin }} {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}al{% else %}to{% endif %} {{ request.GET.checkout }}
+  </div>
+{% endif %}
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const btn = document.getElementById("scroll-down-btn");
+
+  const toggleButton = () => {
+    const scrollPos = window.scrollY;
+    const halfPage = document.body.scrollHeight / 2;
+    if (scrollPos >= halfPage) {
+      btn.style.opacity = 0;
+      btn.style.pointerEvents = "none";
+    } else {
+      btn.style.opacity = 1;
+      btn.style.pointerEvents = "auto";
+    }
+  };
+
+  window.addEventListener("scroll", toggleButton);
+  toggleButton();
+
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener("click", function(e) {
+      e.preventDefault();
+      document.querySelector(this.getAttribute("href")).scrollIntoView({
+        behavior: "smooth"
+      });
+      btn.style.opacity = 0;
+      btn.style.pointerEvents = "none";
+    });
+  });
+});
+</script>
+
+{% endblock %}

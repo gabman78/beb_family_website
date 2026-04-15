@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <title>Calendario Piazza Plebiscito</title>
+
+  <!-- FullCalendar -->
+  <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.css" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
+
+  <style>
+    :root {
+      --colore-principale: #b23a48;
+      --colore-occupato: #d94c5a;
+      --colore-libero: #4caf50;
+      --sfondo: #fff4f4;
+      --bianco: #ffffff;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: var(--sfondo);
+      margin: 0;
+      padding: 20px;
+      color: #2c3e50;
+    }
+
+    #calendar {
+      position: relative;
+      max-width: 1100px;
+      margin: 0 auto;
+      background: var(--bianco);
+      border-radius: 16px;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+      padding: 50px 40px 30px;
+      min-height: 750px;
+      overflow: visible;
+    }
+
+    /* Titolo mese */
+    .fc-toolbar-title {
+      text-transform: capitalize;
+      text-align: center !important;
+      width: 100%;
+      font-family: 'Poppins', sans-serif;
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--colore-principale);
+      letter-spacing: 1px;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Celle del calendario */
+    .fc-daygrid-day-frame {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+      padding: 8px 0;
+      transition: background-color 0.25s ease, transform 0.15s ease;
+    }
+
+    .fc-daygrid-day {
+      border-radius: 10px;
+      border: 1px solid rgba(0, 0, 0, 0.05);
+    }
+
+    .fc-daygrid-day:hover {
+      background-color: #e0f2ff !important;
+      transform: scale(1.02);
+      cursor: pointer;
+      border: 2px solid #2f4f6f !important;
+      box-shadow: 0 0 6px rgba(47, 79, 111, 0.2);
+    }
+
+    /* Numero giorno + etichetta */
+    .fc-daygrid-day-number {
+      font-size: 2rem;
+      font-weight: 900;
+      color: #852b36;
+      margin-bottom: 3px;
+      position: static !important;
+      text-align: center;
+      width: 100%;
+      line-height: 1.1;
+    }
+
+    .fc-daygrid-day-number::after {
+      display: block;
+      margin-top: 2px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.3px;
+    }
+
+    /* Disponibilità */
+    .fc-daygrid-day.fc-day-libero {
+      background-color: #f4fff4 !important;
+    }
+    .fc-daygrid-day.fc-day-occupato {
+      background-color: #fff1f1 !important;
+    }
+
+    .fc-daygrid-day.fc-day-libero .fc-daygrid-day-number::after {
+      content: "Disponibile";
+      color: var(--colore-libero);
+    }
+    .fc-daygrid-day.fc-day-occupato .fc-daygrid-day-number::after {
+      content: "Occupato";
+      color: var(--colore-occupato);
+    }
+
+    /* --- Giorni già trascorsi (come Vesuvio, con “–”) --- */
+    .fc-daygrid-day.past-day {
+      opacity: 0.55;
+      filter: saturate(0.8);
+      background-color: #fff2f2 !important; /* rosa chiarissimo */
+      pointer-events: none;
+      border: 1px solid rgba(178, 58, 72, 0.2);
+    }
+
+    .fc-daygrid-day.past-day .fc-daygrid-day-number {
+      color: #b23a48 !important; /* colore principale */
+    }
+
+    .fc-daygrid-day.past-day .fc-daygrid-day-number::after {
+      content: "–";
+      color: #e3a6a6 !important; /* rosa tenue per il simbolo */
+      font-weight: 600;
+      display: block;
+      margin-top: 2px;
+    }
+
+    /* Frecce di navigazione */
+    .nav-arrow {
+      position: absolute;
+      top: 60px;
+      background: transparent;
+      border: none;
+      font-size: 3rem;
+      font-weight: 700;
+      color: var(--colore-principale);
+      cursor: pointer;
+      z-index: 9999;
+      transition: color 0.3s ease, transform 0.2s ease;
+    }
+
+    .nav-arrow.left { left: -40px; }
+    .nav-arrow.right { right: -40px; }
+
+    .nav-arrow:hover {
+      color: #8b1e2d;
+      transform: scale(1.2);
+    }
+
+    /* Legenda */
+    .legend {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      margin-top: 15px;
+      font-size: 0.9rem;
+      flex-wrap: wrap;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .legend-item .box {
+      width: 16px;
+      height: 16px;
+      border-radius: 4px;
+    }
+
+    .legend-item .occ { background: var(--colore-occupato); }
+    .legend-item .lib { background: var(--colore-libero); }
+
+    #status {
+      text-align: center;
+      color: #777;
+      margin-bottom: 10px;
+      font-size: 0.9rem;
+    }
+
+    /* Fix struttura */
+    .fc-scroller,
+    .fc-view-harness,
+    .fc-dayGridMonth-view {
+      overflow: visible !important;
+      height: auto !important;
+      min-height: unset !important;
+    }
+
+    .fc-daygrid-body,
+    .fc-daygrid-body table {
+      height: auto !important;
+    }
+
+    @media (max-width: 768px) {
+      .nav-arrow { font-size: 2.2rem; top: 55px; }
+      .nav-arrow.left { left: -15px; }
+      .nav-arrow.right { right: -15px; }
+    }
+  </style>
+</head>
+
+<body>
+  <div id="status">⏳ Caricamento disponibilità...</div>
+  <div id="calendar">
+    <button class="nav-arrow left" id="prevMonth">‹</button>
+    <button class="nav-arrow right" id="nextMonth">›</button>
+  </div>
+
+  <div class="legend">
+    <div class="legend-item">
+      <span class="box occ"></span><span>Occupato</span>
+    </div>
+    <div class="legend-item">
+      <span class="box lib"></span><span>Disponibile</span>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', async function () {
+      const calendarEl = document.getElementById('calendar');
+      const statusEl = document.getElementById('status');
+      let dateRanges = [];
+
+    try {
+
+      const response = await fetch('/api/calendar/plebiscito/');
+
+      if (!response.ok) {
+        throw new Error("Errore nel caricamento calendario.");
+      }
+
+      const data = await response.json();
+
+      dateRanges = data.map(ev => ({
+        start: new Date(ev.start),
+        end: new Date(ev.end)
+      }));
+
+      statusEl.textContent = "👀 Controlla le disponibilità:";
+
+    } catch (err) {
+
+      console.error(err);
+      statusEl.textContent = "⚠️ Non è stato possibile caricare la disponibilità in tempo reale.";
+
+    }
+
+    const toDateOnly = (d) => new Date(d.getFullYear(), d.getMonth(), d.getDate());
+
+    const calendar = new FullCalendar.Calendar(calendarEl, {
+        initialView: 'dayGridMonth',
+        height: 'auto',
+        locale: 'it',
+        firstDay: 1,
+        headerToolbar: { left: '', center: 'title', right: '' },
+
+        dayCellDidMount: function (arg) {
+            const dayDate = toDateOnly(arg.date); // rimuove ore/minuti/secondi
+            const occupato = dateRanges.some(range => {
+                const start = toDateOnly(range.start);
+                const end = toDateOnly(range.end); // Booking: DTEND esclusivo
+                return dayDate >= start && dayDate < end;
+            });
+
+            if (occupato) arg.el.classList.add('fc-day-occupato');
+            else arg.el.classList.add('fc-day-libero');
+
+            // Giorni già trascorsi
+            const today = toDateOnly(new Date());
+            if (dayDate < today) arg.el.classList.add('past-day');
+        }
+    });
+
+      calendar.render();
+      document.getElementById("prevMonth").addEventListener("click", () => calendar.prev());
+      document.getElementById("nextMonth").addEventListener("click", () => calendar.next());
+
+      // --- BLOCCO NUOVO ---
+      const params = new URLSearchParams(window.location.search);
+      const checkin = params.get("checkin");
+      const checkout = params.get("checkout");
+
+      if (checkin && checkout) {
+        const checkinDate = new Date(checkin);
+        const checkoutDate = new Date(checkout);
+
+        const msg = document.createElement("div");
+        msg.textContent = `Hai selezionato dal ${checkinDate.toLocaleDateString('it-IT')} al ${checkoutDate.toLocaleDateString('it-IT')}`;
+        msg.style.textAlign = "center";
+        msg.style.marginBottom = "15px";
+        msg.style.color = "#6b573d";
+        msg.style.fontWeight = "600";
+        document.getElementById("status").after(msg);
+
+        const celle = document.querySelectorAll(".fc-daygrid-day");
+        celle.forEach(cell => {
+          const cellDate = new Date(cell.getAttribute("data-date"));
+          if (cellDate >= checkinDate && cellDate < checkoutDate) {
+            cell.style.outline = "3px solid #8b7355";
+            cell.style.outlineOffset = "-3px";
+            cell.style.borderRadius = "10px";
+            cell.style.boxShadow = "0 0 8px rgba(139,115,85,0.3)";
+          }
+        });
+      }
+
+    });
+
+    const resizeObserver = new ResizeObserver(() => {
+      const height = document.body.scrollHeight;
+      window.parent.postMessage({ type: "resize-calendar", height }, "*");
+    });
+    resizeObserver.observe(document.body);
+  </script>
+</body>
+</html>

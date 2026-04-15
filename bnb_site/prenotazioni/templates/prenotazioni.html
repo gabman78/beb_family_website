@@ -1,0 +1,158 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<section class="d-flex align-items-end justify-content-center text-center"
+         style="background-color:#f8f3ed; color:#4a4a4a; min-height:40vh; padding-bottom:60px;">
+  <div class="container">
+    <h1 class="fw-bold mb-3"
+        style="font-family:'Poppins',sans-serif; color:#7a6652; font-size:2.4rem;">
+      {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Prenota il tuo soggiorno al Family{% else %}Book your stay at Family{% endif %}
+    </h1>
+    <p class="lead mx-auto" style="max-width:700px; color:#4a4a4a; font-size:1.1rem;">
+      {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}
+        Scegli le date e il numero di ospiti per verificare le disponibilità nelle nostre strutture:
+      {% else %}
+        Choose your dates and the number of guests to check availability in our properties:
+      {% endif %}
+    </p>
+  </div>
+</section>
+
+<section class="py-5 text-center bg-white border-top border-bottom">
+  <div class="container">
+    <form method="get" 
+          class="row g-4 justify-content-center align-items-end bg-white p-5 rounded shadow-lg" 
+          style="max-width:8000px; margin:auto;">
+      <div class="col-md-3">
+        <label for="checkin" class="form-label fw-semibold text-dark">Check-in</label>
+        <input type="date" id="checkin" name="checkin" value="{{ checkin }}" class="form-control form-control-lg">
+      </div>
+      <div class="col-md-3">
+        <label for="checkout" class="form-label fw-semibold text-dark">Check-out</label>
+        <input type="date" id="checkout" name="checkout" value="{{ checkout }}" class="form-control form-control-lg">
+      </div>
+      <div class="col-md-3">
+        <label for="persone" class="form-label fw-semibold text-dark">{% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Ospiti{% else %}Guests{% endif %}</label>
+        <input type="number" id="persone" name="persone" min="1" value="{{ persone }}" class="form-control form-control-lg">
+      </div>
+      <div class="col-md-2">
+        <button type="submit" 
+                class="btn w-100 fw-bold text-white"
+                style="background-color:#8b7355; border:none; font-size:1rem; padding:10px 20px; border-radius:6px;">
+                {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Cerca{% else %}Search{% endif %}
+        </button>
+      </div>
+    </form>
+    
+    {% if ricerca_effettuata and not camere %}
+    <div class="mt-5 text-center">
+      <i class="fa-solid fa-face-frown fa-4x mb-3" style="color:#8b7355;"></i>
+      <h3 class="fw-semibold mb-3" style="color:#8b7355;">
+        {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Nessuna camera disponibile{% else %}No rooms available{% endif %}
+      </h3>
+      <p class="text-muted mb-0" style="font-size:1.05rem;">
+        {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Prova a modificare le date o il numero di persone.{% else %}Try changing the dates or the number of guests.{% endif %}
+      </p>
+    </div>
+    {% endif %}
+  </div>
+</section>
+
+<section class="py-5" style="background-color:#f9f5ef;">
+  <div class="container">
+
+    {% if ricerca_effettuata %}
+      {% if camere %}
+        <h2 class="fw-bold mb-5 text-center" style="color:#6b573d; font-family:'Poppins',sans-serif;">
+          {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Camere disponibili{% else %}Available rooms{% endif %}
+        </h2>
+
+        <div class="row g-4 justify-content-center">
+
+          {% for camera in camere %}
+          <div class="col-12 col-md-6 col-lg-4">
+            <form method="get"
+                  action="
+                    {% if camera.nome == 'Vesuvio' %}
+                      {% url 'camera_vesuvio' %}
+                    {% elif camera.nome == 'Piazza Plebiscito' %}
+                      {% url 'camera_piazzaplebiscito' %}
+                    {% elif camera.nome == 'Castel dell\'Ovo' %}
+                      {% url 'camera_casteldellovo' %}
+                    {% elif camera.tipo_struttura == 'CASA' %}
+                      {% url 'casavacanze' %}
+                    {% endif %}
+                  ">
+              <input type="hidden" name="checkin" value="{{ checkin }}">
+              <input type="hidden" name="checkout" value="{{ checkout }}">
+              <input type="hidden" name="persone" value="{{ persone }}">
+
+              <button type="submit" class="border-0 bg-transparent text-start w-100 p-0">
+                <div class="card border-0 shadow-lg h-100" style="background-color:#fffaf3; transition:transform .2s ease;">
+                  <div class="card-body text-center">
+                    <h4 class="fw-bold mb-2" style="color:#8b7355;">
+                      {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}
+                        {{ camera.nome }}
+                      {% else %}
+                        {% if camera.nome == 'Vesuvio' %}Vesuvio Room{% elif camera.nome == 'Piazza Plebiscito' %}Piazza Plebiscito Room{% elif camera.nome == 'Castel dell\'Ovo' %}Castel dell'Ovo Room{% else %}{{ camera.nome }}{% endif %}
+                      {% endif %}
+                    </h4>
+                    <p class="text-muted mb-2">
+                      {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}
+                        {{ camera.get_tipo_struttura_display }}
+                      {% else %}
+                        {% if camera.tipo_struttura == 'CASA' %}Holiday House{% else %}B&B Room{% endif %}
+                      {% endif %}
+                    </p>
+                    <p class="mb-2" style="color:#4a4a4a;">
+                      {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Capienza{% else %}Capacity{% endif %}: {{ camera.capienza }} {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}persone{% else %}people{% endif %}
+                    </p>
+                    <p class="fw-semibold mb-0" style="color:#6b573d;">€{{ camera.prezzo }} / {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}notte{% else %}night{% endif %}</p>
+                    <div class="mt-3">
+                      <span class="btn px-4 py-2"
+                            style="background-color:#8b7355; color:#fff; font-weight:600; border-radius:30px;">
+                            {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Vedi disponibilità{% else %}View availability{% endif %}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </button>
+            </form>
+          </div>
+          {% endfor %}
+        </div>
+
+      {% endif %}
+    {% endif %}
+
+  </div>
+</section>
+
+<section class="py-5 text-center" style="background:linear-gradient(135deg,#e9dcc9,#f0e6d2);">
+  <div class="container">
+    <h2 class="fw-bold mb-3" style="font-family:'Poppins',sans-serif; color:#6b573d;">
+      {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Problemi nel verificare la disponibilità?{% else %}Trouble checking availability?{% endif %}
+    </h2>
+    <p class="mb-4" style="color:#5c5c5c;">
+      {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Contattaci subito!{% else %}Contact us now!{% endif %}
+    </p>
+    <a href="tel:+393929093515"
+       class="btn shadow-lg d-inline-flex align-items-center justify-content-center gap-2"
+       style="background-color:#8b7355; color:white; font-weight:bold; font-size:1.3rem; padding:15px 45px; border-radius:50px;">
+       <i class="fa-solid fa-phone-volume fa-lg"></i>
+       392 9093515
+    </a>
+    <p class="mt-4 text-muted" style="font-size:0.95rem;">
+      {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Oppure scrivici su WhatsApp per una risposta immediata.{% else %}Or message us on WhatsApp for an immediate reply.{% endif %}
+    </p>
+    <a href="https://wa.me/393929093515" target="_blank"
+       class="btn btn-outline-secondary mt-2 d-inline-flex align-items-center justify-content-center gap-2"
+       style="font-weight:600; border-radius:50px; color:#6b573d; border-color:#8b7355;">
+       <i class="fa-brands fa-whatsapp fa-lg text-success"></i>
+       {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Chatta su WhatsApp{% else %}Chat on WhatsApp{% endif %}
+    </a>
+  </div>
+</section>
+
+{% endblock %}

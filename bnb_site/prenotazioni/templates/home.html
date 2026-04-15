@@ -1,0 +1,229 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+{% include 'partials/hero_slider.html' %}
+
+<section class="py-5 text-center" style="background-color:#f9f5ef;">
+  <div class="container">
+    <h2 class="fw-bold mb-4" style="color:#6b573d;">
+      {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Unisciti alla nostra Family!{% else %}Join our Family!{% endif %}
+    </h2>
+    <p class="lead mx-auto" style="max-width: 700px; color:#4a4a4a;">
+      {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}
+        Comfort, accoglienza e un’atmosfera familiare: tutto ciò che desideri ti aspetta al <strong>Family Room di Portici</strong>, 
+        a pochi minuti da Napoli e a due passi dal mare e dal Vesuvio.
+        Scegli una delle nostre tre camere del <strong>B&B</strong> con bagno privato, giardino e area relax, 
+        oppure opta per la nostra <strong>Casa Vacanze</strong>, perfetta per un soggiorno in famiglia.
+      {% else %}
+        Comfort, hospitality, and a family atmosphere: everything you desire awaits you at the <strong>Family Room in Portici</strong>, 
+        just minutes from Naples and steps away from the sea and Mount Vesuvius.
+        Choose one of our three <strong>B&B</strong> rooms with private bathroom, garden, and relaxation area, 
+        or opt for our <strong>Holiday House</strong>, perfect for a family stay.
+      {% endif %}
+    </p>
+  </div>
+</section>
+
+<section class="container py-5">
+  <div class="row g-4">
+    <div class="col-md-6">
+      <div class="card border-0 shadow-lg h-100" style="background-color:#fffaf3;">
+        <div class="position-relative overflow-hidden">
+          <img src="/media/generali/prima.jpg" class="card-img-top" alt="B&B" style="height:300px; object-fit:cover;">
+        </div>
+        <div class="card-body text-center">
+          <h3 class="fw-bold mb-3" style="color:#8b7355;">
+            {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Scopri il nostro B&B{% else %}Discover our B&B{% endif %}
+          </h3>
+          <p class="text-muted">
+            {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}
+              Camere accoglienti con bagno privato, sala colazioni e un ampio giardino con area relax per vivere al meglio il tuo soggiorno.
+            {% else %}
+              Cozy rooms with private bathrooms, a breakfast room, and a large garden with a relaxation area to enjoy your stay to the fullest.
+            {% endif %}
+          </p>
+          <a href="{% url 'beb' %}" class="btn px-4 mt-2"
+             style="background-color:#8b7355; color:#fff; font-weight:600; border-radius:30px;">
+             {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Visita il B&B{% else %}Visit the B&B{% endif %}
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="card border-0 shadow-lg h-100" style="background-color:#fffaf3;">
+        <div class="position-relative overflow-hidden">
+          <img src="/media/casa_vacanze/major_room.jpg" class="card-img-top" alt="Casa Vacanze" style="height:300px; object-fit:cover;">
+        </div>
+        <div class="card-body text-center">
+          <h3 class="fw-bold mb-3" style="color:#8b7355;">
+            {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Scopri la Casa Vacanze{% else %}Discover the Holiday House{% endif %}
+          </h3>
+          <p class="text-muted">
+            {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}
+              Ideale per famiglie o gruppi: libertà, privacy e un’atmosfera autentica nel cuore di Portici.
+            {% else %}
+              Ideal for families or groups: freedom, privacy, and an authentic atmosphere in the heart of Portici.
+            {% endif %}
+          </p>
+          <a href="{% url 'casavacanze' %}" class="btn px-4 mt-2"
+             style="background-color:#8b7355; color:#fff; font-weight:600; border-radius:30px;">
+             {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Visita la Casa Vacanze{% else %}Visit the Holiday House{% endif %}
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="py-5 text-center" style="background-color:#f9f5ef;">
+  <div class="container">
+    <h2 class="fw-bold mb-4" style="color:#6b573d; font-family:'Poppins', sans-serif;">
+      {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Dove ci troviamo{% else %}Where we are{% endif %}
+    </h2>
+    <p class="lead mx-auto mb-5" style="max-width:700px; color:#4a4a4a;">
+      {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}
+        Siamo nel cuore di Portici, a due passi da Viale Leonardo da Vinci e da Via Libertà, fulcro dello shopping cittadino, e in posizione strategica per raggiungere facilmente Napoli.
+      {% else %}
+        We are in the heart of Portici, a few steps from Viale Leonardo da Vinci and Via Libertà, the city's shopping hub, and in a strategic position to easily reach Naples.
+      {% endif %}
+    </p>
+
+    <div class="d-flex align-items-center justify-content-center flex-wrap gap-5">
+      
+      <a href="https://maps.app.goo.gl/iteYvz9nVtH4X48v9"
+         target="_blank"
+         class="d-flex flex-column align-items-center justify-content-center shadow text-decoration-none"
+         style="width:160px; height:160px; background-color:#8b7355; color:white; border-radius:20px; font-weight:600; transition:transform .2s ease; margin-right: 40px;">
+         <i class="fa-solid fa-map-location-dot fa-2x mb-3"></i>
+         {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Cerca B&B<br>Family Room<br>su Maps{% else %}Search B&B<br>Family Room<br>on Maps{% endif %}
+      </a>
+      
+      <div class="shadow-lg rounded-4 overflow-hidden position-relative" 
+           style="width:500px; height:400px; flex-shrink:0; border:3px solid #e6dccb; background-color: #f1f1f1;">
+        
+        <iframe
+          data-src="https://www.google.com/maps/d/u/1/embed?mid=1_lr6E_GxQJ1ScwaE0IUk3UaRTunN3Os&ehbc=2E312F"
+          src=""
+          width="100%" height="100%" style="border:10px; position: relative; z-index: 2;" allowfullscreen="" loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+        
+        <div class="map-placeholder position-absolute top-0 start-0 w-100 h-100 d-flex flex-column justify-content-center align-items-center p-4 text-center z-1" style="background-color: #f9f5ef; color: #6b573d;">
+          <i class="fa-solid fa-map-location-dot fa-3x mb-3 opacity-50"></i>
+          <p class="mb-0 fw-semibold">{% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Mappa disabilitata{% else %}Map disabled{% endif %}</p>
+          <p class="small text-muted">
+            {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}
+              Accetta i cookie di terze parti dal banner in basso per visualizzare la mappa interattiva.
+            {% else %}
+              Accept third-party cookies from the banner below to view the interactive map.
+            {% endif %}
+          </p>
+        </div>
+      </div>
+
+      <a href="https://www.google.com/maps/place/Family+Home+Portici/@40.8154756,14.3434088,720m/data=!3m2!1e3!4b1!4m6!3m5!1s0x133ba77f457ed377:0x7f9026161f7a27a2!8m2!3d40.8154756!4d14.3434088!16s%2Fg%2F11lydwq65l?entry=ttu&g_ep=EgoyMDI1MTAyMi4wIKXMDSoASAFQAw%3D%3D"
+         target="_blank"
+         class="d-flex flex-column align-items-center justify-content-center shadow text-decoration-none"
+         style="width:160px; height:160px; background-color:#8b7355; color:white; border-radius:20px; font-weight:600; transition:transform .2s ease; margin-left: 40px;">
+         <i class="fa-solid fa-map-location-dot fa-2x mb-3"></i>
+         {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Cerca Casa Vacanze<br>Family Room<br>su Maps{% else %}Search Holiday House<br>Family Room<br>on Maps{% endif %}
+      </a>
+
+    </div>
+  </div>
+</section>
+
+
+<section class="py-5 bg-white text-center border-top border-bottom">
+  <div class="container">
+    <h2 class="fw-bold mb-5" style="font-family: 'Poppins', sans-serif;">
+      {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}I nostri servizi{% else %}Our services{% endif %}
+    </h2>
+    <div class="row justify-content-center g-4">
+ 
+      <div class="col-6 col-md-3">
+        <img src="/media/icons/wifi-sign.png" class="servizio-icon" alt="Wi-Fi" style="width:70px; height:70px; object-fit:contain; display:block; margin:0 auto 10px;">
+        <h5 style="color:#4a4a4a; font-size:18px; font-weight:bold; margin-top:10px; font-family: 'Poppins', sans-serif;">
+          {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Wi-Fi gratuito{% else %}Free Wi-Fi{% endif %}
+        </h5>
+      </div>
+
+      <div class="col-6 col-md-3">
+        <img src="/media/icons/croissant.png" class="servizio-icon" alt="Breakfast" style="width:70px; height:70px; object-fit:contain; display:block; margin:0 auto 10px;">
+        <h5 style="color:#4a4a4a; font-size:18px; font-weight:bold; margin-top:10px; font-family: 'Poppins', sans-serif;">
+          {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Colazione inclusa su richiesta{% else %}Breakfast included on request{% endif %}
+        </h5>
+      </div>
+
+      <div class="col-6 col-md-3">
+        <img src="/media/icons/paws.png" class="servizio-icon" alt="Pets" style="width:70px; height:70px; object-fit:contain; display:block; margin:0 auto 10px;">
+        <h5 style="color:#4a4a4a; font-size:18px; font-weight:bold; margin-top:10px; font-family: 'Poppins', sans-serif;">
+          {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Porta con te il tuo amico a 4 zampe!{% else %}Bring your 4-legged friend with you!{% endif %}
+        </h5>
+      </div>
+
+      <div class="col-6 col-md-3">
+        <img src="/media/icons/parking.png" class="servizio-icon" alt="Parking" style="width:70px; height:70px; object-fit:contain; display:block; margin:0 auto 10px;">
+        <h5 style="color:#4a4a4a; font-size:18px; font-weight:bold; margin-top:10px; font-family: 'Poppins', sans-serif;">
+          {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Parcheggio su richiesta{% else %}Parking on request{% endif %}
+        </h5>
+      </div>
+
+      <div class="col-6 col-md-3">
+        <img src="/media/icons/mobile-app.png" class="servizio-icon" alt="Shuttle" style="width:70px; height:70px; object-fit:contain; display:block; margin:0 auto 10px;">
+        <h5 style="color:#4a4a4a; font-size:18px; font-weight:bold; margin-top:10px; font-family: 'Poppins', sans-serif;">
+          {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Servizio Navetta{% else %}Shuttle Service{% endif %}
+        </h5>
+      </div>
+
+      <div class="col-6 col-md-3">
+        <img src="/media/icons/cheers.png" class="servizio-icon" alt="Events" style="width:70px; height:70px; object-fit:contain; display:block; margin:0 auto 10px;">
+        <h5 style="color:#4a4a4a; font-size:18px; font-weight:bold; margin-top:10px; font-family: 'Poppins', sans-serif;">
+          {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Feste ed Eventi{% else %}Parties and Events{% endif %}
+        </h5>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="py-5 text-center" style="background: linear-gradient(135deg, #e9dcc9, #f0e6d2); color:#4a4a4a;">
+  <div class="container">
+    <h2 class="fw-bold mb-3" style="font-family:'Poppins',sans-serif; color:#6b573d;">
+      {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Scopri la disponibilità delle camere e della Casa Vacanze qui:{% else %}Check room and Holiday House availability here:{% endif %}
+    </h2>
+    <a href="{% url 'prenotazioni' %}"
+       class="btn shadow-lg"
+       style="background-color:#8b7355; color:white; font-weight: bold; font-size: 1.3rem; padding: 15px 50px; border-radius: 50px;">
+       {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Verifica Disponibilità{% else %}Check Availability{% endif %}
+    </a>
+  </div>
+</section>
+
+
+<section class="py-5 text-center text-dark" style="background: linear-gradient(135deg, #e9dcc9, #f0e6d2);">
+  <div class="container">
+    <h2 class="fw-bold mb-3" style="font-family:'Poppins',sans-serif; color:#6b573d;">
+      {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Prenota ora o contattaci per maggiori informazioni!{% else %}Book now or contact us for more information!{% endif %}
+    </h2>
+    <a href="tel:+393929093515"
+       class="btn shadow-lg d-inline-flex align-items-center justify-content-center gap-2"
+       style="background-color:#8b7355; color:white; font-weight: bold; font-size: 1.3rem; padding: 15px 45px; border-radius: 50px;">
+       <i class="fa-solid fa-phone-volume fa-lg"></i>
+       392 9093515
+    </a>
+    <p class="mt-4 text-muted" style="font-size:0.95rem;">
+      {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Altrimenti scrivici su WhatsApp per una risposta immediata.{% else %}Or message us on WhatsApp for an immediate reply.{% endif %}
+    </p>
+    <a href="https://wa.me/393929093515" target="_blank"
+       class="btn btn-outline-secondary mt-2 d-inline-flex align-items-center justify-content-center gap-2"
+       style="font-weight: 600; border-radius: 50px; color:#6b573d; border-color:#8b7355;">
+       <i class="fa-brands fa-whatsapp fa-lg text-success"></i>
+       {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Chatta su WhatsApp{% else %}Chat on WhatsApp{% endif %}
+    </a>
+  </div>
+</section>
+
+{% endblock %}

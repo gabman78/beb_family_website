@@ -1,0 +1,12 @@
+<h2>Camere disponibili</h2>
+<ul>
+    {% for c in camere %}
+        <li>
+            <h3>{{ c.nome }} - €{{ c.prezzo }}</h3>
+            <p>{{ c.descrizione }}</p>
+            {% if c.immagine %}
+                <img src="{{ c.immagine.url }}" width="200">
+            {% endif %}
+        </li>
+    {% endfor %}
+</ul>

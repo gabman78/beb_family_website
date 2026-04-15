@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <title>Calendario Camera Vesuvio</title>
+
+  <!-- FullCalendar -->
+  <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.css" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
+
+  <style>
+    :root {
+      --colore-principale: #4a90c2;
+      --colore-occupato: #d9534f;
+      --colore-libero: #4caf50;
+      --sfondo: #eaf6ff;
+      --bianco: #ffffff;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: var(--sfondo);
+      margin: 0;
+      padding: 20px;
+      color: #2f4f6f;
+    }
+
+    h2 {
+      text-align: center;
+      color: var(--colore-principale);
+      margin-bottom: 20px;
+    }
+
+    #calendar {
+      position: relative;
+      max-width: 1100px;
+      margin: 0 auto;
+      background: var(--bianco);
+      border-radius: 16px;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+      padding: 50px 40px 30px;
+      min-height: 750px;
+      overflow: visible;
+    }
+
+    .fc-toolbar-title {
+      text-transform: capitalize;
+      text-align: center !important;
+      width: 100%;
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--colore-principale);
+    }
+
+    .fc-button {
+      background: var(--colore-principale) !important;
+      border: none !important;
+      color: white !important;
+      border-radius: 8px !important;
+    }
+
+    .fc-daygrid-day-frame {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 8px 0;
+      transition: background-color 0.25s ease, transform 0.15s ease;
+    }
+
+    .fc-daygrid-day:hover {
+      background-color: #d4ecff !important;
+      transform: scale(1.02);
+      cursor: pointer;
+    }
+
+    .fc-daygrid-day-number {
+      font-size: 1.9rem;
+      font-weight: 900;
+      color: #2f4f6f;
+    }
+
+    .fc-daygrid-day-number::after {
+      display: block;
+      margin-top: 2px;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+
+    .fc-daygrid-day.fc-day-libero {
+      background-color: #effff0 !important;
+    }
+    .fc-daygrid-day.fc-day-occupato {
+      background-color: #ffecec !important;
+    }
+
+    .fc-daygrid-day.fc-day-libero .fc-daygrid-day-number::after {
+      content: "Disponibile";
+      color: var(--colore-libero);
+    }
+    .fc-daygrid-day.fc-day-occupato .fc-daygrid-day-number::after {
+      content: "Occupato";
+      color: var(--colore-occupato);
+    }
+
+    .fc-daygrid-day.past-day {
+      opacity: 0.5;
+      filter: saturate(0.8);   
+      background-color: #dbe5f0 !important;
+      pointer-events: none;
+      border: 1px solid rgba(47,79,111,0.15);
+    }
+
+    .fc-daygrid-day.past-day .fc-daygrid-day-number {
+      color: #7a99b5 !important;
+    }
+    .fc-daygrid-day.past-day .fc-daygrid-day-number::after {
+      content: "–";
+      color: #aac0d3;
+      font-weight: 600;
+      display: block;
+      margin-top: 2px;
+    }
+
+    .legend {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      margin-top: 15px;
+      font-size: 0.9rem;
+      flex-wrap: wrap;
+    }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .legend-item .box {
+      width: 16px;
+      height: 16px;
+      border-radius: 4px;
+    }
+    .legend-item .occ { background: var(--colore-occupato); }
+    .legend-item .lib { background: var(--colore-libero); }
+
+    #status {
+      text-align: center;
+      color: #2f4f6f;
+      margin-bottom: 10px;
+      font-size: 0.9rem;
+    }
+
+    /* Frecce laterali */
+    .nav-arrow {
+      position: absolute;
+      top: 60px;
+      background: transparent;
+      border: none;
+      font-size: 3rem;
+      font-weight: 700;
+      color: var(--colore-principale);
+      cursor: pointer;
+      z-index: 9999;
+      transition: color 0.3s ease, transform 0.2s ease;
+    }
+
+    @media (max-width: 768px) {
+      .nav-arrow { font-size: 2.2rem; top: 55px; }
+      .nav-arrow.left { left: -15px; }
+      .nav-arrow.right { right: -15px; }
+    }
+    .nav-arrow.left { left: -40px; }
+    .nav-arrow.right { right: -40px; }
+
+    .nav-arrow:hover {
+      color: #064c5f;
+      transform: scale(1.2);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .nav-arrow { font-size: 2.2rem; top: 55px; }
+      .nav-arrow.left { left: -15px; }
+      .nav-arrow.right { right: -15px; }
+    }
+
+    .fc-daygrid-day-frame {
+      display: flex !important;
+      flex-direction: column;
+      justify-content: center !important;
+      align-items: center !important;
+    }
+
+    /* Centra anche i trattini e la descrizione sotto il numero */
+    .fc-daygrid-day-number,
+    .fc-daygrid-day-number::after {
+      text-align: center !important;
+      width: 100%;
+    }
+
+
+  </style>
+</head>
+<body>
+  <div id="status">⏳ Caricamento disponibilità...</div>
+  <div id="calendar">
+    <button class="nav-arrow left" id="prevMonth">‹</button>
+    <button class="nav-arrow right" id="nextMonth">›</button>
+  </div>
+
+  <div class="legend">
+    <div class="legend-item"><span class="box occ"></span><span>Occupato</span></div>
+    <div class="legend-item"><span class="box lib"></span><span>Disponibile</span></div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', async function () {
+      const calendarEl = document.getElementById('calendar');
+      const statusEl = document.getElementById('status');
+      let dateRanges = [];
+
+      try {
+        // ✅ Fetch dalla tua API Django invece di ICAL diretto
+        const response = await fetch('/api/calendar/vesuvio/');
+        if (!response.ok) throw new Error("Errore nel caricamento calendario.");
+        const data = await response.json();
+        dateRanges = data.map(ev => ({ start: new Date(ev.start), end: new Date(ev.end) }));
+        statusEl.textContent = "👀 Controlla le disponibilità:";
+      } catch (err) {
+        console.error(err);
+        statusEl.textContent = "⚠️ Non è stato possibile caricare la disponibilità in tempo reale.";
+      }
+
+    const toDateOnly = (d) => new Date(d.getFullYear(), d.getMonth(), d.getDate());
+
+    const calendar = new FullCalendar.Calendar(calendarEl, {
+        initialView: 'dayGridMonth',
+        height: 'auto',
+        locale: 'it',
+        firstDay: 1,
+        headerToolbar: { left: '', center: 'title', right: '' },
+
+        dayCellDidMount: function (arg) {
+            const dayDate = toDateOnly(arg.date); // rimuove ore/minuti/secondi
+            const occupato = dateRanges.some(range => {
+                const start = toDateOnly(range.start);
+                const end = toDateOnly(range.end); // Booking: DTEND esclusivo
+                return dayDate >= start && dayDate < end;
+            });
+
+            if (occupato) arg.el.classList.add('fc-day-occupato');
+            else arg.el.classList.add('fc-day-libero');
+
+            // Giorni già trascorsi
+            const today = toDateOnly(new Date());
+            if (dayDate < today) arg.el.classList.add('past-day');
+        }
+    });
+      calendar.render();
+
+      document.getElementById("prevMonth").addEventListener("click", () => calendar.prev());
+      document.getElementById("nextMonth").addEventListener("click", () => calendar.next());
+
+      // checkin/checkout
+      const params = new URLSearchParams(window.location.search);
+      const checkin = params.get("checkin");
+      const checkout = params.get("checkout");
+
+      if (checkin && checkout) {
+        const checkinDate = new Date(checkin);
+        const checkoutDate = new Date(checkout);
+
+        const msg = document.createElement("div");
+        msg.textContent = `Hai selezionato dal ${checkinDate.toLocaleDateString('it-IT')} al ${checkoutDate.toLocaleDateString('it-IT')}`;
+        msg.style.textAlign = "center";
+        msg.style.marginBottom = "15px";
+        msg.style.color = "#6b573d";
+        msg.style.fontWeight = "600";
+        document.getElementById("status").after(msg);
+
+        document.querySelectorAll(".fc-daygrid-day").forEach(cell => {
+          const cellDate = new Date(cell.getAttribute("data-date"));
+          if (cellDate >= checkinDate && cellDate < checkoutDate) {
+            cell.style.outline = "3px solid #8b7355";
+            cell.style.outlineOffset = "-3px";
+            cell.style.borderRadius = "10px";
+            cell.style.boxShadow = "0 0 8px rgba(139,115,85,0.3)";
+          }
+        });
+      }
+
+      // invio altezza al parent iframe
+      const resizeObserver = new ResizeObserver(() => {
+        window.parent.postMessage({ type: "resize-calendar", height: document.body.scrollHeight }, "*");
+      });
+      resizeObserver.observe(document.body);
+    });
+  </script>
+</body>

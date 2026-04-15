@@ -1,0 +1,56 @@
+/* Font generali */
+body {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 400;
+  color: #333;
+}
+
+/* Titoli */
+h1, h2, h3, h4, h5, h6, .navbar-brand {
+  font-family: 'Playfair Display', serif;
+  letter-spacing: 0.5px;
+}
+
+/* Navbar */
+.navbar-nav .nav-link {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Hero section e titoli principali */
+.hero h1, .hero h2 {
+  font-family: 'Playfair Display', serif;
+  font-weight: 600;
+}
+
+/* Footer */
+footer {
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.95rem;
+  letter-spacing: 0.3px;
+}
+
+.navbar .container {
+  padding-left: 0 !important;
+}
+
+
+.navbar-brand {
+  position: relative;
+  left: -140px; /* aumenta o diminuisci a gusto */
+}
+
+section .servizio-icon {
+  width: 70px !important;
+  height: 70px !important;
+  object-fit: contain;
+  display: block;
+  margin: 0 auto 10px;
+  transition: transform 0.2s ease;
+}
+
+section .servizio-icon:hover {
+  transform: scale(1.1);
+}

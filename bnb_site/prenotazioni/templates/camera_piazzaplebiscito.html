@@ -1,0 +1,227 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<a href="{% url 'beb' %}" 
+   class="btn btn-light position-fixed top-50 start-0 m-4 d-flex align-items-center justify-content-center shadow"
+   style="width:50px; height:50px; border-radius:50%; 
+       background-color:rgba(255,255,255,0.85); 
+       border:none; z-index:1000;
+       transform: translateY(-50%);">
+  <i class="fa-solid fa-arrow-left text-dark"></i>
+</a>
+
+
+<section class="position-relative text-white text-center" style="background: url('/media/posti/piazza.jpg') center/cover; height: 60vh;">
+  <div class="bg-dark bg-opacity-50 w-100 h-100 position-absolute top-0 start-0"></div>
+
+  <div class="position-relative h-100 d-flex flex-column justify-content-center align-items-center">
+    <h1 class="fw-bold" style="font-family:'Poppins',sans-serif;">
+        {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Camera Piazza Plebiscito{% else %}Piazza Plebiscito Room{% endif %}
+    </h1>
+    <p class="lead mb-4">
+        {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Matrimoniale Deluxe con divano letto aggiuntivo.{% else %}Deluxe Double Room with additional sofa bed.{% endif %}
+    </p>
+
+    <form id="check-availability-form" class="availability-form row g-3 justify-content-center align-items-end bg-white bg-opacity-75 p-4 rounded shadow-lg"
+          style="max-width:1400px; width:95%;"
+          data-ical="{{ ical_link }}"
+          data-max-guests="4">
+      <div class="col-md-3">
+        <label for="checkin" class="form-label fw-semibold text-dark">Check-in</label>
+        <input type="date" name="checkin" id="checkin" class="form-control">
+      </div>
+      <div class="col-md-3">
+        <label for="checkout" class="form-label fw-semibold text-dark">Check-out</label>
+        <input type="date" name="checkout" id="checkout" class="form-control">
+      </div>
+      <div class="col-md-2">
+        <label for="guests" class="form-label fw-semibold text-dark">{% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Ospiti{% else %}Guests{% endif %}</label>
+        <input type="number" name="guests" id="guests" class="form-control" min="1" value="2">
+      </div>
+      <div class="col-md-2">
+        <button type="submit" class="btn w-100 fw-bold text-white"
+                style="background-color:#b23a48; border:none;">
+          {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Verifica disponibilità{% else %}Check availability{% endif %}
+        </button>
+      </div>
+      <div class="col-12 mt-3 availability-message"></div>
+    </form>
+  </div>
+  <script src="{% static 'js/check_availability.js' %}"></script>
+</section>
+
+<section class="text-dark text-center py-5"
+         style="background: linear-gradient(180deg, #fff4f4 0%, #f9e3e3 100%); width:100vw; margin-left: calc(-50vw + 50%);">
+  
+  <div class="container d-flex flex-column align-items-center">
+    <div class="bg-white bg-opacity-90 rounded-4 shadow-lg p-4"
+      style="width:100%; max-width:1250px; backdrop-filter: blur(6px);">
+
+      <iframe src="{% static 'calendars/piazzaplebiscito.html' %}"
+              id="calendar-frame"
+              style="width:100%; border:0; border-radius:12px; overflow:hidden;"
+              title="{% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Calendario Camera Piazza Plebiscito{% else %}Piazza Plebiscito Room Calendar{% endif %}"></iframe>
+
+      <script>
+        window.addEventListener("message", (event) => {
+          if (event.data && event.data.type === "resize-calendar") {
+            const iframe = document.getElementById("calendar-frame");
+            iframe.style.height = event.data.height + "px";
+          }
+        });
+      </script>
+
+    </div>
+    <p class="mt-4 text-secondary" style="font-size:0.95rem;">
+      {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Scorri il calendario per visualizzare le disponibilità aggiornate in tempo reale.{% else %}Scroll through the calendar to view real-time availability updates.{% endif %}
+    </p>
+  </div>
+</section>
+
+<a href="#galleria-camera" 
+   id="scroll-down-btn"
+   class="d-flex position-fixed top-50 end-0 align-items-center shadow"
+   style="z-index:1000; transform: translateY(-50%); text-decoration:none; display:none;">
+
+  <span style="color:#b23a48; font-weight:600; font-family:'Poppins',sans-serif; 
+               margin-right:16px; white-space:nowrap;">
+    {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Dettagli della Camera{% else %}Room Details{% endif %}
+  </span>
+
+  <div class="btn d-flex align-items-center justify-content-center"
+       style="width:50px; height:50px; border-radius:50%; background-color:#b23a48;">
+    <i class="fa-solid fa-arrow-down fa-lg" style="color:#ffffff;"></i>
+  </div>
+
+</a>
+
+<section id="galleria-camera" class="py-5" style="background-color:#fbeaea;">
+  <div class="container">
+    <div id="carouselPiazza" class="carousel slide shadow-lg rounded overflow-hidden" data-bs-ride="carousel" data-bs-interval="4000">
+      
+      <div class="carousel-indicators">
+        <button type="button" data-bs-target="#carouselPiazza" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+        <button type="button" data-bs-target="#carouselPiazza" data-bs-slide-to="1" aria-label="Slide 2"></button>
+        <button type="button" data-bs-target="#carouselPiazza" data-bs-slide-to="2" aria-label="Slide 3"></button>
+        <button type="button" data-bs-target="#carouselPiazza" data-bs-slide-to="3" aria-label="Slide 4"></button>
+        <button type="button" data-bs-target="#carouselPiazza" data-bs-slide-to="4" aria-label="Slide 5"></button>
+        <button type="button" data-bs-target="#carouselPiazza" data-bs-slide-to="5" aria-label="Slide 6"></button>
+        <button type="button" data-bs-target="#carouselPiazza" data-bs-slide-to="6" aria-label="Slide 7"></button>
+        <button type="button" data-bs-target="#carouselPiazza" data-bs-slide-to="7" aria-label="Slide 8"></button>
+      </div>
+
+      <div class="carousel-inner rounded shadow-lg">
+        <div class="carousel-item active"><img src="/media/2/362602785.jpg" class="d-block w-100" style="height:750px; object-fit:cover;" alt="Camera Piazza 1"></div>
+        <div class="carousel-item"><img src="/media/2/362603003.jpg" class="d-block w-100" style="height:750px; object-fit:cover;" alt="Camera Piazza 2"></div>
+        <div class="carousel-item"><img src="/media/2/362603005.jpg" class="d-block w-100" style="height:750px; object-fit:cover;" alt="Camera Piazza 3"></div>
+        <div class="carousel-item"><img src="/media/2/362603538.jpg" class="d-block w-100" style="height:750px; object-fit:cover;" alt="Camera Piazza 4"></div>
+        <div class="carousel-item"><img src="/media/2/362603622.jpg" class="d-block w-100" style="height:750px; object-fit:cover;" alt="Camera Piazza 5"></div>
+        <div class="carousel-item"><img src="/media/2/362603636.jpg" class="d-block w-100" style="height:750px; object-fit:cover;" alt="Camera Piazza 6"></div>
+        <div class="carousel-item"><img src="/media/2/362603663.jpg" class="d-block w-100" style="height:750px; object-fit:cover;" alt="Camera Piazza 7"></div>
+        <div class="carousel-item"><img src="/media/2/head_piazzaplebi.jpg" class="d-block w-100" style="height:750px; object-fit:cover;" alt="Camera Piazza 8"></div>
+      </div>
+
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselPiazza" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">{% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Precedente{% else %}Previous{% endif %}</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselPiazza" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">{% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Successiva{% else %}Next{% endif %}</span>
+      </button>
+    </div>
+  </div>
+</section>
+
+<section class="py-5 text-center" style="background-color:#fff8f8;">
+  <div class="container">
+    <h2 class="fw-bold mb-4" style="font-family:'Poppins',sans-serif; color:#b23a48;">{% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Dettagli della Camera{% else %}Room Details{% endif %}</h2>
+    <p class="lead mx-auto" style="max-width:750px; color:#4a4a4a;">
+      {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}
+      La Camera Piazza Plebiscito è un confortevole ambiente dominato da tonalità calde di rosso che creano un’atmosfera intima e romantica.
+      Pensata per coppie, offre un ampio letto matrimoniale e la possibilità di aggiungere un divano letto, ideale per rilassarsi o per ospitare anche una terza persona.
+      Il bagno privato e l’accesso diretto al giardino aggiungono comfort e riservatezza, mentre aria condizionata autonoma, Smart TV e WiFi gratuito garantiscono un soggiorno piacevole.
+      {% else %}
+      The Piazza Plebiscito Room is a comfortable environment dominated by warm shades of red that create an intimate and romantic atmosphere.
+      Designed for couples, it offers a large double bed and the possibility of adding a sofa bed, ideal for relaxing or accommodating a third person.
+      The private bathroom and direct access to the garden add comfort and privacy, while independent air conditioning, Smart TV, and free WiFi guarantee a pleasant stay.
+      {% endif %}
+    </p>
+
+    <div class="mt-4" style="color:#5c5c5c;">
+      <p><i class="fa-solid fa-bed me-2" style="color:#b23a48;"></i> {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}1 letto matrimoniale large + divano letto{% else %}1 large double bed + sofa bed{% endif %}</p>
+      <p><i class="fa-solid fa-bath me-2" style="color:#b23a48;"></i> {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Bagno privato con doccia e set di cortesia{% else %}Private bathroom with shower and courtesy set{% endif %}</p>
+      <p><i class="fa-solid fa-tree me-2" style="color:#b23a48;"></i> {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Accesso al patio esterno con giardino{% else %}Access to the outdoor patio with garden{% endif %}</p>
+      <p><i class="fa-solid fa-snowflake me-2" style="color:#b23a48;"></i> {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Aria condizionata{% else %}Air conditioning{% endif %}</p>
+      <p><i class="fa-solid fa-wifi me-2" style="color:#b23a48;"></i> {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Wi-Fi gratuito in tutta la struttura{% else %}Free Wi-Fi throughout the property{% endif %}</p>
+      <p><i class="fa-solid fa-tv me-2" style="color:#b23a48;"></i> Smart TV</p>
+    </div>
+  </div>
+</section>
+
+<section class="py-5 text-center text-dark" style="background: linear-gradient(180deg, #f3dcdc, #e9cfcf);">
+  <div class="container">
+    <h2 class="fw-bold mb-3" style="font-family:'Poppins',sans-serif; color:#8b1e2d;">
+      {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Chiama Ora{% else %}Call Now{% endif %}
+    </h2>
+    <p class="mb-4" style="font-size:1.1rem; color:#4a4a4a;">
+      {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}per Prenotare o per ulteriori Informazioni{% else %}to book or for further information{% endif %}
+    </p>
+    <a href="tel:+393929093515"
+       class="btn shadow-lg d-inline-flex align-items-center justify-content-center gap-2"
+       style="background-color:#b23a48; color:white; font-weight: bold; font-size: 1.3rem; padding: 15px 45px; border-radius: 50px;">
+       <i class="fa-solid fa-phone-volume fa-lg"></i>
+       392 9093515
+    </a>
+    <p class="mt-4 text-muted" style="font-size:0.95rem;">
+      {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Oppure scrivici su WhatsApp per una risposta immediata.{% else %}Or message us on WhatsApp for an immediate reply.{% endif %}
+    </p>
+    <a href="https://wa.me/393929093515" target="_blank"
+       class="btn btn-outline-secondary mt-2 d-inline-flex align-items-center justify-content-center gap-2"
+       style="font-weight: 600; border-radius: 50px; color:#8b1e2d; border-color:#b23a48;">
+       <i class="fa-brands fa-whatsapp fa-lg text-success"></i>
+       {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Chatta su WhatsApp{% else %}Chat on WhatsApp{% endif %}
+    </a>
+  </div>
+</section>
+
+{% if request.GET.checkin and request.GET.checkout %}
+  <div class="alert alert-light mt-4" style="border:1px solid #e6dccb; color:#6b573d;">
+    <strong>{% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Date selezionate:{% else %}Selected dates:{% endif %}</strong> {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}dal{% else %}from{% endif %} {{ request.GET.checkin }} {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}al{% else %}to{% endif %} {{ request.GET.checkout }}
+  </div>
+{% endif %}
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const btn = document.getElementById("scroll-down-btn");
+
+  const toggleButton = () => {
+    const scrollPos = window.scrollY;
+    const halfPage = document.body.scrollHeight / 2;
+    if (scrollPos >= halfPage) {
+      btn.style.opacity = 0;
+      btn.style.pointerEvents = "none";
+    } else {
+      btn.style.opacity = 1;
+      btn.style.pointerEvents = "auto";
+    }
+  };
+
+  window.addEventListener("scroll", toggleButton);
+  toggleButton();
+
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener("click", function(e) {
+      e.preventDefault();
+      document.querySelector(this.getAttribute("href")).scrollIntoView({
+        behavior: "smooth"
+      });
+      btn.style.opacity = 0;
+      btn.style.pointerEvents = "none";
+    });
+  });
+});
+</script>
+
+{% endblock %}

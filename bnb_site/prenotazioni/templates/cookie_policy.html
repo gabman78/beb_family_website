@@ -1,0 +1,167 @@
+{% extends "base.html" %}
+
+{% block content %}
+<main class="cookie-container" style="margin-top: 80px; min-height: 70vh;">
+  <div class="container my-5 shadow-sm p-4 p-md-5 bg-white rounded">
+    <h1 class="fw-bold mb-3" style="color: #6b573d;">
+      {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Cookie Policy{% else %}Cookie Policy{% endif %}
+    </h1>
+    <p class="text-muted mb-4">
+      <strong>{% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Ultimo aggiornamento:{% else %}Last update:{% endif %}</strong> 
+      {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}3 Aprile 2026{% else %}April 3, 2026{% endif %}
+    </p>
+
+    <section class="mb-4">
+      <h2 class="h5 fw-bold" style="color: #8b7355;">
+        {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}1. Titolare del Trattamento{% else %}1. Data Controller{% endif %}
+      </h2>
+      <p>
+        {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}
+          Il Titolare del trattamento è <strong>VESUVIAN HOLIDAYS S.R.L.</strong>, 
+          con sede legale in Trav. III Tr. Dx. Via Libertà 7 - 80055 - Portici (NA), 
+          P.IVA: 10593311219. Email: <a href="mailto:vesuvianholidayssrl@pec-societa.com" style="color:#6b573d;">vesuvianholidayssrl@pec-societa.com</a>.
+        {% else %}
+          The Data Controller is <strong>VESUVIAN HOLIDAYS S.R.L.</strong>, 
+          with registered office at Trav. III Tr. Dx. Via Libertà 7 - 80055 - Portici (NA), 
+          VAT: 10593311219. Email: <a href="mailto:vesuvianholidayssrl@pec-societa.com" style="color:#6b573d;">vesuvianholidayssrl@pec-societa.com</a>.
+        {% endif %}
+      </p>
+    </section>
+
+    <section class="mb-4">
+      <h2 class="h5 fw-bold" style="color: #8b7355;">
+        {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}2. Cosa sono i Cookie?{% else %}2. What are Cookies?{% endif %}
+      </h2>
+      <p class="text-justify">
+        {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}
+          I cookie sono stringhe di testo di piccole dimensioni che i siti visitati dall'utente inviano al suo terminale (solitamente al browser), dove vengono memorizzati per essere poi ritrasmessi agli stessi siti alla successiva visita del medesimo utente. Nel corso della navigazione, l'utente può ricevere sul suo terminale anche cookie che vengono inviati da siti o da web server diversi (c.d. "terze parti").
+        {% else %}
+          Cookies are small text strings that websites visited by the user send to their terminal (usually to the browser), where they are stored to be retransmitted to the same sites during the next visit by the same user. While browsing, the user may also receive cookies on their terminal that are sent from different sites or web servers (so-called "third parties").
+        {% endif %}
+      </p>
+    </section>
+
+    <section class="mb-4">
+      <h2 class="h5 fw-bold" style="color: #8b7355;">
+        {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}3. Quali Cookie utilizza questo sito?{% else %}3. Which Cookies does this site use?{% endif %}
+      </h2>
+      <p>
+        {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}
+          Il nostro sito web è stato progettato per essere il più rispettoso possibile della privacy degli utenti. <strong>Non utilizziamo cookie di profilazione o di marketing propri</strong> e non utilizziamo sistemi di analisi statistica invasivi.
+        {% else %}
+          Our website is designed to be as respectful as possible of user privacy. <strong>We do not use our own profiling or marketing cookies</strong> and we do not use invasive statistical analysis systems.
+        {% endif %}
+      </p>
+      
+      <h3 class="h6 fw-bold mt-4">
+        {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}A. Cookie Tecnici (Prima Parte){% else %}A. Technical Cookies (First Party){% endif %}
+      </h3>
+      <p>
+        {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}
+          Sono cookie installati direttamente dal nostro sito, indispensabili per il corretto funzionamento tecnico della piattaforma e per la sicurezza. Per l'installazione di tali cookie <strong>non è richiesto il preventivo consenso</strong> dell'utente.
+        {% else %}
+          These are cookies installed directly by our site, essential for the correct technical functioning of the platform and for security. For the installation of these cookies, <strong>prior consent is not required</strong> from the user.
+        {% endif %}
+      </p>
+      
+      <div class="table-responsive my-3">
+        <table class="table table-bordered border-secondary-subtle align-middle">
+          <thead class="table-light">
+            <tr>
+              <th>{% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Nome del Cookie{% else %}Cookie Name{% endif %}</th>
+              <th>{% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Fornitore{% else %}Provider{% endif %}</th>
+              <th>{% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Scopo{% else %}Purpose{% endif %}</th>
+              <th>{% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Scadenza{% else %}Expiration{% endif %}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>csrftoken</strong></td>
+              <td>Family Room (Django)</td>
+              <td>
+                {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}
+                  Cookie di sicurezza essenziale. Previene attacchi di tipo <em>Cross-Site Request Forgery</em> (CSRF) quando l'utente compila form di contatto.
+                {% else %}
+                  Essential security cookie. Prevents <em>Cross-Site Request Forgery</em> (CSRF) attacks when the user fills out contact forms.
+                {% endif %}
+              </td>
+              <td>1 {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}anno{% else %}year{% endif %}</td>
+            </tr>
+            <tr>
+              <td><strong>sessionid</strong></td>
+              <td>Family Room (Django)</td>
+              <td>
+                {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}
+                  Cookie tecnico utilizzato unicamente per il mantenimento della sessione di navigazione.
+                {% else %}
+                  Technical cookie used solely for maintaining the browsing session.
+                {% endif %}
+              </td>
+              <td>{% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Chiusura del browser{% else %}Browser close{% endif %}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 class="h6 fw-bold mt-4">
+        {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}B. Cookie di Terze Parti (Servizi Esterni){% else %}B. Third-Party Cookies (External Services){% endif %}
+      </h3>
+      <p>
+        {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}
+          Visitando il nostro sito potresti ricevere cookie da siti gestiti da altre organizzazioni ("terze parti"). Questo avviene perché sul nostro sito sono integrati elementi ospitati su server esterni.
+        {% else %}
+          By visiting our site you may receive cookies from sites managed by other organizations ("third parties"). This happens because elements hosted on external servers are integrated into our site.
+        {% endif %}
+      </p>
+      
+      <div class="table-responsive my-3">
+        <table class="table table-bordered border-secondary-subtle align-middle">
+          <thead class="table-light">
+            <tr>
+              <th>{% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Servizio Esterno{% else %}External Service{% endif %}</th>
+              <th>{% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Scopo e Tipologia{% else %}Purpose and Type{% endif %}</th>
+              <th>Privacy Policy</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Google Maps</strong></td>
+              <td>
+                {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}
+                  Abbiamo inserito una mappa interattiva per aiutarti a trovarci. Google potrebbe utilizzare cookie (come <em>NID</em>) per memorizzare le tue preferenze sulla mappa.
+                {% else %}
+                  We have included an interactive map to help you find us. Google may use cookies (such as <em>NID</em>) to store your preferences on the map.
+                {% endif %}
+              </td>
+              <td><a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer" style="color:#6b573d;">Google Privacy Policy</a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="mb-4">
+      <h2 class="h5 fw-bold" style="color: #8b7355;">
+        {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}4. Come disabilitare i Cookie dal Browser{% else %}4. How to Disable Cookies from the Browser{% endif %}
+      </h2>
+      <p>
+        {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}
+          L'utente può decidere se accettare o meno i cookie utilizzando le impostazioni del proprio browser. 
+          Attenzione: la disabilitazione dei cookie tecnici può compromettere l'utilizzo delle funzionalità del sito.
+        {% else %}
+          The user can decide whether or not to accept cookies using their browser settings. 
+          Warning: disabling technical cookies may compromise the use of the site's features.
+        {% endif %}
+      </p>
+      <p>{% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Di seguito i link alle istruzioni per i browser più comuni:{% else %}Below are the links to instructions for the most common browsers:{% endif %}</p>
+      <ul>
+        <li><a href="https://support.google.com/chrome/answer/95647" target="_blank" rel="noopener noreferrer" style="color:#6b573d;">Google Chrome</a></li>
+        <li><a href="https://support.mozilla.org/it/kb/Gestione%20dei%20cookie" target="_blank" rel="noopener noreferrer" style="color:#6b573d;">Mozilla Firefox</a></li>
+        <li><a href="https://support.apple.com/it-it/guide/safari/sfri11471/mac" target="_blank" rel="noopener noreferrer" style="color:#6b573d;">Apple Safari</a></li>
+        <li><a href="https://support.microsoft.com/it-it/microsoft-edge/eliminare-i-cookie-in-microsoft-edge-63947406-40ac-c3b8-57b9-2a946a29ae09" target="_blank" rel="noopener noreferrer" style="color:#6b573d;">Microsoft Edge</a></li>
+      </ul>
+    </section>
+
+  </div>
+</main>
+{% endblock %}

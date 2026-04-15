@@ -1,0 +1,140 @@
+{% extends "base.html" %}
+
+{% block content %}
+<main class="terms-container" style="margin-top: 80px; min-height: 70vh;">
+  <div class="container my-5 shadow-sm p-4 p-md-5 bg-white rounded">
+    <h1 class="fw-bold mb-3" style="color: #6b573d;">
+      {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Termini e Condizioni{% else %}Terms and Conditions{% endif %}
+    </h1>
+    <p class="text-muted mb-4">
+      <strong>{% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Ultimo aggiornamento:{% else %}Last update:{% endif %}</strong> 
+      {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}3 Aprile 2026{% else %}April 3, 2026{% endif %}
+    </p>
+
+    <section class="mb-4">
+      <h2 class="h5 fw-bold" style="color: #8b7355;">
+        {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}1. Titolare e Dati Aziendali{% else %}1. Owner and Company Data{% endif %}
+      </h2>
+      <p>
+        {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}
+          Il presente sito web è di proprietà di <strong>VESUVIAN HOLIDAYS S.R.L.</strong>, 
+          con sede legale in <strong>Trav. III Tr. Dx. Via Libertà 7 - 80055 - Portici (NA)</strong>, 
+          P.IVA e Codice Fiscale: <strong>10593311219</strong>.<br>
+          Email di contatto: <a href="mailto:vesuvianholidayssrl@pec-societa.com" style="color:#6b573d;">vesuvianholidayssrl@pec-societa.com</a>.
+        {% else %}
+          This website is owned by <strong>VESUVIAN HOLIDAYS S.R.L.</strong>, 
+          with registered office at <strong>Trav. III Tr. Dx. Via Libertà 7 - 80055 - Portici (NA)</strong>, 
+          VAT and Tax Code: <strong>10593311219</strong>.<br>
+          Contact Email: <a href="mailto:vesuvianholidayssrl@pec-societa.com" style="color:#6b573d;">vesuvianholidayssrl@pec-societa.com</a>.
+        {% endif %}
+      </p>
+    </section>
+
+    <section class="mb-4">
+      <h2 class="h5 fw-bold" style="color: #8b7355;">
+        {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}2. Scopo del Sito e Oggetto{% else %}2. Purpose of the Site and Scope{% endif %}
+      </h2>
+      <p>
+        {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}
+          Il presente sito ha finalità puramente illustrative e informative in merito ai servizi di ospitalità offerti dalla struttura <strong>Family Room</strong> (B&B e Casa Vacanze). 
+          L'utilizzo del sito e l'invio di richieste di contatto implicano la presa visione delle presenti Condizioni.
+        {% else %}
+          This site is for purely illustrative and informative purposes regarding the hospitality services offered by the <strong>Family Room</strong> facility (B&B and Holiday House). 
+          The use of the site and the sending of contact requests imply the acceptance of these Terms.
+        {% endif %}
+      </p>
+    </section>
+
+    <section class="mb-4">
+      <h2 class="h5 fw-bold" style="color: #8b7355;">
+        {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}3. Richieste di Disponibilità e Conferma Prenotazione{% else %}3. Availability Requests and Booking Confirmation{% endif %}
+      </h2>
+      <p>
+        {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}
+          <strong>Attraverso questo sito web non è possibile effettuare prenotazioni dirette o pagamenti online.</strong> 
+          Gli utenti possono utilizzare i form di contatto, i recapiti telefonici o WhatsApp per verificare la disponibilità delle camere e richiedere un preventivo.
+        {% else %}
+          <strong>It is not possible to make direct bookings or online payments through this website.</strong> 
+          Users may use the contact forms, telephone numbers, or WhatsApp to check room availability and request a quote.
+        {% endif %}
+      </p>
+      <p>
+        {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}
+          A seguito della richiesta, la Direzione fornirà privatamente tutte le informazioni su tariffe, Tassa di Soggiorno ed eventuali servizi extra.
+          La prenotazione si intenderà <strong>definitivamente confermata solo dopo l'accettazione del preventivo</strong> da parte dell'ospite e il versamento di un'eventuale caparra confirmatoria, secondo i termini concordati in fase di comunicazione privata.
+        {% else %}
+          Following the request, the Management will privately provide all information regarding rates, Tourist Tax, and any extra services.
+          The booking will be considered <strong>definitively confirmed only after the acceptance of the quote</strong> by the guest and the payment of any confirmatory deposit, according to the terms agreed upon during private communication.
+        {% endif %}
+      </p>
+    </section>
+
+    <section class="mb-4">
+      <h2 class="h5 fw-bold" style="color: #8b7355;">
+        {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}4. Politiche di Cancellazione{% else %}4. Cancellation Policies{% endif %}
+      </h2>
+      <p>
+        {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}
+          Le specifiche politiche di cancellazione, l'eventuale trattenuta della caparra e le scadenze per disdire senza penali verranno comunicate in modo trasparente all'interno del preventivo fornito al cliente prima della conferma finale.
+        {% else %}
+          Specific cancellation policies, any retention of the deposit, and deadlines for canceling without penalties will be transparently communicated within the quote provided to the customer before final confirmation.
+        {% endif %}
+      </p>
+      <p>
+        {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}
+          Si ricorda che, ai sensi dell'art. 59, comma 1, del Codice del Consumo (D.Lgs. 206/2005), per i contratti di fornitura di alloggi per fini non residenziali <strong>è escluso il diritto di recesso gratuito di 14 giorni</strong>.
+        {% else %}
+          Please note that, pursuant to art. 59, paragraph 1, of the Consumer Code (Legislative Decree 206/2005), for the supply of accommodation for non-residential purposes, <strong>the 14-day free right of withdrawal is excluded</strong>.
+        {% endif %}
+      </p>
+    </section>
+
+    <section class="mb-4">
+      <h2 class="h5 fw-bold" style="color: #8b7355;">
+        {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}5. Regole Generali di Soggiorno (Check-in / Check-out){% else %}5. General Stay Rules (Check-in / Check-out){% endif %}
+      </h2>
+      <p>{% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Salvo accordi diversi presi direttamente con la Direzione in fase di prenotazione, si applicano le seguenti regole generali:{% else %}Unless otherwise agreed directly with the Management during the booking phase, the following general rules apply:{% endif %}</p>
+      <ul>
+        <li><strong>Check-in:</strong> {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Dalle ore <strong>14:00</strong> alle ore <strong>20:00</strong>.{% else %}From <strong>2:00 PM</strong> to <strong>8:00 PM</strong>.{% endif %}</li>
+        <li><strong>Check-out:</strong> {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Entro le ore <strong>10:30</strong> del giorno di partenza.{% else %}By <strong>10:30 AM</strong> on the day of departure.{% endif %}</li>
+      </ul>
+      <p>
+        {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}
+          Al momento dell'arrivo è <strong>obbligatorio per legge</strong> esibire un documento d'identità in corso di validità (Carta d'Identità o Passaporto) per ciascun ospite, al fine di consentire la registrazione presso le Autorità di Pubblica Sicurezza.
+        {% else %}
+          Upon arrival, it is <strong>required by law</strong> to present a valid identification document (ID Card or Passport) for each guest to allow registration with the Public Security Authorities.
+        {% endif %}
+      </p>
+    </section>
+
+    <section class="mb-4">
+      <h2 class="h5 fw-bold" style="color: #8b7355;">
+        {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}6. Limitazioni di Responsabilità{% else %}6. Limitation of Liability{% endif %}
+      </h2>
+      <p>
+        {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}
+          La Direzione si impegna a mantenere le informazioni sul sito il più accurate e aggiornate possibile, ma non garantisce l'assenza di errori o inesattezze. Le foto delle camere hanno scopo puramente illustrativo.
+          Inoltre, la struttura declina ogni responsabilità per disservizi legati al soggiorno dovuti a cause di forza maggiore (es. interruzioni idriche/elettriche comunali, eventi atmosferici).
+        {% else %}
+          Management strives to keep the information on the site as accurate and up-to-date as possible but does not guarantee the absence of errors or inaccuracies. Room photos are for illustrative purposes only.
+          Furthermore, the facility declines any responsibility for service interruptions related to the stay due to force majeure (e.g., municipal water/electricity outages, atmospheric events).
+        {% endif %}
+      </p>
+    </section>
+
+    <section class="mb-4">
+      <h2 class="h5 fw-bold" style="color: #8b7355;">
+        {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}7. Legge Applicabile e Foro Competente{% else %}7. Applicable Law and Jurisdiction{% endif %}
+      </h2>
+      <p>
+        {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}
+          Le presenti Condizioni sono regolate dalla Legge Italiana. Per qualsiasi controversia derivante dall'utilizzo del sito o dal soggiorno, sarà competente il <strong>Foro di Napoli</strong>, fatti salvi i fori inderogabili previsti a tutela del Consumatore.
+        {% else %}
+          These Terms are governed by Italian Law. For any dispute arising from the use of the site or the stay, the <strong>Court of Naples</strong> shall have jurisdiction, without prejudice to mandatory courts provided for consumer protection.
+        {% endif %}
+      </p>
+    </section>
+
+  </div>
+</main>
+{% endblock %}

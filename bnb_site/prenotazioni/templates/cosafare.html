@@ -1,0 +1,393 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<style>
+  /* Fissa l'altezza delle immagini e le adatta in automatico */
+  .card-img-custom {
+    height: 220px;
+    width: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+  }
+
+  /* Effetto zoom al passaggio del mouse */
+  .card-zoom:hover .card-img-custom {
+    transform: scale(1.08);
+  }
+
+  .hero-blur-section {
+    position: relative;
+    overflow: hidden;
+    min-height: 45vh;
+    background-color: #f8f3ed;
+  }
+
+  .hero-blur-section::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-image: url('/media/napoli/napoli.jpg'); 
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    filter: blur(8px); 
+    transform: scale(1.1);
+    z-index: 1;
+  }
+
+  .hero-blur-section .container {
+    position: relative;
+    z-index: 2;
+  }
+</style>
+
+<section class="hero-blur-section d-flex align-items-center justify-content-center text-center py-5">
+  <div class="container">
+    <h1 class="fw-bold mb-3" 
+        style="font-family:'Poppins',sans-serif; color:#4a3f35; font-size:2.8rem; text-shadow: 2px 2px 10px rgba(255,255,255,0.8);">
+      {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Scopri Napoli & Portici{% else %}Discover Naples & Portici{% endif %}
+    </h1>
+    <p class="lead" 
+       style="max-width:750px; margin:auto; color:#2d261f; font-size: 1.2rem; font-weight: 500; background: rgba(207, 244, 243, 0.291); padding: 10px; border-radius: 8px;">
+      {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}
+        Vivi il cuore della Campania tra storia, mare, cultura e tradizioni.
+      {% else %}
+        Experience the heart of Campania through history, sea, culture, and traditions.
+      {% endif %}
+    </p>
+  </div>
+</section>
+
+<section class="container my-5 py-4">
+  <div class="text-center mb-5">
+    <h2 class="fw-bold mb-3" style="color:#7a6652;">{% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Scopri Napoli{% else %}Discover Naples{% endif %}</h2>
+    <p class="text-center" style="max-width:850px; margin:auto; color:#4a4a4a; font-size: 1.1rem; line-height: 1.6;">
+        {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}
+            Napoli è una città unica al mondo: un mix di storia millenaria, panorami mozzafiato e cultura vibrante.
+            Il nostro B&B si trova a <strong>Portici, a soli 10 minuti da Napoli</strong>, perfetto per visitarla senza rinunciare alla tranquillità.
+        {% else %}
+            Naples is a unique city: a mix of millennial history, breathtaking views, and vibrant culture.
+            Our B&B is located in <strong>Portici, just 10 minutes from Naples</strong>, perfect for visiting the city without giving up tranquility.
+        {% endif %}
+    </p>
+  </div>
+
+  <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 mb-5">
+    
+    <div class="col">
+      <div class="card card-zoom h-100 shadow-sm border-0 rounded-4 overflow-hidden">
+        <img src="/media/napoli/napoli_centro_storico.jpg" class="card-img-top card-img-custom" alt="Centro Storico">
+        <div class="card-body p-4">
+          <h5 class="card-title fw-bold">🏛 {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Centro Storico{% else %}Historic Center{% endif %}</h5>
+          <p class="card-text text-muted">{% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Patrimonio UNESCO, ricco di chiese, vicoli e tradizioni.{% else %}UNESCO Heritage, rich in churches, alleys, and traditions.{% endif %}</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col">
+      <div class="card card-zoom h-100 shadow-sm border-0 rounded-4 overflow-hidden">
+        <img src="/media/napoli/napoli_piazza_plebiscito.jpg" class="card-img-top card-img-custom" alt="Piazza Plebiscito">
+        <div class="card-body p-4">
+          <h5 class="card-title fw-bold">🏰 Piazza del Plebiscito</h5>
+          <p class="card-text text-muted">{% if request.LANGUAGE_CODE|slice:":2" == 'it' %}La piazza simbolo di Napoli, impreziosita dal maestoso Palazzo Reale.{% else %}The symbolic square of Naples, embellished by the majestic Royal Palace.{% endif %}</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col">
+      <div class="card card-zoom h-100 shadow-sm border-0 rounded-4 overflow-hidden">
+        <img src="/media/napoli/napoli_san_carlo.jpg" class="card-img-top card-img-custom" alt="Teatro San Carlo">
+        <div class="card-body p-4">
+          <h5 class="card-title fw-bold">🎭 Teatro San Carlo</h5>
+          <p class="card-text text-muted">{% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Il teatro lirico più antico d’Europa ancora attivo.{% else %}The oldest active opera house in Europe.{% endif %}</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col">
+      <div class="card card-zoom h-100 shadow-sm border-0 rounded-4 overflow-hidden">
+        <img src="/media/napoli/napoli_street_food.jpg" class="card-img-top card-img-custom" alt="Street Food">
+        <div class="card-body p-4">
+          <h5 class="card-title fw-bold">🍕 Street Food & Pizza</h5>
+          <p class="card-text text-muted">{% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Assapora la vera pizza napoletana e specialità locali, ovunque per tutta la città.{% else %}Taste the real Neapolitan pizza and local specialties throughout the city.{% endif %}</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col">
+      <div class="card card-zoom h-100 shadow-sm border-0 rounded-4 overflow-hidden">
+        <img src="/media/napoli/napoli_via_toledo.jpg" class="card-img-top card-img-custom" alt="Via Toledo">
+        <div class="card-body p-4">
+          <h5 class="card-title fw-bold">🛍 Via Toledo & Quartieri Spagnoli</h5>
+          <p class="card-text text-muted">{% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Shopping, murales, storia, locali, movida e vita autentica napoletana.{% else %}Shopping, murals, history, clubs, nightlife, and authentic Neapolitan life.{% endif %}</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col">
+      <div class="card card-zoom h-100 shadow-sm border-0 rounded-4 overflow-hidden">
+        <img src="/media/napoli/napoli_mergellina.jpg" class="card-img-top card-img-custom" alt="Mergellina">
+        <div class="card-body p-4">
+          <h5 class="card-title fw-bold">🌊 Mergellina & Castel dell’Ovo</h5>
+          <p class="card-text text-muted">{% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Uno dei lungomari più belli d’Italia, perfetto per passeggiate vista mare.{% else %}One of the most beautiful seafronts in Italy, perfect for sea-view walks.{% endif %}</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="text-center mt-5 mb-5 p-4 rounded-4" style="background-color: #fbfbfb; border: 1px solid #eee;">
+    <p style="color:#6c5b47; font-size:1.1rem; max-width: 900px; margin: auto;">
+      {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}
+        👉 E molto altro ancora: Museo e Bosco di Capodimonte, Napoli Sotterranea, San Gregorio Armeno, il Cristo Velato, il Murales di Maradona, il Duomo di Napoli e tantissime meraviglie tutte da scoprire.
+      {% else %}
+        👉 And much more: Capodimonte Museum and Park, Underground Naples, San Gregorio Armeno, the Veiled Christ, Maradona's Murals, the Naples Cathedral, and many wonders to discover.
+      {% endif %}
+    </p>
+  </div>
+
+</section>
+
+<section class="container my-5 py-5 rounded-5" style="background-color:#f8f3ed;">
+  <div class="row align-items-center g-5 justify-content-center p-4">
+    
+    <div class="col-md-7 col-lg-6">
+      <h2 class="fw-bold mb-4" style="color:#7a6652;">🌋 {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Vivi il Vesuvio da vicino{% else %}Experience Mount Vesuvius up close{% endif %}</h2>
+      
+      <p style="color:#4a4a4a; font-size:1.1rem;">
+        {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}
+            Soggiornando da noi ti troverai <strong>alle pendici del Vesuvio</strong>, uno dei vulcani più famosi al mondo.
+        {% else %}
+            Staying with us, you will find yourself <strong>at the slopes of Mount Vesuvius</strong>, one of the most famous volcanoes in the world.
+        {% endif %}
+      </p>
+
+      <p style="color:#4a4a4a;">
+        {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}
+            Potrai raggiungere facilmente il <strong>Parco Nazionale del Vesuvio</strong>, percorrere i sentieri panoramici e arrivare fino al cratere.
+        {% else %}
+            You can easily reach the <strong>Vesuvius National Park</strong>, walk the panoramic trails, and reach the crater.
+        {% endif %}
+      </p>
+
+      <ul style="color:#4a4a4a; font-size: 1.05rem;">
+        <li>🚗 {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}10 minuti dal B&B, con navette disponibili{% else %}10 minutes from the B&B, shuttles available{% endif %}</li>
+        <li>🥾 {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Escursioni guidate{% else %}Guided tours{% endif %}</li>
+        <li>📸 {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Panorama unico al mondo{% else %}Unique panorama in the world{% endif %}</li>
+      </ul>
+    </div>
+
+    <div class="col-md-5 col-lg-6 d-flex justify-content-center overflow-hidden rounded-5 shadow-lg p-0 card-zoom">
+      <img src="/media/napoli/parco_vesuvio.jpg"
+           class="img-fluid w-100"
+           style="object-fit:cover; height: 400px; transition: transform 0.4s ease;" alt="Vesuvio">
+    </div>
+
+  </div>
+</section>
+
+<section class="container my-5 py-5 rounded-5" style="background-color:#fff9f0;">
+  <div class="row align-items-center g-5 justify-content-center p-4">
+    
+    <div class="col-md-5 col-lg-6 order-2 order-md-1 d-flex justify-content-center p-0">
+      <div id="carouselDintorni" class="carousel slide carousel-fade rounded-5 shadow-lg overflow-hidden w-100" data-bs-ride="carousel" style="height: 400px;">
+        <div class="carousel-inner h-100">
+          <div class="carousel-item active h-100" data-bs-interval="3000">
+            <img src="/media/napoli/scavi_ercolano.jpg" class="d-block w-100 h-100" style="object-fit:cover;" alt="Ercolano">
+          </div>
+          <div class="carousel-item h-100" data-bs-interval="3000">
+            <img src="/media/napoli/scavi_pompei.jpg" class="d-block w-100 h-100" style="object-fit:cover;" alt="Pompei">
+          </div>
+          <div class="carousel-item h-100" data-bs-interval="3000">
+            <img src="/media/napoli/penisola_sorrentina.jpg" class="d-block w-100 h-100" style="object-fit:cover;" alt="Sorrento">
+          </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselDintorni" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselDintorni" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        </button>
+      </div>
+    </div>
+
+    <div class="col-md-7 col-lg-6 order-1 order-md-2">
+      <h2 class="fw-bold mb-4" style="color:#7a6652;">🏛 {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Tra Storia Antica e Mare da Sogno{% else %}Ancient History and Dreamy Seas{% endif %}</h2>
+      
+      <p style="color:#4a4a4a; font-size:1.1rem;">
+        {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}
+            La nostra posizione strategica ti permette di esplorare facilmente le mete più desiderate della Campania.
+        {% else %}
+            Our strategic location allows you to easily explore the most desired destinations in Campania.
+        {% endif %}
+      </p>
+
+      <ul style="color:#4a4a4a; font-size: 1.05rem; line-height: 1.8;">
+        <li>🚶‍♂️ <strong>{% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Scavi di Ercolano{% else %}Herculaneum Ruins{% endif %}:</strong> {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Raggiungibili comodamente a piedi dal B&B.{% else %}Easily reachable on foot from the B&B.{% endif %}</li>
+        <li>🏛 <strong>{% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Scavi di Pompei{% else %}Pompeii Ruins{% endif %}:</strong> {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Siamo al centro esatto tra Napoli e Pompei.{% else %}We are exactly halfway between Naples and Pompeii.{% endif %}</li>
+        <li>🍋 <strong>{% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Penisola Sorrentina{% else %}Sorrento Peninsula{% endif %}:</strong> {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Prendi il treno da Portici verso Sorrento senza traffico!{% else %}Take the train from Portici towards Sorrento without traffic!{% endif %}</li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+<section class="container my-5 py-4">
+  <div class="text-center mb-5">
+    <h2 class="fw-bold mb-3" style="color:#7a6652;">{% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Scopri Portici{% else %}Discover Portici{% endif %}</h2>
+    <p class="text-center" style="max-width:850px; margin:auto; color:#4a4a4a; font-size: 1.1rem; line-height: 1.6;">
+        {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Portici è una gemma affacciata sul mare, elegante e autentica.{% else %}Portici is a gem overlooking the sea, elegant and authentic.{% endif %}
+    </p>
+  </div>
+
+  <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+
+    <div class="col">
+      <div class="card card-zoom h-100 shadow-sm border-0 rounded-4 overflow-hidden">
+        <img src="/media/napoli/portici_reggia.jpg" class="card-img-top card-img-custom" alt="Reggia">
+        <div class="card-body p-4">
+          <h5 class="card-title fw-bold">🏛 {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Reggia di Portici{% else %}Palace of Portici{% endif %}</h5>
+          <p class="card-text text-muted">{% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Splendida residenza borbonica con giardini storici e Orto Botanico.{% else %}Splendid Bourbon residence with historic gardens and Botanical Garden.{% endif %}</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col">
+      <div class="card card-zoom h-100 shadow-sm border-0 rounded-4 overflow-hidden">
+        <img src="/media/napoli/portici_bosco.jpg" class="card-img-top card-img-custom" alt="Bosco">
+        <div class="card-body p-4">
+          <h5 class="card-title fw-bold">🌳 {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Bosco della Reggia{% else %}Woods of the Palace{% endif %}</h5>
+          <p class="card-text text-muted">{% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Un’oasi verde ideale per passeggiate e jogging lontano dal caos.{% else %}A green oasis ideal for walks and jogging away from the chaos.{% endif %}</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col">
+      <div class="card card-zoom h-100 shadow-sm border-0 rounded-4 overflow-hidden">
+        <img src="/media/napoli/portici_pietrarsa.jpg" class="card-img-top card-img-custom" alt="Pietrarsa">
+        <div class="card-body p-4">
+          <h5 class="card-title fw-bold">🚂 {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Museo di Pietrarsa{% else %}Pietrarsa Railway Museum{% endif %}</h5>
+          <p class="card-text text-muted">{% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Museo Nazionale Ferroviario sulla storica prima tratta Napoli–Portici.{% else %}National Railway Museum on the historic first Naples–Portici line.{% endif %}</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col">
+      <div class="card card-zoom h-100 shadow-sm border-0 rounded-4 overflow-hidden">
+        <img src="/media/napoli/portici_granatello.jpg" class="card-img-top card-img-custom" alt="Granatello">
+        <div class="card-body p-4">
+          <h5 class="card-title fw-bold">🌊 {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Porto del Granatello{% else %}Granatello Port{% endif %}</h5>
+          <p class="card-text text-muted">{% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Passeggiata sul mare con bar e ristoranti in un’atmosfera autentica.{% else %}Seaside walk with bars and restaurants in an authentic atmosphere.{% endif %}</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col">
+      <div class="card card-zoom h-100 shadow-sm border-0 rounded-4 overflow-hidden">
+        <img src="/media/napoli/portici_lungomare.jpg" class="card-img-top card-img-custom" alt="Lungomare">
+        <div class="card-body p-4">
+          <h5 class="card-title fw-bold">🌊 {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Lungomare e Spiagge{% else %}Seafront and Beaches{% endif %}</h5>
+          <p class="card-text text-muted">{% if request.LANGUAGE_CODE|slice:":2" == 'it' %}2 km di lungomare con tre spiagge e vista sul Vesuvio.{% else %}2 km of seafront with three beaches and views of Mount Vesuvius.{% endif %}</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col">
+      <div class="card card-zoom h-100 shadow-sm border-0 rounded-4 overflow-hidden">
+        <img src="/media/napoli/portici_trattoria.jpg" class="card-img-top card-img-custom" alt="Cucina">
+        <div class="card-body p-4">
+          <h5 class="card-title fw-bold">🍝 {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Cucina locale{% else %}Local Cuisine{% endif %}</h5>
+          <p class="card-text text-muted">{% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Assapora il meglio della tradizione tra piatti di mare e specialità partenopee.{% else %}Savor the best of tradition between seafood dishes and Neapolitan specialties.{% endif %}</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section class="py-5 text-center text-dark" style="background:linear-gradient(180deg, #f0e6d2, #e9dcc9);">
+  <div class="container py-4">
+    <h2 class="fw-bold mb-4" style="color:#6b573d;">{% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Esperienze & Tour{% else %}Experiences & Tours{% endif %}</h2>
+
+    <p class="mb-5 fs-5" style="color:#4a4a4a; max-width:750px; margin:auto; line-height: 1.6;">
+      {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}
+        Siamo a disposizione per consigliarti e organizzare <strong>tour guidati, escursioni e esperienze locali</strong> su misura.
+      {% else %}
+        We are at your disposal to recommend and organize tailored <strong>guided tours, excursions, and local experiences</strong>.
+      {% endif %}
+    </p>
+
+    <a href="{% url 'contatti' %}"
+       class="btn shadow-lg d-inline-flex align-items-center justify-content-center gap-2"
+       style="background-color:#8b7355; color:white; font-weight:bold; font-size:1.3rem; padding:18px 50px; border-radius:60px;">
+       <i class="fa-solid fa-map-location-dot"></i>
+       {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Chiedi informazioni{% else %}Ask for information{% endif %}
+    </a>
+  </div>
+</section>
+
+<section class="container my-5 py-5">
+  <div class="p-5 rounded-5 shadow-lg text-center" style="background-color:#fff9f0; border:1px solid #eee;">
+
+    <h2 class="fw-bold mb-4" style="color:#7a6652;">
+      {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Come raggiungere Napoli{% else %}How to reach Naples{% endif %}
+    </h2>
+
+    <p class="mb-5" style="max-width:850px; margin:auto; color:#4a4a4a; font-size:1.1rem; line-height: 1.6;">
+      {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}
+        Il nostro B&B si trova in una posizione strategica, a pochi passi dalla Circumvesuviana e dalla metropolitana.
+      {% else %}
+        Our B&B is strategically located, just a few steps from the Circumvesuviana and the subway.
+      {% endif %}
+    </p>
+
+    <div class="row row-cols-1 row-cols-md-3 g-4 mt-3 text-start">
+
+      <div class="col">
+        <div class="card h-100 p-4 rounded-4 border-0 shadow-sm" style="background-color: #fbfbfb;">
+            <div class="d-flex align-items-center mb-3">
+              <i class="fa-solid fa-train fa-2x text-warning me-3"></i>
+              <h5 class="fw-bold mb-0">🚆 Circumvesuviana</h5>
+            </div>
+            <p>{% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Collega Portici al centro di Napoli, Pompei e Sorrento.{% else %}Connects Portici to the center of Naples, Pompeii, and Sorrento.{% endif %}</p>
+            <ul class="mb-0" style="color:#4a4a4a; font-size: 1.05rem;">
+              <li>📍 {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Stazione a 100mt{% else %}100m from the station{% endif %}</li>
+              <li>⏱ {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Tempo: ~15 minuti{% else %}Time: ~15 minutes{% endif %}</li>
+            </ul>
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="card h-100 p-4 rounded-4 border-0 shadow-sm" style="background-color: #fbfbfb;">
+            <div class="d-flex align-items-center mb-3">
+              <i class="fa-solid fa-subway fa-2x text-warning me-3"></i>
+              <h5 class="fw-bold mb-0">🚇 Metropolitana</h5>
+            </div>
+            <p>{% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Ideale per spostarsi velocemente verso il centro città.{% else %}Ideal for moving quickly to the city center.{% endif %}</p>
+            <ul class="mb-0" style="color:#4a4a4a; font-size: 1.05rem;">
+              <li>📍 {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Stazione storica al Porto del Granatello{% else %}Historic station at Port of Granatello{% endif %}</li>
+              <li>⏱ {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Collegamento rapido{% else %}Fast connection{% endif %}</li>
+            </ul>
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="card h-100 p-4 rounded-4 border-0 shadow-sm" style="background-color: #fbfbfb;">
+            <div class="d-flex align-items-center mb-3">
+              <i class="fa-solid fa-car fa-2x text-warning me-3"></i>
+              <h5 class="fw-bold mb-0">🚗 {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Auto{% else %}Car{% endif %}</h5>
+            </div>
+            <p>{% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Se preferisci muoverti in autonomia.{% else %}If you prefer to move independently.{% endif %}</p>
+            <ul class="mb-0" style="color:#4a4a4a; font-size: 1.05rem;">
+              <li>🚗 {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Parcheggio in struttura{% else %}On-site parking{% endif %}</li>
+              <li>⏱ {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Raggiungi Napoli in 9 minuti{% else %}9 minutes from Naples{% endif %}</li>
+            </ul>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+{% endblock %}
