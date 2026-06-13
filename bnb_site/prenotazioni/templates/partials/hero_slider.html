@@ -42,8 +42,22 @@
               d-flex flex-column justify-content-center align-items-center" 
        style="z-index: 2;">
     <h1 class="display-3 fw-bold text-shadow">Family Room Portici</h1>
-    <h2 class="fs-4 mb-4 text-light">B&B e Casa Vacanze</h2>
-    <a href="{% url 'prenotazioni' %}" class="btn btn-light btn-lg px-5 shadow">Prenota Ora</a>
+    
+    <h2 class="fs-4 mb-4 text-light">
+      {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}
+        B&B e Casa Vacanze
+      {% else %}
+        B&B and Holiday House
+      {% endif %}
+    </h2>
+    
+    <a href="{% url 'prenotazioni' %}" class="btn btn-light btn-lg px-5 shadow">
+      {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}
+        Prenota Ora
+      {% else %}
+        Book Now
+      {% endif %}
+    </a>
   </div>
 
 </section>

@@ -32,15 +32,7 @@ footer {
   letter-spacing: 0.3px;
 }
 
-.navbar .container {
-  padding-left: 0 !important;
-}
 
-
-.navbar-brand {
-  position: relative;
-  left: -140px; /* aumenta o diminuisci a gusto */
-}
 
 section .servizio-icon {
   width: 70px !important;
