@@ -11,3 +11,4 @@ charset-normalizer==3.4.4
 idna==3.11
 urllib3==2.5.0
 tzdata==2025.2
+gunicorn
