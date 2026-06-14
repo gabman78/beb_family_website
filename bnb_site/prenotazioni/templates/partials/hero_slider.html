@@ -44,7 +44,7 @@
     
   </div>
 
-  <!-- Overlay Desktop (invariato) -->
+  <!-- Overlay Desktop -->
   <div class="position-absolute top-0 start-0 w-100 h-100 bg-dark bg-opacity-50 d-flex flex-column justify-content-center align-items-center" style="z-index: 2;">
     <h1 class="display-3 fw-bold mb-3" 
         style="color: #ffffff; text-shadow: 2px 2px 0 #7a6652, -2px -2px 0 #7a6652, 2px -2px 0 #7a6652, -2px 2px 0 #7a6652, 0 0 20px rgba(0,0,0,0.5);">
@@ -68,10 +68,47 @@
   </div>
 </section>
 
-<!-- HERO MOBILE -->
+<!-- HERO MOBILE - CON CAROUSEL -->
 <section class="d-block d-md-none position-relative text-center text-white overflow-hidden" style="height: 50vh;">
-  <img src="{{ mobile_image }}" class="position-absolute top-0 start-0 w-100 h-100 object-fit-cover" alt="Family Room Portici">
-  
+
+  <div id="heroCarouselMobile" class="carousel slide carousel-fade position-absolute top-0 start-0 w-100 h-100" data-bs-ride="carousel" data-bs-interval="4000">
+    <div class="carousel-inner h-100">
+      
+      {% for media in hero_media %}
+      <!-- Su mobile mostriamo solo le immagini, saltiamo i video -->
+      {% if media.type == 'image' %}
+      <div class="carousel-item h-100 {% if forloop.first %}active{% endif %}">
+        <img src="{{ media.url }}" class="w-100 h-100 object-fit-cover" alt="{{ media.alt }}">
+      </div>
+      {% endif %}
+      {% endfor %}
+      
+    </div>
+    
+    <!-- Pulsanti navigazione mobile (opzionali) -->
+    <button class="carousel-control-prev" type="button" data-bs-target="#heroCarouselMobile" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#heroCarouselMobile" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+    
+    <!-- Indicatori mobile -->
+    <div class="carousel-indicators">
+      {% for media in hero_media %}
+      {% if media.type == 'image' %}
+      <button type="button" data-bs-target="#heroCarouselMobile" data-bs-slide-to="{{ forloop.counter0 }}" 
+              {% if forloop.first %}class="active" aria-current="true"{% endif %} 
+              aria-label="Slide {{ forloop.counter }}"></button>
+      {% endif %}
+      {% endfor %}
+    </div>
+    
+  </div>
+
+  <!-- Overlay Mobile -->
   <div class="position-absolute top-0 start-0 w-100 h-100 bg-dark bg-opacity-50 d-flex flex-column justify-content-center align-items-center" style="z-index: 2; padding: 20px;">
     <h1 class="display-5 fw-bold mb-3" 
         style="color: #ffffff; text-shadow: 2px 2px 0 #7a6652, -2px -2px 0 #7a6652, 2px -2px 0 #7a6652, -2px 2px 0 #7a6652, 0 0 20px rgba(0,0,0,0.5); font-size: 1.8rem;">
@@ -80,9 +117,9 @@
     <p class="fs-6 mb-4" 
        style="color: #ffffff; text-shadow: 1px 1px 0 #7a6652, -1px -1px 0 #7a6652, 1px -1px 0 #7a6652, -1px 1px 0 #7a6652;">
       {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}
-        Il tuo B&B a due passi da Napoli
+        B&B e Casa Vacanze
       {% else %}
-        Your B&B close to Naples
+        B&B and Holiday House
       {% endif %}
     </p>
     <a href="{% url 'prenotazioni' %}" 
