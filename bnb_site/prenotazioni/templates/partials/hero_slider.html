@@ -7,7 +7,8 @@
     <div class="carousel-inner h-100">
       
       {% for media in hero_media %}
-      <div class="carousel-item h-100 {% if forloop.first %}active{% endif %}" data-interval="{% if media.type == 'video' %}8000{% else %}5000{% endif %}">
+      <div class="carousel-item h-100 {% if forloop.first %}active{% endif %}" 
+           {% if media.type == 'video' %}data-interval="8000"{% else %}data-interval="5000"{% endif %}>
         
         {% if media.type == 'video' %}
         <video class="w-100 h-100 object-fit-cover" autoplay muted loop playsinline>
@@ -43,7 +44,7 @@
     
   </div>
 
-  <!-- Overlay Desktop -->
+  <!-- Overlay Desktop (invariato) -->
   <div class="position-absolute top-0 start-0 w-100 h-100 bg-dark bg-opacity-50 d-flex flex-column justify-content-center align-items-center" style="z-index: 2;">
     <h1 class="display-3 fw-bold mb-3" 
         style="color: #ffffff; text-shadow: 2px 2px 0 #7a6652, -2px -2px 0 #7a6652, 2px -2px 0 #7a6652, -2px 2px 0 #7a6652, 0 0 20px rgba(0,0,0,0.5);">

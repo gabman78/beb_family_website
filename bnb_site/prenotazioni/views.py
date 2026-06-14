@@ -38,7 +38,9 @@ from django.conf import settings
 def home(request):
     # Leggi tutti i file dalla cartella hero
     hero_folder = os.path.join(settings.MEDIA_ROOT, 'hero')
-    hero_media = []
+    
+    images = []
+    videos = []
     
     image_extensions = ('.jpg', '.jpeg', '.png', '.webp', '.gif')
     video_extensions = ('.mp4', '.webm', '.mov', '.avi')
@@ -48,17 +50,41 @@ def home(request):
             file_lower = filename.lower()
             
             if file_lower.endswith(image_extensions):
-                hero_media.append({
+                images.append({
                     'type': 'image',
                     'url': f"{settings.MEDIA_URL}hero/{filename}",
                     'alt': filename.split('.')[0].replace('_', ' ')
                 })
             elif file_lower.endswith(video_extensions):
-                hero_media.append({
+                videos.append({
                     'type': 'video',
                     'url': f"{settings.MEDIA_URL}hero/{filename}",
                     'alt': filename.split('.')[0].replace('_', ' ')
                 })
+    
+    # Crea la sequenza: 2 immagini, 1 video, 2 immagini, 1 video, ecc.
+    hero_media = []
+    images_per_group = 2
+    
+    # Calcola quante sequenze complete possiamo fare
+    max_sequences = max(len(images) // images_per_group, 1)
+    
+    for seq in range(max_sequences):
+        # Aggiungi gruppo di immagini
+        start_idx = seq * images_per_group
+        end_idx = start_idx + images_per_group
+        if start_idx < len(images):
+            group_images = images[start_idx:end_idx]
+            hero_media.extend(group_images)
+        
+        # Aggiungi video (ciclico: quando finiscono i video, ricomincia dal primo)
+        if videos:
+            video_idx = seq % len(videos)
+            hero_media.append(videos[video_idx])
+    
+    # Aggiungi eventuali immagini rimanenti
+    remaining_images = images[len(hero_media)//2 * images_per_group:]
+    hero_media.extend(remaining_images)
     
     # Se non ci sono file, usa quelli di default
     if not hero_media:
@@ -67,7 +93,7 @@ def home(request):
             {'type': 'image', 'url': '/media/generali/prima.jpg', 'alt': 'Family Room Portici 2'},
         ]
     
-    # Immagine per mobile (usa la prima immagine disponibile)
+    # Immagine per mobile
     mobile_image = '/media/foto_portici/IMG_1721.jpg'
     for media in hero_media:
         if media['type'] == 'image':
