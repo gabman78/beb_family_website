@@ -43,6 +43,32 @@ document.addEventListener("DOMContentLoaded", function() {
         const checkout = checkoutInput.value;
         const guests = parseInt(guestsInput.value) || 0;
         
+        // --- INIZIO: INSERISCI IL BLOCCO DI VALIDAZIONE QUI ---
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        const checkinDate = new Date(checkin);
+        const checkoutDate = new Date(checkout);
+        
+        if (!checkin || !checkout) {
+            msgDiv.innerHTML = `<div class="alert alert-warning">${isEn ? 'Please select both dates' : 'Seleziona entrambe le date'}</div>`;
+            return;
+        }
+        
+        if (checkinDate < today) {
+            msgDiv.innerHTML = `<div class="alert alert-warning">${isEn ? 'Check-in date cannot be in the past' : 'La data di check-in non può essere nel passato'}</div>`;
+            return;
+        }
+        
+        if (checkoutDate <= checkinDate) {
+            msgDiv.innerHTML = `<div class="alert alert-warning">${isEn ? 'Check-out must be after check-in' : 'La data di check-out deve essere successiva al check-in'}</div>`;
+            return;
+        }
+        
+        if (guests < 1 || guests > maxGuests) {
+            msgDiv.innerHTML = `<div class="alert alert-warning">${isEn ? `Max ${maxGuests} guests.` : `Massimo ${maxGuests} ospiti.`}</div>`;
+            return;
+        }
+            
         // Validazione
         if (!checkin || !checkout) {
             showMessage('warning', 

@@ -78,20 +78,21 @@
               <div class="col-md-3">
                 <!-- CORREGGI: for deve matchare l'id -->
                 <label for="checkin" class="form-label fw-semibold text-dark">Check-in</label>
-                <input type="date" id="checkin" name="checkin" value="{{ checkin }}" class="form-control form-control-lg">
+                <input type="date" id="checkin" name="checkin" value="{{ checkin }}" 
+                       class="form-control form-control-lg" required min="{{ today|date:'Y-m-d' }}">
               </div>
               <div class="col-md-3">
                 <!-- CORREGGI: for deve matchare l'id -->
                 <label for="checkout" class="form-label fw-semibold text-dark">Check-out</label>
-                <input type="date" id="checkout" name="checkout" value="{{ checkout }}" class="form-control form-control-lg">
+                <input type="date" id="checkout" name="checkout" value="{{ checkout }}" 
+                       class="form-control form-control-lg" required>
               </div>
               <div class="col-md-3">
                 <!-- CORREGGI: for deve matchare l'id -->
                 <label for="persone" class="form-label fw-semibold text-dark">
                   {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Ospiti{% else %}Guests{% endif %}
                 </label>
-                <input type="number" id="persone" name="persone" min="1" value="{{ persone|default:'2' }}" class="form-control form-control-lg">
-              </div>
+                <input type="number" id="id_guests" name="persone" min="1" value="{{ persone }}" class="form-control form-control-lg">              </div>
               <div class="col-md-2">
                 <button type="submit" 
                         class="btn w-100 fw-bold text-white"
