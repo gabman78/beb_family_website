@@ -46,3 +46,42 @@ section .servizio-icon {
 section .servizio-icon:hover {
   transform: scale(1.1);
 }
+
+
+/* =========================================
+   OTTIMIZZAZIONI MOBILE (Sotto i 768px)
+   ========================================= */
+@media (max-width: 767.98px) {
+  
+  /* 1. Riduci i padding (spazi interni) delle sezioni */
+  section {
+    padding-top: 3rem !important;
+    padding-bottom: 3rem !important;
+  }
+
+  /* 2. Rimpicciolisci i titoli principali */
+  h2 {
+    font-size: 1.8rem !important;
+  }
+  h3 {
+    font-size: 1.5rem !important;
+  }
+  p {
+    font-size: 0.95rem !important;
+  }
+
+  /* 3. Immagini delle camere o della struttura */
+  .card-img-top, 
+  .img-fluid {
+    max-height: 250px;
+    object-fit: cover;
+  }
+
+  /* 4. Centra il testo nel footer su mobile */
+  footer {
+    text-align: center;
+  }
+  footer .text-md-start {
+    text-align: center !important;
+  }
+}

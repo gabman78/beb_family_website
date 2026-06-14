@@ -40,6 +40,22 @@
     position: relative;
     z-index: 2;
   }
+
+  @media (max-width: 767px) {
+    .hero-blur-section { min-height: 35vh !important; }
+    h1 { font-size: 2rem !important; }
+    .card-img-custom { height: 180px !important; }
+    .carousel-inner { height: 250px !important; }
+    #carouselDintorni { height: 250px !important; }
+    .p-4 { padding: 1.2rem !important; }
+    .container { padding-left: 15px !important; padding-right: 15px !important; }
+  }
+
+  /* Piccola correzione per il testo in sovrimpressione */
+  .hero-blur-section p {
+    font-size: 1rem !important;
+    padding: 8px !important;
+  }
 </style>
 
 <section class="hero-blur-section d-flex align-items-center justify-content-center text-center py-5">

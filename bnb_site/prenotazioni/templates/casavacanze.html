@@ -2,7 +2,14 @@
 {% load static %}
 {% block content %}
 
-
+<style>
+  @media (max-width: 768px) {
+    .hero-title { font-size: 2rem !important; }
+    .form-box { padding: 1.5rem !important; }
+    .cta-btn-mobile { width: 100% !important; max-width: 300px !important; }
+    .map-btn-mobile { width: 100% !important; max-width: 350px !important; height: auto !important; padding: 15px !important; }
+  }
+</style>
 <a href="{% url 'home' %}" 
    class="btn btn-light position-fixed top-50 start-0 m-4 d-flex align-items-center justify-content-center shadow"
    style="width:50px; height:50px; border-radius:50%; 

@@ -2,6 +2,17 @@
 {% load static %}
 
 {% block content %}
+<style>
+  /* Ottimizzazione Mobile Spinta */
+  @media (max-width: 576px) {
+    h1 { font-size: 2rem !important; }
+    .container { padding-left: 20px !important; padding-right: 20px !important; }
+    .form-control-lg { font-size: 1rem !important; padding: 10px !important; }
+    .btn-lg { padding: 12px 25px !important; font-size: 1.1rem !important; }
+    iframe { height: 300px !important; }
+    .section-padding { padding-top: 3rem !important; padding-bottom: 3rem !important; }
+  }
+</style>
 <a href="{% url 'beb' %}" 
    class="btn btn-light position-fixed top-50 start-0 m-4 d-flex align-items-center justify-content-center shadow"
    style="width:50px; height:50px; border-radius:50%; 

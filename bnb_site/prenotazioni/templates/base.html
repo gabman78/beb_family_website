@@ -24,7 +24,7 @@
       {% endif %}
     </a>
 
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu">
+    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileMenu" aria-controls="mobileMenu">
       <span class="navbar-toggler-icon"></span>
     </button>
 
@@ -70,6 +70,53 @@
     </div>
   </div>
 </nav>
+<div class="offcanvas offcanvas-start d-lg-none bg-dark text-white" tabindex="-1" id="mobileMenu" aria-labelledby="mobileMenuLabel">
+  <div class="offcanvas-header border-bottom border-secondary">
+    <h5 class="offcanvas-title fw-bold" id="mobileMenuLabel">Family Portici</h5>
+    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  
+  <div class="offcanvas-body">
+    <ul class="navbar-nav flex-column gap-3 mb-4">
+      <li class="nav-item">
+        <a class="nav-link text-white fw-semibold text-uppercase" href="/">Home</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link text-white fw-semibold text-uppercase" href="/beb/">B&B</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link text-white fw-semibold text-uppercase" href="/casavacanze/">
+          {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Casa Vacanze{% else %}Holiday House{% endif %}
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link text-white fw-semibold text-uppercase" href="/cosafare/">
+          {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Scopri Napoli & Portici{% else %}Discover Naples & Portici{% endif %}
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link text-white fw-semibold text-uppercase" href="/contatti/">
+          {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Contatti{% else %}Contacts{% endif %}
+        </a>
+      </li>
+    </ul>
+
+    <hr class="border-secondary mb-4">
+    <form action="{% url 'set_language' %}" method="post" class="d-flex justify-content-center">
+      {% csrf_token %}
+      <input name="next" type="hidden" value="{{ request.get_full_path }}">
+      {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}
+        <button type="submit" name="language" value="en" class="btn btn-outline-light btn-lg w-100 fw-bold">
+           Passa a EN 🇬🇧
+        </button>
+      {% else %}
+        <button type="submit" name="language" value="it" class="btn btn-outline-light btn-lg w-100 fw-bold">
+           Switch to IT 🇮🇹
+        </button>
+      {% endif %}
+    </form>
+  </div>
+</div>
 
   <main style="margin-top: 60px; min-height: 70vh;"> 
     {% block content %}{% endblock %}
