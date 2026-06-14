@@ -26,9 +26,17 @@
       {% endif %}
     </a>
 
-    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileMenu" aria-controls="mobileMenu">
+    <button class="navbar-toggler me-auto" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileMenu" aria-controls="mobileMenu">
       <span class="navbar-toggler-icon"></span>
     </button>
+
+    <a class="navbar-brand fw-bold" href="/" style="font-size: 1rem;">
+      {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}
+        Family Room Portici – B&B e Casa Vacanze
+      {% else %}
+        Family Room Portici – B&B and Holiday House
+      {% endif %}
+    </a>
 
     <div class="collapse navbar-collapse" id="menu">
       <ul class="navbar-nav ms-auto align-items-center">
@@ -210,7 +218,7 @@
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
 
 <script>
   // 🌍 FUNZIONE PER ABILITARE LE MAPPE

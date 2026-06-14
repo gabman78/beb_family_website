@@ -129,15 +129,23 @@
 
 <!-- Sezione Hero -->
 <section class="position-relative text-white text-center" style="background: url('/media/posti/vesuvio.jpg') center/cover; height: 60vh; min-height: 500px;">
+  <!-- Overlay scuro per leggibilità -->
   <div class="bg-dark bg-opacity-50 w-100 h-100 position-absolute top-0 start-0"></div>
-  <div class="position-relative h-100 d-flex flex-column justify-content-center align-items-center px-3">
-    <h1 class="fw-bold hero-room-title" style="font-family:'Poppins',sans-serif;">
-        {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Camera Vesuvio{% else %}Vesuvio Room{% endif %}
+  
+  <!-- Contenuto centrato con stile Family Room Portici -->
+  <div class="position-absolute top-0 start-0 w-100 h-100 d-flex flex-column justify-content-center align-items-center" style="z-index: 2;">
+    <h1 class="display-3 fw-bold mb-3" 
+        style="color: #ffffff; text-shadow: 2px 2px 0 #4a90c2, -2px -2px 0 #4a90c2, 2px -2px 0 #4a90c2, -2px 2px 0 #4a90c2, 0 0 20px rgba(0,0,0,0.5);">
+      {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Camera Vesuvio{% else %}Vesuvio Room{% endif %}
     </h1>
-    <p class="lead mb-4">
-        {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Familiare Deluxe Matrimoniale con due letti singoli{% else %}Deluxe Family Room - Double bed with two single beds{% endif %}
-    </p>
-
+    <h2 class="fs-4 mb-4" 
+        style="color: #ffffff; text-shadow: 1px 1px 0 #4a90c2, -1px -1px 0 #4a90c2, 1px -1px 0 #4a90c2, -1px 1px 0 #4a90c2;">
+      {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}
+        Familiare Deluxe Matrimoniale con due letti singoli
+      {% else %}
+        Deluxe Family Room - Double bed with two single beds
+      {% endif %}
+    </h2>
     <form id="check-availability-form" class="availability-form row g-3 justify-content-center align-items-end bg-white bg-opacity-75 form-box rounded shadow-lg"
           style="max-width:1400px; width:95%;"
           data-ical="{{ ical_link }}"

@@ -108,6 +108,93 @@ section {
 .servizio-icon:hover {
   transform: scale(1.15);
 }
+
+/* Fix hero slider - evita che il contenuto sottostante sparisca */
+section.hero {
+  position: relative;
+  z-index: 1;
+}
+
+/* Assicura che le sezioni dopo l'hero siano visibili */
+main > section:not(.hero) {
+  position: relative;
+  z-index: 2;
+  background-color: #fdfbf8;
+}
+
+
+/* WhatsApp e Scroll-to-top: nascosti su desktop */
+.whatsapp-float,
+.scroll-top {
+  display: none;
+}
+
+/* Cookie banner */
+.cookie-banner {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 95%;
+  max-width: 900px;
+  z-index: 9999;
+}
+
+.custom-hover:hover {
+  opacity: 1 !important;
+  text-decoration: underline !important;
+}
+
+/* Servizi title desktop */
+.servizio-title {
+  color: #4a4a4a;
+  font-size: 18px;
+  font-weight: bold;
+  margin-top: 10px;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Mappa container desktop */
+.map-container {
+  width: 500px;
+  height: 400px;
+}
+
+/* Map box desktop */
+.map-box {
+  width: 100%;
+  max-width: 500px;
+  height: 400px;
+}
+
+/* Map btn desktop */
+.map-btn {
+  width: 140px;
+  height: 140px;
+}
+
+/* Maps link btn desktop */
+.maps-link-btn {
+  width: 400px;
+  height: 100px;
+  background-color: #8b7355;
+  color: white;
+  border-radius: 25px;
+  font-weight: 600;
+  font-size: 1.1rem;
+  gap: 15px;
+  white-space: nowrap;
+}
+
+/* Garden desktop */
+.garden-slide {
+  height: 550px;
+}
+
+.garden-img {
+  height: 100%;
+  width: auto;
+}
 /* =========================================
    VERSIONE MOBILE (solo sotto 768px)
    ========================================= */

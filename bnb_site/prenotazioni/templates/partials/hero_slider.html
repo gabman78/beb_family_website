@@ -1,9 +1,8 @@
 {% load static %}
 
-<!-- HERO DESKTOP E TABLET (Nascosta su mobile) -->
+<!-- HERO DESKTOP E TABLET -->
 <section class="hero position-relative text-center text-white overflow-hidden d-none d-md-block" style="height: 100vh;">
 
-  <!-- CAROUSEL DI SFONDO -->
   <div id="heroCarousel" class="carousel slide carousel-fade position-absolute top-0 start-0 w-100 h-100" data-bs-ride="carousel" data-bs-interval="4000">
     <div class="carousel-inner h-100">
       <div class="carousel-item active h-100">
@@ -25,6 +24,7 @@
     </div>
   </div>
 
+  <!-- Overlay Desktop -->
   <div class="position-absolute top-0 start-0 w-100 h-100 bg-dark bg-opacity-50 d-flex flex-column justify-content-center align-items-center" style="z-index: 2;">
     <h1 class="display-3 fw-bold mb-3" 
         style="color: #ffffff; text-shadow: 2px 2px 0 #7a6652, -2px -2px 0 #7a6652, 2px -2px 0 #7a6652, -2px 2px 0 #7a6652, 0 0 20px rgba(0,0,0,0.5);">
@@ -46,39 +46,30 @@
       {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Prenota Ora{% else %}Book Now{% endif %}
     </a>
   </div>
+</section>
 
-<!-- MENU LATERALE OFFCANVAS (Solo Mobile) -->
-<div class="offcanvas offcanvas-start d-md-none bg-light" tabindex="-1" id="mobileMenu" aria-labelledby="mobileMenuLabel">
-  <div class="offcanvas-header border-bottom">
-    <h5 class="offcanvas-title" id="mobileMenuLabel" style="font-family: 'Playfair Display', serif;">Family Portici</h5>
-    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+<!-- HERO MOBILE -->
+<section class="d-block d-md-none position-relative text-center text-white overflow-hidden" style="height: 50vh;">
+  <img src="/media/foto_portici/IMG_1721.jpg" class="position-absolute top-0 start-0 w-100 h-100 object-fit-cover" alt="Family Room Portici">
+  
+  <!-- Overlay Mobile -->
+  <div class="position-absolute top-0 start-0 w-100 h-100 bg-dark bg-opacity-50 d-flex flex-column justify-content-center align-items-center" style="z-index: 2; padding: 20px;">
+    <h1 class="display-5 fw-bold mb-3" 
+        style="color: #ffffff; text-shadow: 2px 2px 0 #7a6652, -2px -2px 0 #7a6652, 2px -2px 0 #7a6652, -2px 2px 0 #7a6652, 0 0 20px rgba(0,0,0,0.5); font-size: 1.8rem;">
+      Family Room Portici
+    </h1>
+    <p class="fs-6 mb-4" 
+       style="color: #ffffff; text-shadow: 1px 1px 0 #7a6652, -1px -1px 0 #7a6652, 1px -1px 0 #7a6652, -1px 1px 0 #7a6652;">
+      {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}
+        Il tuo B&B a due passi da Napoli
+      {% else %}
+        Your B&B close to Naples
+      {% endif %}
+    </p>
+    <a href="{% url 'prenotazioni' %}" 
+       class="btn btn-light btn-lg w-100 py-3 fw-bold shadow-lg"
+       style="border-radius: 50px; background: linear-gradient(135deg, #ffffff, #f0e6d2); color: #7a6652; border: 2px solid #b59f84; letter-spacing: 1px; max-width: 300px;">
+      {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Prenota Ora{% else %}Book Now{% endif %}
+    </a>
   </div>
-  <div class="offcanvas-body">
-    <ul class="navbar-nav flex-column gap-3">
-      <!-- Metti qui i tuoi link veri -->
-      <li class="nav-item">
-        <a class="nav-link text-dark fw-bold" href="/">Home</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link text-dark fw-bold" href="#camere">Camere</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link text-dark fw-bold" href="#dove-siamo">Posizione</a>
-      </li>
-    </ul>
-
-    <hr class="my-4">
-    
-    <!-- Link per cambiare lingua nel menu mobile -->
-    <div class="d-flex justify-content-around mb-4">
-        <a href="/it/" class="text-decoration-none text-dark">IT 🇮🇹</a>
-        <a href="/en/" class="text-decoration-none text-dark">EN 🇬🇧</a>
-    </div>
-
-    <div class="d-grid">
-      <a href="{% url 'prenotazioni' %}" class="btn btn-primary btn-lg">
-        {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Prenota Ora{% else %}Book Now{% endif %}
-      </a>
-    </div>
-  </div>
-</div>
+</section>

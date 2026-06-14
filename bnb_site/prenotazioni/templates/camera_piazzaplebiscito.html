@@ -126,15 +126,23 @@
 
 <!-- Sezione Hero -->
 <section class="position-relative text-white text-center" style="background: url('/media/posti/piazza.jpg') center/cover; height: 60vh; min-height: 500px;">
+  <!-- Overlay scuro per leggibilità -->
   <div class="bg-dark bg-opacity-50 w-100 h-100 position-absolute top-0 start-0"></div>
-
-  <div class="position-relative h-100 d-flex flex-column justify-content-center align-items-center px-3">
-    <h1 class="fw-bold hero-room-title" style="font-family:'Poppins',sans-serif;">
-        {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Camera Piazza Plebiscito{% else %}Piazza Plebiscito Room{% endif %}
+  
+  <!-- Contenuto centrato con stile Family Room Portici -->
+  <div class="position-absolute top-0 start-0 w-100 h-100 d-flex flex-column justify-content-center align-items-center" style="z-index: 2;">
+    <h1 class="display-3 fw-bold mb-3" 
+        style="color: #ffffff; text-shadow: 2px 2px 0 #b23a48, -2px -2px 0 #b23a48, 2px -2px 0 #b23a48, -2px 2px 0 #b23a48, 0 0 20px rgba(0,0,0,0.5);">
+      {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Camera Piazza Plebiscito{% else %}Piazza Plebiscito Room{% endif %}
     </h1>
-    <p class="lead mb-4">
-        {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Matrimoniale Deluxe con divano letto aggiuntivo.{% else %}Deluxe Double Room with additional sofa bed.{% endif %}
-    </p>
+    <h2 class="fs-4 mb-4" 
+        style="color: #ffffff; text-shadow: 1px 1px 0 #b23a48, -1px -1px 0 #b23a48, 1px -1px 0 #b23a48, -1px 1px 0 #b23a48;">
+      {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}
+        Matrimoniale Deluxe con divano letto aggiuntivo
+      {% else %}
+        Deluxe Double Room with additional sofa bed
+      {% endif %}
+    </h2>
 
     <form id="check-availability-form" class="availability-form row g-3 justify-content-center align-items-end bg-white bg-opacity-75 form-box rounded shadow-lg"
           style="max-width:1400px; width:95%;"
