@@ -2,13 +2,23 @@
 <html lang="it">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
   <title>Calendario Castel dell'Ovo</title>
 
   <!-- FullCalendar -->
   <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.css" rel="stylesheet" />
   <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
 
+  <!-- FontAwesome per icone -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
   <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
     :root {
       --colore-principale: #8b7355;
       --colore-occupato: #c46a6a;
@@ -20,49 +30,51 @@
     body {
       font-family: 'Poppins', sans-serif;
       background: var(--sfondo);
-      margin: 0;
-      padding: 20px;
+      padding: 12px;
       color: #3b2e23;
-    }
-
-    h2 {
-      text-align: center;
-      color: var(--colore-principale);
-      margin-bottom: 20px;
+      overflow-x: hidden;
     }
 
     #calendar {
       position: relative;
-      max-width: 1100px;
+      max-width: 1200px;
       margin: 0 auto;
       background: var(--bianco);
       border-radius: 16px;
       box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
-      padding: 50px 40px 30px;
-      min-height: 750px;
-      overflow: visible;
+      padding: 60px 12px 20px 12px;
+      overflow-x: auto;
     }
 
-    /* Titolo mese */
+    /* Stili FullCalendar responsive */
+    .fc {
+      min-width: 500px;
+    }
+
+    .fc .fc-toolbar {
+      flex-direction: column;
+      gap: 10px;
+    }
+
     .fc-toolbar-title {
       text-transform: capitalize;
       text-align: center !important;
-      width: 100%;
       font-family: 'Poppins', sans-serif;
-      font-size: 2rem;
+      font-size: 1.4rem !important;
       font-weight: 800;
       color: var(--colore-principale);
       letter-spacing: 1px;
       text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     }
 
-    /* Bottoni standard */
     .fc-button {
       background: var(--colore-principale) !important;
       border: none !important;
       color: white !important;
       font-weight: 500;
       border-radius: 8px !important;
+      padding: 6px 12px !important;
+      font-size: 0.85rem !important;
     }
 
     /* Celle centrali */
@@ -71,14 +83,17 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      height: 100%;
-      padding: 8px 0;
-      transition: background-color 0.25s ease, transform 0.15s ease;
+      padding: 4px 0;
+      transition: background-color 0.25s ease;
+    }
+
+    .fc-daygrid-day {
+      border-radius: 10px;
+      border: 1px solid rgba(0, 0, 0, 0.05);
     }
 
     .fc-daygrid-day:hover {
       background-color: #e0f2ff !important;
-      transform: scale(1.02);
       cursor: pointer;
       border: 2px solid #3b2e23 !important;
       box-shadow: 0 0 6px rgba(47, 79, 111, 0.2);
@@ -86,10 +101,9 @@
 
     /* Numero del giorno */
     .fc-daygrid-day-number {
-      font-size: 2rem;
+      font-size: 1.1rem !important;
       font-weight: 900;
       color: #3b2e23;
-      margin-bottom: 3px;
       position: static !important;
       text-align: center;
       width: 100%;
@@ -99,19 +113,12 @@
     .fc-daygrid-day-number::after {
       display: block;
       margin-top: 2px;
-      font-size: 0.85rem;
+      font-size: 0.65rem;
       font-weight: 600;
       letter-spacing: 0.3px;
     }
 
-    /* Celle “Disponibile” / “Occupato” */
-    .fc-daygrid-day.fc-day-libero {
-      background-color: #f4fff4 !important;
-    }
-    .fc-daygrid-day.fc-day-occupato {
-      background-color: #fff1f1 !important;
-    }
-
+    /* Celle "Disponibile" / "Occupato" */
     .fc-daygrid-day.fc-day-libero .fc-daygrid-day-number::after {
       content: "Disponibile";
       color: var(--colore-libero);
@@ -121,53 +128,67 @@
       color: var(--colore-occupato);
     }
 
-    /* --- GIORNI GIA' TRASCORSI --- */
+    /* Giorni già trascorsi */
     .fc-daygrid-day.past-day {
-    opacity: 0.55;                          /* leggermente sbiadito ma visibile */
-    filter: saturate(0.8);                  /* mantiene un po’ di colore */
-    background-color: #f8f2e7 !important;   /* beige chiaro coerente con il tema */
-    pointer-events: none;                   /* non cliccabile */
-    border: 1px solid rgba(139,115,85,0.2); /* bordo sabbia tenue */
+      opacity: 0.55;
+      filter: saturate(0.8);
+      background-color: #f8f2e7 !important;
+      pointer-events: none;
+      border: 1px solid rgba(139, 115, 85, 0.2);
     }
 
     .fc-daygrid-day.past-day .fc-daygrid-day-number {
-    color: #8b7355 !important;              /* marrone sabbia del tema */
+      color: #8b7355 !important;
     }
 
     .fc-daygrid-day.past-day .fc-daygrid-day-number::after {
-    content: "–";                           
-    color: #c7ad8b !important;              /* sabbia chiaro */
-    font-weight: 600;
-    display: block;
-    margin-top: 2px;
+      content: "Passato";
+      color: #c7ad8b !important;
+      font-weight: 600;
     }
 
+    /* Frecce laterali */
+    .nav-arrow {
+      position: absolute;
+      top: 15px;
+      background: transparent;
+      border: none;
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--colore-principale);
+      cursor: pointer;
+      z-index: 9999;
+      transition: color 0.3s ease;
+      padding: 0 10px;
+    }
 
-    /* Bordi e struttura */
-    .fc-daygrid-day {
-      border-radius: 10px;
-      border: 1px solid rgba(0, 0, 0, 0.05);
+    .nav-arrow.left { left: 5px; }
+    .nav-arrow.right { right: 5px; }
+
+    .nav-arrow:hover {
+      color: #6b573d;
+      transform: scale(1.1);
     }
 
     /* Legenda */
     .legend {
       display: flex;
       justify-content: center;
-      gap: 30px;
+      gap: 20px;
       margin-top: 15px;
-      font-size: 0.9rem;
+      font-size: 0.75rem;
       flex-wrap: wrap;
     }
 
     .legend-item {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
     }
 
     .legend-item .box {
-      width: 16px;
-      height: 16px;
+      width: 14px;
+      height: 14px;
       border-radius: 4px;
     }
 
@@ -178,36 +199,19 @@
       text-align: center;
       color: #7a6a55;
       margin-bottom: 10px;
-      font-size: 0.9rem;
+      font-size: 0.8rem;
     }
 
-    /* Frecce laterali */
-    .nav-arrow {
-      position: absolute;
-      top: 60px;
-      background: transparent;
-      border: none;
-      font-size: 3rem;
-      font-weight: 700;
-      color: var(--colore-principale);
-      cursor: pointer;
-      z-index: 9999;
-      transition: color 0.3s ease, transform 0.2s ease;
-    }
-
-    .nav-arrow.left { left: -40px; }
-    .nav-arrow.right { right: -40px; }
-
-    .nav-arrow:hover {
-      color: #6b573d;
-      transform: scale(1.2);
-    }
-
-    /* Responsive */
-    @media (max-width: 768px) {
-      .nav-arrow { font-size: 2.2rem; top: 55px; }
-      .nav-arrow.left { left: -15px; }
-      .nav-arrow.right { right: -15px; }
+    /* Messaggio scroll mobile */
+    .scroll-hint {
+      display: none;
+      text-align: center;
+      font-size: 0.7rem;
+      color: #6c5b47;
+      margin-top: 10px;
+      padding: 5px;
+      background: rgba(255, 255, 255, 0.8);
+      border-radius: 20px;
     }
 
     /* Rimuove scroll interno */
@@ -223,6 +227,57 @@
     .fc-daygrid-body table {
       height: auto !important;
     }
+
+    /* ============================================
+       MOBILE SPECIFIC
+       ============================================ */
+    @media (max-width: 768px) {
+      body {
+        padding: 8px;
+      }
+      
+      #calendar {
+        padding: 50px 8px 15px 8px;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+      
+      .fc {
+        min-width: 600px;
+      }
+      
+      .fc-toolbar-title {
+        font-size: 1.1rem !important;
+      }
+      
+      .fc-daygrid-day-number {
+        font-size: 0.9rem !important;
+      }
+      
+      .fc-daygrid-day-number::after {
+        font-size: 0.55rem;
+      }
+      
+      .nav-arrow {
+        top: 10px;
+        font-size: 1.5rem;
+      }
+      
+      .scroll-hint {
+        display: block;
+      }
+      
+      .legend {
+        gap: 15px;
+        font-size: 0.7rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .fc {
+        min-width: 550px;
+      }
+    }
   </style>
 </head>
 
@@ -231,6 +286,10 @@
   <div id="calendar">
     <button class="nav-arrow left" id="prevMonth">‹</button>
     <button class="nav-arrow right" id="nextMonth">›</button>
+  </div>
+
+  <div class="scroll-hint">
+    <i class="fa-solid fa-arrows-left-right"></i> Scorri orizzontalmente per vedere tutti i mesi <i class="fa-solid fa-arrows-left-right"></i>
   </div>
 
   <div class="legend">
@@ -245,7 +304,7 @@
       let dateRanges = [];
 
       try {
-        const response = await fetch('/api/calendar/ovo/'); // usa la tua API Django
+        const response = await fetch('/api/calendar/ovo/');
         if (!response.ok) throw new Error("Errore nel caricamento calendario.");
         const data = await response.json();
         dateRanges = data.map(ev => ({ start: new Date(ev.start), end: new Date(ev.end) }));
@@ -258,28 +317,29 @@
       const toDateOnly = (d) => new Date(d.getFullYear(), d.getMonth(), d.getDate());
 
       const calendar = new FullCalendar.Calendar(calendarEl, {
-          initialView: 'dayGridMonth',
-          height: 'auto',
-          locale: 'it',
-          firstDay: 1,
-          headerToolbar: { left: '', center: 'title', right: '' },
+        initialView: 'dayGridMonth',
+        height: 'auto',
+        locale: 'it',
+        firstDay: 1,
+        headerToolbar: { left: '', center: 'title', right: '' },
 
-          dayCellDidMount: function (arg) {
-              const dayDate = toDateOnly(arg.date); // rimuove ore/minuti/secondi
-              const occupato = dateRanges.some(range => {
-                  const start = toDateOnly(range.start);
-                  const end = toDateOnly(range.end); // Booking: DTEND esclusivo
-                  return dayDate >= start && dayDate < end;
-              });
+        dayCellDidMount: function (arg) {
+          const dayDate = toDateOnly(arg.date);
+          const occupato = dateRanges.some(range => {
+            const start = toDateOnly(range.start);
+            const end = toDateOnly(range.end);
+            return dayDate >= start && dayDate < end;
+          });
 
-              if (occupato) arg.el.classList.add('fc-day-occupato');
-              else arg.el.classList.add('fc-day-libero');
+          if (occupato) arg.el.classList.add('fc-day-occupato');
+          else arg.el.classList.add('fc-day-libero');
 
-              // Giorni già trascorsi
-              const today = toDateOnly(new Date());
-              if (dayDate < today) arg.el.classList.add('past-day');
-          }
+          // Giorni già trascorsi
+          const today = toDateOnly(new Date());
+          if (dayDate < today) arg.el.classList.add('past-day');
+        }
       });
+      
       calendar.render();
       document.getElementById("prevMonth").addEventListener("click", () => calendar.prev());
       document.getElementById("nextMonth").addEventListener("click", () => calendar.next());
@@ -288,9 +348,11 @@
       const params = new URLSearchParams(window.location.search);
       const checkin = params.get("checkin");
       const checkout = params.get("checkout");
+      
       if (checkin && checkout) {
         const checkinDate = new Date(checkin);
         const checkoutDate = new Date(checkout);
+        
         const msg = document.createElement("div");
         msg.textContent = `Hai selezionato dal ${checkinDate.toLocaleDateString('it-IT')} al ${checkoutDate.toLocaleDateString('it-IT')}`;
         msg.style.textAlign = "center";
@@ -299,21 +361,33 @@
         msg.style.fontWeight = "600";
         document.getElementById("status").after(msg);
 
-        document.querySelectorAll(".fc-daygrid-day").forEach(cell => {
-          const cellDate = new Date(cell.getAttribute("data-date"));
-          if (cellDate >= checkinDate && cellDate < checkoutDate) {
-            cell.style.outline = "3px solid #8b7355";
-            cell.style.outlineOffset = "-3px";
-            cell.style.borderRadius = "10px";
-            cell.style.boxShadow = "0 0 8px rgba(139,115,85,0.3)";
-          }
-        });
+        // Attendiamo che il calendario sia renderizzato
+        setTimeout(() => {
+          const celle = document.querySelectorAll(".fc-daygrid-day");
+          celle.forEach(cell => {
+            const cellDateAttr = cell.getAttribute("data-date");
+            if (cellDateAttr) {
+              const cellDate = new Date(cellDateAttr);
+              if (cellDate >= checkinDate && cellDate < checkoutDate) {
+                cell.style.outline = "3px solid #8b7355";
+                cell.style.outlineOffset = "-3px";
+                cell.style.borderRadius = "10px";
+                cell.style.boxShadow = "0 0 8px rgba(139,115,85,0.3)";
+              }
+            }
+          });
+        }, 100);
       }
 
-      const resizeObserver = new ResizeObserver(() => {
+      // Invio altezza al parent iframe
+      const sendHeight = () => {
         window.parent.postMessage({ type: "resize-calendar", height: document.body.scrollHeight }, "*");
-      });
+      };
+      
+      const resizeObserver = new ResizeObserver(() => sendHeight());
       resizeObserver.observe(document.body);
+      
+      setTimeout(sendHeight, 100);
     });
   </script>
 </body>
