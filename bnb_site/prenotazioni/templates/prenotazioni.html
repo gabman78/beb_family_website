@@ -52,7 +52,7 @@
           data-link-vesuvio="{% url 'camera_vesuvio' %}"
           data-link-plebiscito="{% url 'camera_piazzaplebiscito' %}"
           data-link-castello="{% url 'camera_casteldellovo' %}"
-          data-link-casa-vacanze="{% url 'casa_vacanze' %}">
+          data-link-casa-vacanze="{% url 'casavacanze' %}">
       
       <div class="col-md-3">
         <label for="id_checkin" class="form-label fw-semibold text-dark">Check-in</label>
@@ -143,7 +143,7 @@
               {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Prenota ora{% else %}Book now{% endif %}
             </a>
             {% else %}
-            <a href="{% url 'casa_vacanze' %}" 
+            <a href="{% url 'casavacanze' %}" 
                class="btn px-4 py-2 fw-bold text-white"
                style="background-color:#7a6652; border-radius:30px;">
               {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Prenota ora{% else %}Book now{% endif %}
