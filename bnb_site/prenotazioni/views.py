@@ -295,34 +295,50 @@ def check_availability(request):
         print("Errore check availability:", e)
         return JsonResponse({"available": False}, status=500)
     
-# views.py
 from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
 import requests
 from icalendar import Calendar
 from datetime import datetime, timedelta
+import traceback
+import sys
 
+@csrf_exempt
 def check_availability_multiple(request):
     """
-    Controlla la disponibilità di tutte le camere direttamente senza richieste HTTP interne
+    Controlla la disponibilità di tutte le camere
     """
+    # FORZA print su stderr così appare nei log di Render
+    print("=" * 50, file=sys.stderr)
+    print("CHIAMATA A check_availability_multiple", file=sys.stderr)
+    print("=" * 50, file=sys.stderr)
+    
     checkin = request.GET.get("checkin")
     checkout = request.GET.get("checkout")
     
-    # I link iCal vengono passati come GET parameters
+    print(f"Check-in: {checkin}", file=sys.stderr)
+    print(f"Check-out: {checkout}", file=sys.stderr)
+    
     ical_vesuvio = request.GET.get("ical_vesuvio")
     ical_plebiscito = request.GET.get("ical_plebiscito")
     ical_castello = request.GET.get("ical_castello")
     
+    print(f"URL Vesuvio: {ical_vesuvio}", file=sys.stderr)
+    print(f"URL Plebiscito: {ical_plebiscito}", file=sys.stderr)
+    print(f"URL Castello: {ical_castello}", file=sys.stderr)
+    
     if not checkin or not checkout:
+        print("ERRORE: Date mancanti", file=sys.stderr)
         return JsonResponse({"error": "Date mancanti"}, status=400)
     
     try:
         start_date = datetime.fromisoformat(checkin).date()
         end_date = datetime.fromisoformat(checkout).date()
-    except ValueError:
-        return JsonResponse({"error": "Formato data non valido"}, status=400)
+        print(f"Date parsate: {start_date} - {end_date}", file=sys.stderr)
+    except ValueError as e:
+        print(f"ERRORE parsing date: {str(e)}", file=sys.stderr)
+        return JsonResponse({"error": f"Formato data non valido: {str(e)}"}, status=400)
     
-    # Definisci le camere da controllare
     cameras = [
         {"name": "Camera Vesuvio", "ical": ical_vesuvio},
         {"name": "Camera Piazza Plebiscito", "ical": ical_plebiscito},
@@ -333,39 +349,88 @@ def check_availability_multiple(request):
     
     for camera in cameras:
         available = True
+        print(f"\nControllo: {camera['name']}", file=sys.stderr)
         
         if camera["ical"]:
             try:
-                # Scarica e processa il calendario iCal
-                response = requests.get(camera["ical"], timeout=10)
+                print(f"Download iCal da: {camera['ical'][:100]}...", file=sys.stderr)
+                
+                headers = {
+                    'User-Agent': 'Mozilla/5.0 (compatible; FamilyPortici/1.0)'
+                }
+                
+                # Usa verify=False se hai problemi SSL
+                response = requests.get(
+                    camera["ical"], 
+                    timeout=30, 
+                    headers=headers,
+                    verify=True  # Metti False se hai errori SSL
+                )
+                
+                print(f"HTTP Status: {response.status_code}", file=sys.stderr)
+                print(f"Content length: {len(response.content)} bytes", file=sys.stderr)
+                
+                # Stampa i primi 200 caratteri della risposta
+                print(f"Primi 200 char: {response.text[:200]}", file=sys.stderr)
+                
                 response.raise_for_status()
                 
-                cal = Calendar.from_ical(response.content)
-                
-                # Controlla ogni evento nel calendario
-                for component in cal.walk("VEVENT"):
-                    event_start = component.get("dtstart").dt
-                    event_end = component.get("dtend").dt
+                # Verifica che sia un file iCal valido
+                if not response.text.strip().startswith('BEGIN:VCALENDAR'):
+                    print("ERRORE: Il file non sembra essere un iCal valido", file=sys.stderr)
+                    print(f"Contenuto ricevuto: {response.text[:500]}", file=sys.stderr)
+                    available = False
+                else:
+                    cal = Calendar.from_ical(response.content)
+                    events_count = 0
                     
-                    # Normalizza a date
-                    if isinstance(event_start, datetime):
-                        event_start = event_start.date()
-                    if isinstance(event_end, datetime):
-                        event_end = event_end.date()
+                    for component in cal.walk("VEVENT"):
+                        events_count += 1
+                        try:
+                            event_start = component.get("dtstart").dt
+                            event_end = component.get("dtend").dt
+                            
+                            if isinstance(event_start, datetime):
+                                event_start = event_start.date()
+                            if isinstance(event_end, datetime):
+                                event_end = event_end.date()
+                            
+                            print(f"  Evento {events_count}: {event_start} - {event_end}", file=sys.stderr)
+                            
+                            if start_date < event_end and end_date > event_start:
+                                print(f"  >>> SOVRAPPOSIZIONE TROVATA! <<<", file=sys.stderr)
+                                available = False
+                                break
+                        except Exception as e:
+                            print(f"  Errore parsing evento: {str(e)}", file=sys.stderr)
+                            continue
                     
-                    # Verifica sovrapposizione
-                    if start_date < event_end and end_date > event_start:
-                        available = False
-                        break
+                    print(f"Totale eventi: {events_count}", file=sys.stderr)
+                    print(f"Disponibile: {available}", file=sys.stderr)
                         
-            except Exception as e:
-                print(f"Errore nel controllare {camera['name']}: {str(e)}")
-                # In caso di errore, considera la camera non disponibile
+            except requests.exceptions.SSLError as e:
+                print(f"ERRORE SSL: {str(e)}", file=sys.stderr)
                 available = False
+            except requests.exceptions.Timeout:
+                print(f"ERRORE: Timeout dopo 30 secondi", file=sys.stderr)
+                available = False
+            except requests.exceptions.ConnectionError as e:
+                print(f"ERRORE Connessione: {str(e)}", file=sys.stderr)
+                available = False
+            except Exception as e:
+                print(f"ERRORE generico: {str(e)}", file=sys.stderr)
+                print(f"Traceback: {traceback.format_exc()}", file=sys.stderr)
+                available = False
+        else:
+            print("Nessun URL iCal configurato", file=sys.stderr)
+            available = False  # O True, dipende dalla tua logica
         
         results.append({
             "name": camera["name"],
             "available": available
         })
+    
+    print(f"\nRisultati finali: {results}", file=sys.stderr)
+    print("=" * 50, file=sys.stderr)
     
     return JsonResponse({"rooms": results})
