@@ -33,7 +33,7 @@ document.addEventListener("DOMContentLoaded", function() {
         "Camera Castel dell'Ovo": form.dataset.linkCastello,
     };
     
-    const maxGuests = 4;
+    const maxGuestsPerRoom = 4;
     
     form.addEventListener("submit", async function(event) {
         event.preventDefault();
@@ -43,7 +43,7 @@ document.addEventListener("DOMContentLoaded", function() {
         const checkout = checkoutInput.value;
         const guests = parseInt(guestsInput.value) || 0;
         
-        // --- INIZIO: INSERISCI IL BLOCCO DI VALIDAZIONE QUI ---
+        // --- VALIDAZIONE DATE ---
         const today = new Date();
         today.setHours(0, 0, 0, 0);
         const checkinDate = new Date(checkin);
@@ -64,24 +64,41 @@ document.addEventListener("DOMContentLoaded", function() {
             return;
         }
         
-        if (guests < 1 || guests > maxGuests) {
-            msgDiv.innerHTML = `<div class="alert alert-warning">${isEn ? `Max ${maxGuests} guests.` : `Massimo ${maxGuests} ospiti.`}</div>`;
-            return;
-        }
-            
-        // Validazione
-        if (!checkin || !checkout) {
-            showMessage('warning', 
-                isEn ? '⚠️ Attention' : '⚠️ Attenzione',
-                isEn ? 'Please select check-in and check-out dates' : 'Seleziona check-in e check-out');
+        if (guests < 1) {
+            msgDiv.innerHTML = `<div class="alert alert-warning">${isEn ? 'Please select the number of guests' : 'Seleziona il numero di ospiti'}</div>`;
             return;
         }
         
-        if (guests < 1 || guests > maxGuests) {
-            showMessage('warning',
-                isEn ? '⚠️ Attention' : '⚠️ Attenzione',
-                isEn ? `Maximum ${maxGuests} guests allowed.` : `Massimo ${maxGuests} ospiti permessi.`);
-            return;
+        // --- NUOVA GESTIONE OSPITI > 4 ---
+        let guestsToQuery = guests;
+        let overCapacityMessage = '';
+        
+        if (guests > maxGuestsPerRoom) {
+            // Mostra banner informativo
+            overCapacityMessage = `
+                <div class="bg-white rounded-4 shadow-sm p-3 p-md-4 mb-4 text-center" 
+                     style="border: 2px solid #b59f84; border-left: 6px solid #b59f84; background: linear-gradient(135deg, #fdf8f5 0%, #faf6f1 100%);">
+                    <div class="d-flex align-items-center justify-content-center gap-3">
+                        <i class="fa-solid fa-circle-info fa-2x" style="color: #7a6652;"></i>
+                        <div>
+                            <p class="mb-0 fw-semibold" style="color: #7a6652; font-size: 1.1rem;">
+                                ${isEn 
+                                    ? `Our rooms accommodate up to ${maxGuestsPerRoom} guests each. We'll propose multiple rooms if available.`
+                                    : `Le nostre camere possono ospitare fino a ${maxGuestsPerRoom} persone ciascuna. Se disponibili, ti proporremo più camere.`
+                                }
+                            </p>
+                            <p class="mb-0 mt-1" style="color: #6c5b47; font-size: 0.95rem;">
+                                ${isEn 
+                                    ? `Requested: ${guests} guests → Searching availability for ${maxGuestsPerRoom} guests per room`
+                                    : `Richiesti: ${guests} ospiti → Verifica disponibilità per ${maxGuestsPerRoom} ospiti per camera`
+                                }
+                            </p>
+                        </div>
+                    </div>
+                </div>`;
+            
+            // La query controllerà sempre max 4 ospiti per camera
+            guestsToQuery = maxGuestsPerRoom;
         }
         
         // Mostra loader centrato
@@ -94,12 +111,21 @@ document.addEventListener("DOMContentLoaded", function() {
                 <p class="mt-3 mb-0" style="color: #6c5b47; font-size: 1.1rem;">
                     ${isEn ? 'Checking availability...' : 'Verificando disponibilità...'}
                 </p>
+                ${guests > maxGuestsPerRoom ? `
+                    <p class="mt-2 mb-0" style="color: #7a6652; font-size: 0.9rem;">
+                        ${isEn 
+                            ? `Searching rooms for ${maxGuestsPerRoom} guests each`
+                            : `Cerco camere per ${maxGuestsPerRoom} ospiti ciascuna`
+                        }
+                    </p>
+                ` : ''}
             </div>`;
         
         try {
             const params = new URLSearchParams({
                 checkin: checkin,
                 checkout: checkout,
+                guests: guestsToQuery, // Usa 4 invece del numero originale
                 ical_vesuvio: form.dataset.icalVesuvio || '',
                 ical_plebiscito: form.dataset.icalPlebiscito || '',
                 ical_castello: form.dataset.icalCastello || '',
@@ -107,6 +133,7 @@ document.addEventListener("DOMContentLoaded", function() {
             
             const url = `/check_availability_multiple/?${params.toString()}`;
             console.log("🌐 Chiamata a:", url);
+            console.log(`👥 Ospiti richiesti: ${guests} → Ospiti per query: ${guestsToQuery}`);
             
             const response = await fetch(url);
             
@@ -142,13 +169,22 @@ document.addEventListener("DOMContentLoaded", function() {
                                               style="background-color: #b59f84; font-size: 0.9rem;">
                                             ${isEn ? 'Available' : 'Disponibile'}
                                         </span>
+                                        <p class="mt-2 mb-0" style="color: #6c5b47; font-size: 0.85rem;">
+                                            <i class="fa-solid fa-user me-1"></i>
+                                            ${isEn ? `Up to ${maxGuestsPerRoom} guests` : `Fino a ${maxGuestsPerRoom} ospiti`}
+                                        </p>
                                     </div>
                                 </div>
                             </a>
                         </div>`;
                 }).join('');
                 
+                // Calcola quante camere servono per gli ospiti richiesti
+                const roomsNeeded = Math.ceil(guests / maxGuestsPerRoom);
+                
                 msgDiv.innerHTML = `
+                    ${overCapacityMessage}
+                    
                     <div class="bg-white rounded-4 shadow-lg p-4 p-md-5" 
                          style="border: 2px solid #28a745; border-left: 6px solid #28a745;">
                         <div class="text-center mb-4">
@@ -157,8 +193,22 @@ document.addEventListener("DOMContentLoaded", function() {
                                 ${isEn ? 'Great news!' : 'Ottime notizie!'}
                             </h4>
                             <p style="color: #6c5b47; font-size: 1.1rem;">
-                                ${isEn ? 'The following rooms are available for your dates:' : 'Le seguenti camere sono disponibili per le tue date:'}
+                                ${isEn 
+                                    ? `${availableRooms.length} room${availableRooms.length > 1 ? 's' : ''} available for your dates:`
+                                    : `${availableRooms.length} camera${availableRooms.length > 1 ? 'e' : ''} disponibile${availableRooms.length > 1 ? 'i' : ''} per le tue date:`
+                                }
                             </p>
+                            ${guests > maxGuestsPerRoom ? `
+                                <div class="mt-2">
+                                    <span class="badge px-3 py-2" style="background-color: #7a6652; font-size: 0.9rem;">
+                                        <i class="fa-solid fa-users me-1"></i>
+                                        ${isEn 
+                                            ? `${guests} guests → We recommend ${roomsNeeded} room${roomsNeeded > 1 ? 's' : ''}`
+                                            : `${guests} ospiti → Consigliamo ${roomsNeeded} camera${roomsNeeded > 1 ? 'e' : ''}`
+                                        }
+                                    </span>
+                                </div>
+                            ` : ''}
                         </div>
                         
                         <div class="row justify-content-center g-3">
@@ -188,6 +238,8 @@ document.addEventListener("DOMContentLoaded", function() {
             } else {
                 // Nessuna camera disponibile
                 msgDiv.innerHTML = `
+                    ${overCapacityMessage}
+                    
                     <div class="bg-white rounded-4 shadow-lg p-5 text-center" 
                          style="border: 2px solid #dc3545; border-left: 6px solid #dc3545;">
                         <i class="fa-solid fa-circle-xmark fa-3x mb-3" style="color: #dc3545;"></i>
@@ -214,6 +266,8 @@ document.addEventListener("DOMContentLoaded", function() {
         } catch (error) {
             console.error("❌ Errore:", error);
             msgDiv.innerHTML = `
+                ${overCapacityMessage}
+                
                 <div class="bg-white rounded-4 shadow-lg p-5 text-center" 
                      style="border: 2px solid #ffc107; border-left: 6px solid #ffc107;">
                     <i class="fa-solid fa-triangle-exclamation fa-3x mb-3" style="color: #ffc107;"></i>
