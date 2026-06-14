@@ -298,36 +298,74 @@ def check_availability(request):
 # views.py
 from django.http import JsonResponse
 import requests
+from icalendar import Calendar
+from datetime import datetime, timedelta
 
 def check_availability_multiple(request):
     """
-    Controlla la disponibilità di tutte le camere passate tramite iCal.
+    Controlla la disponibilità di tutte le camere direttamente senza richieste HTTP interne
     """
     checkin = request.GET.get("checkin")
     checkout = request.GET.get("checkout")
-
+    
     # I link iCal vengono passati come GET parameters
     ical_vesuvio = request.GET.get("ical_vesuvio")
     ical_plebiscito = request.GET.get("ical_plebiscito")
     ical_castello = request.GET.get("ical_castello")
-
-    calendars = [
+    
+    if not checkin or not checkout:
+        return JsonResponse({"error": "Date mancanti"}, status=400)
+    
+    try:
+        start_date = datetime.fromisoformat(checkin).date()
+        end_date = datetime.fromisoformat(checkout).date()
+    except ValueError:
+        return JsonResponse({"error": "Formato data non valido"}, status=400)
+    
+    # Definisci le camere da controllare
+    cameras = [
         {"name": "Camera Vesuvio", "ical": ical_vesuvio},
         {"name": "Camera Piazza Plebiscito", "ical": ical_plebiscito},
         {"name": "Camera Castel dell'Ovo", "ical": ical_castello},
     ]
-
+    
     results = []
-
-    for cam in calendars:
-        try:
-            url = f"http://127.0.0.1:8000/check-availability/?ical={cam['ical']}&checkin={checkin}&checkout={checkout}"
-            r = requests.get(url)
-            r.raise_for_status()
-            data = r.json()
-            available = data.get("available", False)
-        except Exception:
-            available = False
-        results.append({"name": cam["name"], "available": available})
-
+    
+    for camera in cameras:
+        available = True
+        
+        if camera["ical"]:
+            try:
+                # Scarica e processa il calendario iCal
+                response = requests.get(camera["ical"], timeout=10)
+                response.raise_for_status()
+                
+                cal = Calendar.from_ical(response.content)
+                
+                # Controlla ogni evento nel calendario
+                for component in cal.walk("VEVENT"):
+                    event_start = component.get("dtstart").dt
+                    event_end = component.get("dtend").dt
+                    
+                    # Normalizza a date
+                    if isinstance(event_start, datetime):
+                        event_start = event_start.date()
+                    if isinstance(event_end, datetime):
+                        event_end = event_end.date()
+                    
+                    # Verifica sovrapposizione
+                    if start_date < event_end and end_date > event_start:
+                        available = False
+                        break
+                        
+            except Exception as e:
+                print(f"Errore nel controllare {camera['name']}: {str(e)}")
+                # In caso di errore, considera la camera non disponibile
+                available = False
+        
+        results.append({
+            "name": camera["name"],
+            "available": available
+        })
+    
     return JsonResponse({"rooms": results})
