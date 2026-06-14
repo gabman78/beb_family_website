@@ -4,6 +4,7 @@
 
 {% include 'partials/hero_slider.html' %}
 
+<!-- Sezione Benvenuto -->
 <section class="py-5 text-center" style="background-color:#f9f5ef;">
   <div class="container">
     <h2 class="fw-bold mb-4" style="color:#6b573d;">
@@ -11,7 +12,7 @@
     </h2>
     <p class="lead mx-auto" style="max-width: 700px; color:#4a4a4a;">
       {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}
-        Comfort, accoglienza e un’atmosfera familiare: tutto ciò che desideri ti aspetta al <strong>Family Room di Portici</strong>, 
+        Comfort, accoglienza e un'atmosfera familiare: tutto ciò che desideri ti aspetta al <strong>Family Room di Portici</strong>, 
         a pochi minuti da Napoli e a due passi dal mare e dal Vesuvio.
         Scegli una delle nostre tre camere del <strong>B&B</strong> con bagno privato, giardino e area relax, 
         oppure opta per la nostra <strong>Casa Vacanze</strong>, perfetta per un soggiorno in famiglia.
@@ -25,6 +26,7 @@
   </div>
 </section>
 
+<!-- Sezione Card B&B e Casa Vacanze -->
 <section class="container py-5">
   <div class="row g-4">
     <div class="col-md-6">
@@ -32,7 +34,7 @@
         <div class="position-relative overflow-hidden">
           <img src="/media/generali/prima.jpg" class="card-img-top" alt="B&B" style="height:300px; object-fit:cover;">
         </div>
-        <div class="card-body text-center">
+        <div class="card-body text-center p-3 p-md-4">
           <h3 class="fw-bold mb-3" style="color:#8b7355;">
             {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Scopri il nostro B&B{% else %}Discover our B&B{% endif %}
           </h3>
@@ -56,13 +58,13 @@
         <div class="position-relative overflow-hidden">
           <img src="/media/casa_vacanze/major_room.jpg" class="card-img-top" alt="Casa Vacanze" style="height:300px; object-fit:cover;">
         </div>
-        <div class="card-body text-center">
+        <div class="card-body text-center p-3 p-md-4">
           <h3 class="fw-bold mb-3" style="color:#8b7355;">
             {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Scopri la Casa Vacanze{% else %}Discover the Holiday House{% endif %}
           </h3>
           <p class="text-muted">
             {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}
-              Ideale per famiglie o gruppi: libertà, privacy e un’atmosfera autentica nel cuore di Portici.
+              Ideale per famiglie o gruppi: libertà, privacy e un'atmosfera autentica nel cuore di Portici.
             {% else %}
               Ideal for families or groups: freedom, privacy, and an authentic atmosphere in the heart of Portici.
             {% endif %}
@@ -77,6 +79,7 @@
   </div>
 </section>
 
+<!-- Sezione Mappa -->
 <section class="py-5 text-center" style="background-color:#f9f5ef;">
   <div class="container">
     <h2 class="fw-bold mb-4" style="color:#6b573d; font-family:'Poppins', sans-serif;">
@@ -90,23 +93,28 @@
       {% endif %}
     </p>
 
-    <div class="d-flex align-items-center justify-content-center flex-wrap gap-5">
+    <!-- Mappa container responsive -->
+    <div class="d-flex flex-column flex-lg-row align-items-center justify-content-center gap-4">
       
+      <!-- Pulsante B&B Maps -->
       <a href="https://maps.app.goo.gl/iteYvz9nVtH4X48v9"
          target="_blank"
-         class="d-flex flex-column align-items-center justify-content-center shadow text-decoration-none"
-         style="width:160px; height:160px; background-color:#8b7355; color:white; border-radius:20px; font-weight:600; transition:transform .2s ease; margin-right: 40px;">
-         <i class="fa-solid fa-map-location-dot fa-2x mb-3"></i>
-         {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Cerca B&B<br>Family Room<br>su Maps{% else %}Search B&B<br>Family Room<br>on Maps{% endif %}
+         class="d-flex flex-column align-items-center justify-content-center shadow text-decoration-none map-btn"
+         style="background-color:#8b7355; color:white; border-radius:20px; font-weight:600; transition:transform .2s ease; width:140px; height:140px;">
+         <i class="fa-solid fa-map-location-dot fa-2x mb-2"></i>
+         <span class="small text-center px-2">
+           {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}B&B<br>su Maps{% else %}B&B<br>on Maps{% endif %}
+         </span>
       </a>
       
-      <div class="shadow-lg rounded-4 overflow-hidden position-relative" 
-           style="width:500px; height:400px; flex-shrink:0; border:3px solid #e6dccb; background-color: #f1f1f1;">
+      <!-- Mappa Google -->
+      <div class="shadow-lg rounded-4 overflow-hidden position-relative map-container" 
+           style="border:3px solid #e6dccb; background-color: #f1f1f1;">
         
         <iframe
           data-src="https://www.google.com/maps/d/u/1/embed?mid=1_lr6E_GxQJ1ScwaE0IUk3UaRTunN3Os&ehbc=2E312F"
           src=""
-          width="100%" height="100%" style="border:10px; position: relative; z-index: 2;" allowfullscreen="" loading="lazy"
+          width="100%" height="100%" style="border:0; position: relative; z-index: 2;" allowfullscreen="" loading="lazy"
           referrerpolicy="no-referrer-when-downgrade">
         </iframe>
         
@@ -123,19 +131,22 @@
         </div>
       </div>
 
+      <!-- Pulsante Casa Vacanze Maps -->
       <a href="https://www.google.com/maps/place/Family+Home+Portici/@40.8154756,14.3434088,720m/data=!3m2!1e3!4b1!4m6!3m5!1s0x133ba77f457ed377:0x7f9026161f7a27a2!8m2!3d40.8154756!4d14.3434088!16s%2Fg%2F11lydwq65l?entry=ttu&g_ep=EgoyMDI1MTAyMi4wIKXMDSoASAFQAw%3D%3D"
          target="_blank"
-         class="d-flex flex-column align-items-center justify-content-center shadow text-decoration-none"
-         style="width:160px; height:160px; background-color:#8b7355; color:white; border-radius:20px; font-weight:600; transition:transform .2s ease; margin-left: 40px;">
-         <i class="fa-solid fa-map-location-dot fa-2x mb-3"></i>
-         {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Cerca Casa Vacanze<br>Family Room<br>su Maps{% else %}Search Holiday House<br>Family Room<br>on Maps{% endif %}
+         class="d-flex flex-column align-items-center justify-content-center shadow text-decoration-none map-btn"
+         style="background-color:#8b7355; color:white; border-radius:20px; font-weight:600; transition:transform .2s ease; width:140px; height:140px;">
+         <i class="fa-solid fa-map-location-dot fa-2x mb-2"></i>
+         <span class="small text-center px-2">
+           {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Casa Vacanze<br>su Maps{% else %}Holiday House<br>on Maps{% endif %}
+         </span>
       </a>
 
     </div>
   </div>
 </section>
 
-
+<!-- Sezione Servizi -->
 <section class="py-5 bg-white text-center border-top border-bottom">
   <div class="container">
     <h2 class="fw-bold mb-5" style="font-family: 'Poppins', sans-serif;">
@@ -144,43 +155,43 @@
     <div class="row justify-content-center g-4">
  
       <div class="col-6 col-md-3">
-        <img src="/media/icons/wifi-sign.png" class="servizio-icon" alt="Wi-Fi" style="width:70px; height:70px; object-fit:contain; display:block; margin:0 auto 10px;">
-        <h5 style="color:#4a4a4a; font-size:18px; font-weight:bold; margin-top:10px; font-family: 'Poppins', sans-serif;">
+        <img src="/media/icons/wifi-sign.png" class="servizio-icon" alt="Wi-Fi">
+        <h5 class="servizio-title">
           {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Wi-Fi gratuito{% else %}Free Wi-Fi{% endif %}
         </h5>
       </div>
 
       <div class="col-6 col-md-3">
-        <img src="/media/icons/croissant.png" class="servizio-icon" alt="Breakfast" style="width:70px; height:70px; object-fit:contain; display:block; margin:0 auto 10px;">
-        <h5 style="color:#4a4a4a; font-size:18px; font-weight:bold; margin-top:10px; font-family: 'Poppins', sans-serif;">
+        <img src="/media/icons/croissant.png" class="servizio-icon" alt="Breakfast">
+        <h5 class="servizio-title">
           {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Colazione inclusa su richiesta{% else %}Breakfast included on request{% endif %}
         </h5>
       </div>
 
       <div class="col-6 col-md-3">
-        <img src="/media/icons/paws.png" class="servizio-icon" alt="Pets" style="width:70px; height:70px; object-fit:contain; display:block; margin:0 auto 10px;">
-        <h5 style="color:#4a4a4a; font-size:18px; font-weight:bold; margin-top:10px; font-family: 'Poppins', sans-serif;">
+        <img src="/media/icons/paws.png" class="servizio-icon" alt="Pets">
+        <h5 class="servizio-title">
           {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Porta con te il tuo amico a 4 zampe!{% else %}Bring your 4-legged friend with you!{% endif %}
         </h5>
       </div>
 
       <div class="col-6 col-md-3">
-        <img src="/media/icons/parking.png" class="servizio-icon" alt="Parking" style="width:70px; height:70px; object-fit:contain; display:block; margin:0 auto 10px;">
-        <h5 style="color:#4a4a4a; font-size:18px; font-weight:bold; margin-top:10px; font-family: 'Poppins', sans-serif;">
+        <img src="/media/icons/parking.png" class="servizio-icon" alt="Parking">
+        <h5 class="servizio-title">
           {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Parcheggio su richiesta{% else %}Parking on request{% endif %}
         </h5>
       </div>
 
       <div class="col-6 col-md-3">
-        <img src="/media/icons/mobile-app.png" class="servizio-icon" alt="Shuttle" style="width:70px; height:70px; object-fit:contain; display:block; margin:0 auto 10px;">
-        <h5 style="color:#4a4a4a; font-size:18px; font-weight:bold; margin-top:10px; font-family: 'Poppins', sans-serif;">
+        <img src="/media/icons/mobile-app.png" class="servizio-icon" alt="Shuttle">
+        <h5 class="servizio-title">
           {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Servizio Navetta{% else %}Shuttle Service{% endif %}
         </h5>
       </div>
 
       <div class="col-6 col-md-3">
-        <img src="/media/icons/cheers.png" class="servizio-icon" alt="Events" style="width:70px; height:70px; object-fit:contain; display:block; margin:0 auto 10px;">
-        <h5 style="color:#4a4a4a; font-size:18px; font-weight:bold; margin-top:10px; font-family: 'Poppins', sans-serif;">
+        <img src="/media/icons/cheers.png" class="servizio-icon" alt="Events">
+        <h5 class="servizio-title">
           {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Feste ed Eventi{% else %}Parties and Events{% endif %}
         </h5>
       </div>
@@ -189,6 +200,7 @@
   </div>
 </section>
 
+<!-- Sezione Disponibilità -->
 <section class="py-5 text-center" style="background: linear-gradient(135deg, #e9dcc9, #f0e6d2); color:#4a4a4a;">
   <div class="container">
     <h2 class="fw-bold mb-3" style="font-family:'Poppins',sans-serif; color:#6b573d;">
@@ -202,7 +214,7 @@
   </div>
 </section>
 
-
+<!-- Sezione Contatti -->
 <section class="py-5 text-center text-dark" style="background: linear-gradient(135deg, #e9dcc9, #f0e6d2);">
   <div class="container">
     <h2 class="fw-bold mb-3" style="font-family:'Poppins',sans-serif; color:#6b573d;">

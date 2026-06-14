@@ -204,7 +204,7 @@ document.addEventListener("DOMContentLoaded", function() {
                                         <i class="fa-solid fa-users me-1"></i>
                                         ${isEn 
                                             ? `${guests} guests → We recommend ${roomsNeeded} room${roomsNeeded > 1 ? 's' : ''}`
-                                            : `${guests} ospiti → Consigliamo ${roomsNeeded} camera${roomsNeeded > 1 ? 'e' : ''}`
+                                            : `${guests} ospiti → Consigliamo ${roomsNeeded} camere`
                                         }
                                     </span>
                                 </div>

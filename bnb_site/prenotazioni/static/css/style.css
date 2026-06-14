@@ -1,87 +1,257 @@
+/* ============================================
+   STILI GLOBALI
+   ============================================ */
+
 /* Font generali */
 body {
   font-family: 'Poppins', sans-serif;
   font-weight: 400;
-  color: #333;
+  color: #4a4a4a;
+  background-color: #fdfbf8;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 /* Titoli */
-h1, h2, h3, h4, h5, h6, .navbar-brand {
+h1, h2, h3, h4, h5, h6 {
   font-family: 'Playfair Display', serif;
   letter-spacing: 0.5px;
 }
 
-/* Navbar */
-.navbar-nav .nav-link {
-  font-family: 'Poppins', sans-serif;
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 1px;
+h1 {
+  font-size: 2.4rem;
+  font-weight: 700;
+  color: #7a6652;
 }
 
-/* Hero section e titoli principali */
-.hero h1, .hero h2 {
-  font-family: 'Playfair Display', serif;
+h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #7a6652;
+}
+
+h3 {
+  font-size: 1.6rem;
   font-weight: 600;
+  color: #7a6652;
 }
 
-/* Footer */
-footer {
-  font-family: 'Poppins', sans-serif;
-  font-size: 0.95rem;
-  letter-spacing: 0.3px;
+/* Paragrafi */
+p {
+  font-size: 1rem;
+  line-height: 1.7;
+  color: #4a4a4a;
 }
 
+.lead {
+  font-size: 1.1rem;
+  font-weight: 300;
+  color: #6c5b47;
+}
 
+/* Link */
+a {
+  color: #7a6652;
+  transition: all 0.3s ease;
+}
 
-section .servizio-icon {
-  width: 70px !important;
-  height: 70px !important;
+a:hover {
+  color: #6b573d;
+}
+
+/* Sezioni */
+section {
+  padding-top: 4rem;
+  padding-bottom: 4rem;
+}
+
+/* Card */
+.card {
+  border-radius: 16px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+}
+
+/* Badge */
+.badge-custom {
+  background-color: #b59f84;
+  color: white;
+  border-radius: 20px;
+  padding: 8px 16px;
+  font-weight: 500;
+  font-size: 0.85rem;
+}
+
+/* Linee divisorie */
+.divider-custom {
+  width: 60px;
+  height: 3px;
+  background: #b59f84;
+  margin: 20px auto;
+  border-radius: 3px;
+}
+
+/* Icone servizi */
+.servizio-icon {
+  width: 70px;
+  height: 70px;
   object-fit: contain;
   display: block;
   margin: 0 auto 10px;
-  transition: transform 0.2s ease;
+  transition: transform 0.3s ease;
 }
 
-section .servizio-icon:hover {
-  transform: scale(1.1);
+.servizio-icon:hover {
+  transform: scale(1.15);
 }
-
-
 /* =========================================
-   OTTIMIZZAZIONI MOBILE (Sotto i 768px)
+   VERSIONE MOBILE (solo sotto 768px)
    ========================================= */
 @media (max-width: 767.98px) {
   
-  /* 1. Riduci i padding (spazi interni) delle sezioni */
+  /* Padding sezioni */
   section {
-    padding-top: 3rem !important;
-    padding-bottom: 3rem !important;
+    padding-top: 2.5rem !important;
+    padding-bottom: 2.5rem !important;
   }
 
-  /* 2. Rimpicciolisci i titoli principali */
-  h2 {
-    font-size: 1.8rem !important;
-  }
-  h3 {
-    font-size: 1.5rem !important;
-  }
-  p {
-    font-size: 0.95rem !important;
-  }
+  /* Titoli */
+  h1 { font-size: 1.8rem !important; }
+  h2 { font-size: 1.5rem !important; }
+  h3 { font-size: 1.3rem !important; }
+  p, .lead { font-size: 0.95rem !important; }
 
-  /* 3. Immagini delle camere o della struttura */
-  .card-img-top, 
-  .img-fluid {
-    max-height: 250px;
+  /* Immagini */
+  .card-img-top, .img-fluid {
+    max-height: 220px;
     object-fit: cover;
   }
 
-  /* 4. Centra il testo nel footer su mobile */
+  /* Bottoni */
+  .btn {
+    padding: 10px 20px !important;
+    font-size: 0.9rem !important;
+  }
+
+  /* Navbar */
+  .navbar-brand {
+    font-size: 0.9rem !important;
+  }
+
+  /* Footer centrato */
   footer {
     text-align: center;
   }
-  footer .text-md-start {
-    text-align: center !important;
+
+  /* Menu offcanvas */
+  .offcanvas .nav-link {
+    font-size: 1.1rem !important;
+    padding: 12px 16px !important;
+  }
+
+  /* WhatsApp Button - SOLO MOBILE */
+  .whatsapp-float {
+    position: fixed;
+    bottom: 20px;
+    right: 15px;
+    width: 52px;
+    height: 52px;
+    background: #25D366;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
+    z-index: 999;
+    transition: transform 0.3s ease;
+  }
+
+  .whatsapp-float:hover {
+    transform: scale(1.1);
+    color: white;
+  }
+
+  /* Scroll to Top - SOLO MOBILE */
+  .scroll-top {
+    position: fixed;
+    bottom: 85px;
+    right: 15px;
+    width: 40px;
+    height: 40px;
+    background: #7a6652;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    z-index: 998;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    border: none;
+  }
+
+  .scroll-top.visible {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .scroll-top:hover {
+    background: #6b573d;
+    transform: translateY(-3px);
+  }
+
+  /* Cookie banner più in alto per non sovrapporsi a WhatsApp */
+  .cookie-banner {
+    bottom: 80px !important;
+  }
+
+    /* ========== HOME PAGE MOBILE ========== */
+  
+  /* Card B&B e Casa Vacanze */
+  .card-img-top {
+    height: 200px !important;
+  }
+  
+  .card-body h3 {
+    font-size: 1.3rem !important;
+  }
+  
+  /* Mappa container */
+  .map-container {
+    width: 100% !important;
+    height: 280px !important;
+    max-width: 500px;
+  }
+  
+  /* Bottoni mappa */
+  .map-btn {
+    width: 110px !important;
+    height: 110px !important;
+    font-size: 0.85rem;
+  }
+  
+  .map-btn i {
+    font-size: 1.5rem !important;
+  }
+  
+  /* Servizi */
+  .servizio-title {
+    font-size: 14px !important;
+    margin-top: 8px;
+  }
+  
+  .servizio-icon {
+    width: 50px !important;
+    height: 50px !important;
   }
 }
