@@ -23,6 +23,8 @@ ALLOWED_HOSTS = [
     "localhost",
     "127.0.0.1",
     "beb-family-website.onrender.com",
+    "www.familyportici.it", 
+    "familyportici.it",   
 ]
 
 
