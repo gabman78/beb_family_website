@@ -72,52 +72,33 @@
 
           {% for camera in camere %}
           <div class="col-12 col-md-6 col-lg-4">
-            <form method="get"
-                  action="
-                    {% if camera.nome == 'Vesuvio' %}
-                      {% url 'camera_vesuvio' %}
-                    {% elif camera.nome == 'Piazza Plebiscito' %}
-                      {% url 'camera_piazzaplebiscito' %}
-                    {% elif camera.nome == 'Castel dell\'Ovo' %}
-                      {% url 'camera_casteldellovo' %}
-                    {% elif camera.tipo_struttura == 'CASA' %}
-                      {% url 'casavacanze' %}
-                    {% endif %}
-                  ">
-              <input type="hidden" name="checkin" value="{{ checkin }}">
-              <input type="hidden" name="checkout" value="{{ checkout }}">
-              <input type="hidden" name="persone" value="{{ persone }}">
-
-              <button type="submit" class="border-0 bg-transparent text-start w-100 p-0">
-                <div class="card border-0 shadow-lg h-100" style="background-color:#fffaf3; transition:transform .2s ease;">
-                  <div class="card-body text-center">
-                    <h4 class="fw-bold mb-2" style="color:#8b7355;">
-                      {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}
-                        {{ camera.nome }}
-                      {% else %}
-                        {% if camera.nome == 'Vesuvio' %}Vesuvio Room{% elif camera.nome == 'Piazza Plebiscito' %}Piazza Plebiscito Room{% elif camera.nome == 'Castel dell\'Ovo' %}Castel dell'Ovo Room{% else %}{{ camera.nome }}{% endif %}
-                      {% endif %}
-                    </h4>
-                    <p class="text-muted mb-2">
-                      {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}
-                        {{ camera.get_tipo_struttura_display }}
-                      {% else %}
-                        {% if camera.tipo_struttura == 'CASA' %}Holiday House{% else %}B&B Room{% endif %}
-                      {% endif %}
-                    </p>
-                    <p class="mb-2" style="color:#4a4a4a;">
-                      {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Capienza{% else %}Capacity{% endif %}: {{ camera.capienza }} {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}persone{% else %}people{% endif %}
-                    </p>
-                    <p class="fw-semibold mb-0" style="color:#6b573d;">€{{ camera.prezzo }} / {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}notte{% else %}night{% endif %}</p>
-                    <div class="mt-3">
-                      <span class="btn px-4 py-2"
-                            style="background-color:#8b7355; color:#fff; font-weight:600; border-radius:30px;">
-                            {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Vedi disponibilità{% else %}View availability{% endif %}
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </button>
+            <form method="get" 
+                  class="row g-4 justify-content-center align-items-end bg-white p-5 rounded shadow-lg" 
+                  style="max-width:8000px; margin:auto;">
+              <div class="col-md-3">
+                <!-- CORREGGI: for deve matchare l'id -->
+                <label for="checkin" class="form-label fw-semibold text-dark">Check-in</label>
+                <input type="date" id="checkin" name="checkin" value="{{ checkin }}" class="form-control form-control-lg">
+              </div>
+              <div class="col-md-3">
+                <!-- CORREGGI: for deve matchare l'id -->
+                <label for="checkout" class="form-label fw-semibold text-dark">Check-out</label>
+                <input type="date" id="checkout" name="checkout" value="{{ checkout }}" class="form-control form-control-lg">
+              </div>
+              <div class="col-md-3">
+                <!-- CORREGGI: for deve matchare l'id -->
+                <label for="persone" class="form-label fw-semibold text-dark">
+                  {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Ospiti{% else %}Guests{% endif %}
+                </label>
+                <input type="number" id="persone" name="persone" min="1" value="{{ persone|default:'2' }}" class="form-control form-control-lg">
+              </div>
+              <div class="col-md-2">
+                <button type="submit" 
+                        class="btn w-100 fw-bold text-white"
+                        style="background-color:#8b7355; border:none; font-size:1rem; padding:10px 20px; border-radius:6px;">
+                        {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Cerca{% else %}Search{% endif %}
+                </button>
+              </div>
             </form>
           </div>
           {% endfor %}
