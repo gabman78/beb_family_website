@@ -129,7 +129,6 @@ def camera_casteldellovo(request):
 
 
 
-# PRENOTAZIONI
 def prenotazioni(request):
 
     camere = Camera.objects.all()
@@ -151,19 +150,12 @@ def prenotazioni(request):
     camere_disponibili = []
 
     if ricerca_effettuata:
-
         checkin_date = parse_date(checkin)
         checkout_date = parse_date(checkout)
 
- 
-
         for camera in camere:
-
             nome = camera.nome.lower()
-
-            # dentro la funzione
             ics_url = None
-            nome = camera.nome.lower()
 
             if "vesuvio" in nome:
                 ics_url = ICAL_LINKS["vesuvio"]
@@ -174,20 +166,13 @@ def prenotazioni(request):
             elif "casa" in nome or "home" in nome:
                 ics_url = ICAL_LINKS["casa"]
 
-            else:
-                ics_url = None
-
             disponibile = True
 
             if ics_url:
-
                 events = get_booking_events(ics_url)
-
                 for event in events:
-
                     start = event["start"]
                     end = event["end"]
-
                     if checkin_date < end and checkout_date > start:
                         disponibile = False
                         break
@@ -196,24 +181,21 @@ def prenotazioni(request):
                 camere_disponibili.append(camera)
 
     context = base_context()
-
     context.update({
         'camere': camere_disponibili,
         'checkin': checkin,
         'checkout': checkout,
         'persone': persone,
-        'ricerca_effettuata': ricerca_effettuata
+        'ricerca_effettuata': ricerca_effettuata,
+        # ⬇️ AGGIUNTI PER IL JAVASCRIPT
+        'ical_vesuvio': ICAL_LINKS.get("vesuvio", ""),
+        'ical_plebiscito': ICAL_LINKS.get("plebiscito", ""),
+        'ical_castello': ICAL_LINKS.get("ovo", ""),
+        'today': today,
+        'guests': persone if persone else 2,
     })
 
     return render(request, 'prenotazioni.html', context)
-
-
-from django.http import JsonResponse
-import requests
-from icalendar import Calendar
-from datetime import datetime
-
-
 
 def booking_calendar(request, room):
     url = ICAL_LINKS.get(room)

@@ -21,30 +21,51 @@
 
 <section class="py-5 text-center bg-white border-top border-bottom">
   <div class="container">
-    <form method="get" 
+    
+    <!-- FORM CORRETTO CON ID GIUSTI E DATA ATTRIBUTES -->
+    <form id="check-availability-form" 
           class="row g-4 justify-content-center align-items-end bg-white p-5 rounded shadow-lg" 
-          style="max-width:8000px; margin:auto;">
+          style="max-width:900px; margin:auto;"
+          data-ical-vesuvio="{{ ical_vesuvio }}"
+          data-ical-plebiscito="{{ ical_plebiscito }}"
+          data-ical-castello="{{ ical_castello }}"
+          data-link-vesuvio="{% url 'camera_vesuvio' %}"
+          data-link-plebiscito="{% url 'camera_piazzaplebiscito' %}"
+          data-link-castello="{% url 'camera_casteldellovo' %}">
+      
       <div class="col-md-3">
-        <label for="checkin" class="form-label fw-semibold text-dark">Check-in</label>
-        <input type="date" id="checkin" name="checkin" value="{{ checkin }}" class="form-control form-control-lg">
+        <label for="id_checkin" class="form-label fw-semibold text-dark">Check-in</label>
+        <input type="date" id="id_checkin" name="checkin" value="{{ checkin }}" 
+               class="form-control form-control-lg" required min="{{ today|date:'Y-m-d' }}">
       </div>
+      
       <div class="col-md-3">
-        <label for="checkout" class="form-label fw-semibold text-dark">Check-out</label>
-        <input type="date" id="checkout" name="checkout" value="{{ checkout }}" class="form-control form-control-lg">
+        <label for="id_checkout" class="form-label fw-semibold text-dark">Check-out</label>
+        <input type="date" id="id_checkout" name="checkout" value="{{ checkout }}" 
+               class="form-control form-control-lg" required>
       </div>
+      
       <div class="col-md-3">
-        <label for="persone" class="form-label fw-semibold text-dark">{% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Ospiti{% else %}Guests{% endif %}</label>
-        <input type="number" id="persone" name="persone" min="1" value="{{ persone }}" class="form-control form-control-lg">
+        <label for="id_guests" class="form-label fw-semibold text-dark">
+          {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Ospiti{% else %}Guests{% endif %}
+        </label>
+        <input type="number" id="id_guests" name="guests" min="1" value="{{ guests }}" 
+               class="form-control form-control-lg">
       </div>
+      
       <div class="col-md-2">
         <button type="submit" 
                 class="btn w-100 fw-bold text-white"
-                style="background-color:#8b7355; border:none; font-size:1rem; padding:10px 20px; border-radius:6px;">
-                {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Cerca{% else %}Search{% endif %}
+                style="background-color:#7a6652; border:none; font-size:1rem; padding:12px 20px; border-radius:30px;">
+          {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Cerca{% else %}Search{% endif %}
         </button>
       </div>
     </form>
     
+    <!-- CONTENITORE PER I RISULTATI DEL JAVASCRIPT -->
+    <div id="availability-message" class="mt-4"></div>
+    
+    <!-- RISULTATI LATO SERVER (fallback) -->
     {% if ricerca_effettuata and not camere %}
     <div class="mt-5 text-center">
       <i class="fa-solid fa-face-frown fa-4x mb-3" style="color:#8b7355;"></i>
@@ -56,60 +77,53 @@
       </p>
     </div>
     {% endif %}
+    
   </div>
 </section>
 
+<!-- SEZIONE RISULTATI LATO SERVER (mostra card camere) -->
+{% if ricerca_effettuata and camere %}
 <section class="py-5" style="background-color:#f9f5ef;">
   <div class="container">
+    <h2 class="fw-bold mb-5 text-center" style="color:#6b573d; font-family:'Poppins',sans-serif;">
+      {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Camere disponibili{% else %}Available rooms{% endif %}
+    </h2>
 
-    {% if ricerca_effettuata %}
-      {% if camere %}
-        <h2 class="fw-bold mb-5 text-center" style="color:#6b573d; font-family:'Poppins',sans-serif;">
-          {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Camere disponibili{% else %}Available rooms{% endif %}
-        </h2>
-
-        <div class="row g-4 justify-content-center">
-
-          {% for camera in camere %}
-          <div class="col-12 col-md-6 col-lg-4">
-            <form method="get" 
-                  class="row g-4 justify-content-center align-items-end bg-white p-5 rounded shadow-lg" 
-                  style="max-width:8000px; margin:auto;">
-              <div class="col-md-3">
-                <!-- CORREGGI: for deve matchare l'id -->
-                <label for="checkin" class="form-label fw-semibold text-dark">Check-in</label>
-                <input type="date" id="checkin" name="checkin" value="{{ checkin }}" 
-                       class="form-control form-control-lg" required min="{{ today|date:'Y-m-d' }}">
-              </div>
-              <div class="col-md-3">
-                <!-- CORREGGI: for deve matchare l'id -->
-                <label for="checkout" class="form-label fw-semibold text-dark">Check-out</label>
-                <input type="date" id="checkout" name="checkout" value="{{ checkout }}" 
-                       class="form-control form-control-lg" required>
-              </div>
-              <div class="col-md-3">
-                <!-- CORREGGI: for deve matchare l'id -->
-                <label for="persone" class="form-label fw-semibold text-dark">
-                  {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Ospiti{% else %}Guests{% endif %}
-                </label>
-                <input type="number" id="id_guests" name="persone" min="1" value="{{ persone }}" class="form-control form-control-lg">              </div>
-              <div class="col-md-2">
-                <button type="submit" 
-                        class="btn w-100 fw-bold text-white"
-                        style="background-color:#8b7355; border:none; font-size:1rem; padding:10px 20px; border-radius:6px;">
-                        {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Cerca{% else %}Search{% endif %}
-                </button>
-              </div>
-            </form>
+    <div class="row g-4 justify-content-center">
+      {% for camera in camere %}
+      <div class="col-12 col-md-6 col-lg-4">
+        <div class="card border-0 shadow-sm h-100" style="background-color:#fff;">
+          <div class="card-body text-center p-4">
+            <div class="mb-3">
+              <i class="fa-solid fa-circle-check fa-2x" style="color: #28a745;"></i>
+            </div>
+            <h4 class="fw-bold" style="color:#7a6652;">{{ camera.nome }}</h4>
+            {% if camera.descrizione %}
+            <p class="text-muted mt-2">{{ camera.descrizione|truncatewords:15 }}</p>
+            {% endif %}
+            <span class="badge px-3 py-2 mt-2" style="background-color: #b59f84; font-size: 0.9rem;">
+              {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Disponibile{% else %}Available{% endif %}
+            </span>
+            {% if camera.prezzo %}
+            <p class="mt-3 mb-0 fw-bold" style="color:#7a6652; font-size:1.2rem;">
+              €{{ camera.prezzo }}/notte
+            </p>
+            {% endif %}
           </div>
-          {% endfor %}
+          <div class="card-footer bg-white border-0 text-center pb-4">
+            <a href="{% url 'camera_vesuvio' %}" 
+               class="btn px-4 py-2 fw-bold text-white"
+               style="background-color:#7a6652; border-radius:30px;">
+              {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Prenota ora{% else %}Book now{% endif %}
+            </a>
+          </div>
         </div>
-
-      {% endif %}
-    {% endif %}
-
+      </div>
+      {% endfor %}
+    </div>
   </div>
 </section>
+{% endif %}
 
 <section class="py-5 text-center" style="background:linear-gradient(135deg,#e9dcc9,#f0e6d2);">
   <div class="container">
@@ -137,4 +151,8 @@
   </div>
 </section>
 
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/check_availability_beb.js' %}"></script>
 {% endblock %}
