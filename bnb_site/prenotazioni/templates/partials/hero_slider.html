@@ -26,11 +26,12 @@
   </div>
 
   <div class="position-absolute top-0 start-0 w-100 h-100 bg-dark bg-opacity-50 d-flex flex-column justify-content-center align-items-center" style="z-index: 2;">
-    <h1 class="display-3 fw-bold mb-3 px-3 py-2 rounded-3" 
-        style="text-shadow: 3px 3px 12px rgba(0,0,0,0.7); background: rgba(0,0,0,0.3); backdrop-filter: blur(4px);">
+    <h1 class="display-3 fw-bold mb-3" 
+        style="color: #ffffff; text-shadow: 2px 2px 0 #7a6652, -2px -2px 0 #7a6652, 2px -2px 0 #7a6652, -2px 2px 0 #7a6652, 0 0 20px rgba(0,0,0,0.5);">
       Family Room Portici
     </h1>
-    <h2 class="fs-4 mb-4 text-light" style="text-shadow: 2px 2px 8px rgba(0,0,0,0.6);">
+    <h2 class="fs-4 mb-4" 
+        style="color: #ffffff; text-shadow: 1px 1px 0 #7a6652, -1px -1px 0 #7a6652, 1px -1px 0 #7a6652, -1px 1px 0 #7a6652;">
       {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}
         B&B e Casa Vacanze
       {% else %}
@@ -42,25 +43,6 @@
       style="border-radius: 50px; background: linear-gradient(135deg, #ffffff, #f0e6d2); color: #7a6652; border: 2px solid #b59f84; letter-spacing: 1px; transition: all 0.3s ease;"
       onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 8px 25px rgba(0,0,0,0.3)';"
       onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 4px 15px rgba(0,0,0,0.2)';">
-      {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Prenota Ora{% else %}Book Now{% endif %}
-    </a>
-  </div>
-#MOBILE
-  <div class="position-absolute top-0 start-0 w-100 h-100 bg-dark bg-opacity-50 d-flex flex-column justify-content-center align-items-center" style="z-index: 2; padding: 20px;">
-    <h1 class="display-5 fw-bold mb-3 px-3 py-2 rounded-3" 
-        style="text-shadow: 3px 3px 12px rgba(0,0,0,0.7); background: rgba(0,0,0,0.3); backdrop-filter: blur(4px); font-size: 1.8rem;">
-      Family Room Portici
-    </h1>
-    <p class="fs-6 mb-4 text-light" style="text-shadow: 2px 2px 8px rgba(0,0,0,0.6);">
-      {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}
-        Il tuo B&B a due passi da Napoli
-      {% else %}
-        Your B&B close to Naples
-      {% endif %}
-    </p>
-    <a href="{% url 'prenotazioni' %}" 
-      class="btn btn-light btn-lg w-100 py-3 fw-bold shadow-lg"
-      style="border-radius: 50px; background: linear-gradient(135deg, #ffffff, #f0e6d2); color: #7a6652; border: 2px solid #b59f84; letter-spacing: 1px; max-width: 300px;">
       {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Prenota Ora{% else %}Book Now{% endif %}
     </a>
   </div>
