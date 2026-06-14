@@ -32,9 +32,55 @@ def base_context():
     }
 
 
-# HOME
+import os
+from django.conf import settings
+
 def home(request):
-    return render(request, 'home.html', base_context())
+    # Leggi tutti i file dalla cartella hero
+    hero_folder = os.path.join(settings.MEDIA_ROOT, 'hero')
+    hero_media = []
+    
+    image_extensions = ('.jpg', '.jpeg', '.png', '.webp', '.gif')
+    video_extensions = ('.mp4', '.webm', '.mov', '.avi')
+    
+    if os.path.exists(hero_folder):
+        for filename in sorted(os.listdir(hero_folder)):
+            file_lower = filename.lower()
+            
+            if file_lower.endswith(image_extensions):
+                hero_media.append({
+                    'type': 'image',
+                    'url': f"{settings.MEDIA_URL}hero/{filename}",
+                    'alt': filename.split('.')[0].replace('_', ' ')
+                })
+            elif file_lower.endswith(video_extensions):
+                hero_media.append({
+                    'type': 'video',
+                    'url': f"{settings.MEDIA_URL}hero/{filename}",
+                    'alt': filename.split('.')[0].replace('_', ' ')
+                })
+    
+    # Se non ci sono file, usa quelli di default
+    if not hero_media:
+        hero_media = [
+            {'type': 'image', 'url': '/media/foto_portici/IMG_1721.jpg', 'alt': 'Family Room Portici'},
+            {'type': 'image', 'url': '/media/generali/prima.jpg', 'alt': 'Family Room Portici 2'},
+        ]
+    
+    # Immagine per mobile (usa la prima immagine disponibile)
+    mobile_image = '/media/foto_portici/IMG_1721.jpg'
+    for media in hero_media:
+        if media['type'] == 'image':
+            mobile_image = media['url']
+            break
+    
+    context = base_context()
+    context.update({
+        'hero_media': hero_media,
+        'mobile_image': mobile_image,
+    })
+    
+    return render(request, 'home.html', context)
 
 def privacy_policy(request):
     return render(request, 'privacy_policy.html', base_context())

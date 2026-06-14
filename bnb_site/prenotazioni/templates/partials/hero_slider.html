@@ -3,25 +3,44 @@
 <!-- HERO DESKTOP E TABLET -->
 <section class="hero position-relative text-center text-white overflow-hidden d-none d-md-block" style="height: 100vh;">
 
-  <div id="heroCarousel" class="carousel slide carousel-fade position-absolute top-0 start-0 w-100 h-100" data-bs-ride="carousel" data-bs-interval="4000">
+  <div id="heroCarousel" class="carousel slide carousel-fade position-absolute top-0 start-0 w-100 h-100" data-bs-ride="carousel" data-bs-interval="5000">
     <div class="carousel-inner h-100">
-      <div class="carousel-item active h-100">
-        <img src="/media/foto_portici/IMG_1721.jpg" class="w-100 h-100 object-fit-cover" alt="Family Room Portici">
-      </div>
-      <div class="carousel-item h-100">
+      
+      {% for media in hero_media %}
+      <div class="carousel-item h-100 {% if forloop.first %}active{% endif %}" data-interval="{% if media.type == 'video' %}8000{% else %}5000{% endif %}">
+        
+        {% if media.type == 'video' %}
         <video class="w-100 h-100 object-fit-cover" autoplay muted loop playsinline>
-          <source src="/media/foto_portici/SnapInsta.to_AQO9HRXrVyscGPLu7AqvhzHmrqypsldzqDdKH-Ssu5TS1rhgXxn78dEW7B_4a_6SmY3GHMj8bfK2EzvbxiDuKJLE-bRoWEAFuQoN8bg.mp4" type="video/mp4">
+          <source src="{{ media.url }}" type="video/mp4">
         </video>
+        {% else %}
+        <img src="{{ media.url }}" class="w-100 h-100 object-fit-cover" alt="{{ media.alt }}">
+        {% endif %}
+        
       </div>
-      <div class="carousel-item h-100">
-        <img src="/media/generali/prima.jpg" class="w-100 h-100 object-fit-cover" alt="Family Room Portici 3">
-      </div>
-      <div class="carousel-item h-100">
-        <video class="w-100 h-100 object-fit-cover" autoplay muted loop playsinline>
-          <source src="/media/foto_portici/SnapInsta.to_AQO9HRXrVyscGPLu7AqvhzHmrqypsldzqDdKH-Ssu5TS1rhgXxn78dEW7B_4a_6SmY3GHMj8bfK2EzvbxiDuKJLE-bRoWEAFuQoN8bg.mp4" type="video/mp4">
-        </video>
-      </div>
+      {% endfor %}
+      
     </div>
+    
+    <!-- Pulsanti navigazione -->
+    <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+    
+    <!-- Indicatori -->
+    <div class="carousel-indicators">
+      {% for media in hero_media %}
+      <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="{{ forloop.counter0 }}" 
+              {% if forloop.first %}class="active" aria-current="true"{% endif %} 
+              aria-label="Slide {{ forloop.counter }}"></button>
+      {% endfor %}
+    </div>
+    
   </div>
 
   <!-- Overlay Desktop -->
@@ -50,9 +69,8 @@
 
 <!-- HERO MOBILE -->
 <section class="d-block d-md-none position-relative text-center text-white overflow-hidden" style="height: 50vh;">
-  <img src="/media/foto_portici/IMG_1721.jpg" class="position-absolute top-0 start-0 w-100 h-100 object-fit-cover" alt="Family Room Portici">
+  <img src="{{ mobile_image }}" class="position-absolute top-0 start-0 w-100 h-100 object-fit-cover" alt="Family Room Portici">
   
-  <!-- Overlay Mobile -->
   <div class="position-absolute top-0 start-0 w-100 h-100 bg-dark bg-opacity-50 d-flex flex-column justify-content-center align-items-center" style="z-index: 2; padding: 20px;">
     <h1 class="display-5 fw-bold mb-3" 
         style="color: #ffffff; text-shadow: 2px 2px 0 #7a6652, -2px -2px 0 #7a6652, 2px -2px 0 #7a6652, -2px 2px 0 #7a6652, 0 0 20px rgba(0,0,0,0.5); font-size: 1.8rem;">
