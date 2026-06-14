@@ -3,15 +3,149 @@
 {% block content %}
 
 <style>
-  @media (max-width: 768px) {
-    .hero-title { font-size: 2rem !important; }
-    .form-box { padding: 1.5rem !important; }
-    .cta-btn-mobile { width: 100% !important; max-width: 300px !important; }
-    .map-btn-mobile { width: 100% !important; max-width: 350px !important; height: auto !important; padding: 15px !important; }
+  @media (min-width: 769px) {
+    /* Desktop invariato */
+  }
+
+  /* =========================================
+     MOBILE (solo sotto 768px)
+     ========================================= */
+  @media (max-width: 767.98px) {
+    .hero-title { 
+      font-size: 1.6rem !important; 
+    }
+    
+    .form-box { 
+      padding: 1rem !important; 
+    }
+    
+    .cta-btn-mobile { 
+      width: 100% !important; 
+      max-width: 300px !important; 
+      font-size: 1rem !important;
+      padding: 12px 30px !important;
+    }
+    
+    .map-btn-mobile { 
+      width: 100% !important; 
+      max-width: 350px !important; 
+      height: auto !important; 
+      padding: 15px !important;
+      font-size: 0.9rem !important;
+    }
+    
+    /* Hero section */
+    section[style*="min-height:75vh"] {
+      min-height: auto !important;
+      padding: 80px 0 40px !important;
+    }
+    
+    h1[style*="font-size:2.8rem"] {
+      font-size: 1.6rem !important;
+    }
+    
+    /* Form */
+    .availability-form {
+      padding: 1rem !important;
+      gap: 0.5rem !important;
+    }
+    
+    .availability-form .col-md-3,
+    .availability-form .col-md-2 {
+      padding: 0 8px !important;
+    }
+    
+    .availability-form .form-label {
+      font-size: 0.85rem !important;
+      margin-bottom: 4px !important;
+    }
+    
+    .availability-form .form-control-lg {
+      font-size: 0.9rem !important;
+      padding: 8px 10px !important;
+    }
+    
+    .availability-form button {
+      font-size: 0.9rem !important;
+      padding: 10px 16px !important;
+    }
+    
+    /* Pulsante indietro */
+    a[href*="home"].position-fixed {
+      width: 40px !important;
+      height: 40px !important;
+      margin: 8px !important;
+    }
+    
+    /* Calendario */
+    .bg-white.rounded-4 {
+      padding: 0.5rem !important;
+    }
+    
+    /* Sezione calendario - rimuovi trucco 100vw */
+    section[style*="width:100vw"] {
+      width: 100% !important;
+      margin-left: 0 !important;
+    }
+    
+    /* Icone servizi */
+    .fa-3x {
+      font-size: 2rem !important;
+    }
+    
+    /* Gallery scroll */
+    .gallery-container img {
+      height: 200px !important;
+    }
+    
+    /* Mappa */
+    .shadow-lg.rounded-4.overflow-hidden[style*="height:400px"] {
+      height: 250px !important;
+      max-width: 100% !important;
+    }
+    
+    /* Bottone Maps */
+    a[style*="width:500px"] {
+      width: 100% !important;
+      max-width: 350px !important;
+      height: 55px !important;
+      font-size: 0.9rem !important;
+      gap: 10px !important;
+      padding: 0 16px !important;
+      border-radius: 15px !important;
+    }
+    
+    /* Titoli */
+    h2[style*="font-size:2.2rem"] {
+      font-size: 1.4rem !important;
+    }
+    
+    /* Pulsante scroll down */
+    #scroll-down-btn {
+      margin: 8px !important;
+    }
+    
+    #scroll-down-btn .btn,
+    #scroll-down-btn div[style*="width:50px"] {
+      width: 40px !important;
+      height: 40px !important;
+    }
+    
+    #scroll-down-btn span {
+      font-size: 0.8rem !important;
+    }
+    
+    /* CTA */
+    .btn[style*="font-size:1.3rem"] {
+      font-size: 1.1rem !important;
+      padding: 12px 30px !important;
+    }
   }
 </style>
+
+<!-- Pulsante Indietro -->
 <a href="{% url 'home' %}" 
-   class="btn btn-light position-fixed top-50 start-0 m-4 d-flex align-items-center justify-content-center shadow"
+   class="btn btn-light position-fixed top-50 start-0 m-2 m-md-4 d-flex align-items-center justify-content-center shadow"
    style="width:50px; height:50px; border-radius:50%; 
        background-color:rgba(255,255,255,0.85); 
        border:none; z-index:1000;
@@ -19,7 +153,7 @@
   <i class="fa-solid fa-arrow-left text-dark"></i>
 </a>
 
-
+<!-- Hero Section -->
 <section class="d-flex align-items-center justify-content-center text-center" 
          style="background-color:#f8f3ed; color:#4a4a4a; min-height:75vh;">
   <div class="container">
@@ -35,55 +169,53 @@
       {% endif %}
     </p>
 
-    <form id="check-availability-form" class="availability-form row g-4 justify-content-center align-items-end bg-white p-5 rounded shadow-lg"
+    <form id="check-availability-form" class="availability-form row g-3 g-md-4 justify-content-center align-items-end bg-white p-3 p-md-5 rounded shadow-lg"
       style="max-width:1200px; margin:auto;"
       data-ical="{{ ical_link }}"
       data-max-guests="6">
 
-    <div class="col-md-3">
-      <label class="form-label fw-semibold text-dark">Check-in</label>
-      <input type="date" name="checkin" id="checkin" class="form-control form-control-lg">
-    </div>
+      <div class="col-6 col-md-3">
+        <label class="form-label fw-semibold text-dark">Check-in</label>
+        <input type="date" name="checkin" id="checkin" class="form-control form-control-lg">
+      </div>
 
-    <div class="col-md-3">
-      <label class="form-label fw-semibold text-dark">Check-out</label>
-      <input type="date" name="checkout" id="checkout" class="form-control form-control-lg">
-    </div>
+      <div class="col-6 col-md-3">
+        <label class="form-label fw-semibold text-dark">Check-out</label>
+        <input type="date" name="checkout" id="checkout" class="form-control form-control-lg">
+      </div>
 
-    <div class="col-md-3">
-      <label class="form-label fw-semibold text-dark">{% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Ospiti{% else %}Guests{% endif %}</label>
-      <input type="number" name="guests" id="guests" class="form-control form-control-lg" min="1" value="2">
-    </div>
+      <div class="col-6 col-md-3">
+        <label class="form-label fw-semibold text-dark">{% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Ospiti{% else %}Guests{% endif %}</label>
+        <input type="number" name="guests" id="guests" class="form-control form-control-lg" min="1" value="2">
+      </div>
 
-    <div class="col-md-2">
-      <button type="submit" 
-              class="btn w-100 fw-bold text-white"
-              style="background-color:#7a6652; border:none;">
-        {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Verifica Disponibilità{% else %}Check Availability{% endif %}
-      </button>
-    </div>
+      <div class="col-6 col-md-2">
+        <button type="submit" 
+                class="btn w-100 fw-bold text-white"
+                style="background-color:#7a6652; border:none;">
+          {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Verifica{% else %}Check{% endif %}
+        </button>
+      </div>
 
-   
-    <div class="col-12 mt-3 availability-message"></div>
+      <div class="col-12 mt-3 availability-message"></div>
 
-  </form>
-  <script src="{% static 'js/check_availability.js' %}"></script>
+    </form>
+    <script src="{% static 'js/check_availability.js' %}"></script>
   </div>
 </section>
 
-
+<!-- Calendario -->
 <section class="text-dark text-center py-5"
-         style="background: linear-gradient(180deg, #fff9f0 0%, #f5ead6 100%); width:100vw; margin-left: calc(-50vw + 50%);">
+         style="background: linear-gradient(180deg, #fff9f0 0%, #f5ead6 100%);">
 
-  <div class="container d-flex flex-column align-items-center">
-    <div class="bg-white bg-opacity-90 rounded-4 shadow-lg p-4"
+  <div class="container d-flex flex-column align-items-center px-2 px-md-4">
+    <div class="bg-white bg-opacity-90 rounded-4 shadow-lg p-2 p-md-4"
       style="width:100%; max-width:1250px; backdrop-filter: blur(6px);">
 
       <iframe src="{% static 'calendars/casavacanze.html' %}"
               id="calendar-frame"
               style="width:100%; border:0; border-radius:12px; overflow:hidden;"
               title="{% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Calendario Casa Vacanze{% else %}Holiday House Calendar{% endif %}"></iframe>
-
 
       <script>
         window.addEventListener("message", (event) => {
@@ -106,23 +238,25 @@
   </div>
 </section>
 
+<!-- Pulsante Scroll -->
 <a href="#galleria-camera" 
    id="scroll-down-btn"
-   class="d-flex position-fixed top-50 end-0 align-items-center shadow"
-   style="z-index:1000; transform: translateY(-50%); text-decoration:none; display:none;">
+   class="d-flex position-fixed top-50 end-0 align-items-center shadow m-2 m-md-4"
+   style="z-index:1000; transform: translateY(-50%); text-decoration:none;">
 
-  <span style="color:#6c5b47;; font-weight:600; font-family:'Poppins',sans-serif; 
+  <span class="d-none d-md-inline" style="color:#6c5b47; font-weight:600; font-family:'Poppins',sans-serif; 
                margin-right:8px; white-space:nowrap;">
     {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Dettagli della Casa{% else %}House Details{% endif %}
   </span>
 
   <div class="d-flex align-items-center justify-content-center"
-       style="width:50px; height:50px; border-radius:50%; background-color:#6c5b47;;">
+       style="width:50px; height:50px; border-radius:50%; background-color:#6c5b47;">
     <i class="fa-solid fa-arrow-down fa-lg text-white"></i>
   </div>
 
 </a>
 
+<!-- Dettagli Casa -->
 <section id="galleria-camera" class="container my-5 py-5">
   <div class="text-center mb-5">
     <h2 class="fw-bold" style="color:#7a6652; font-family:'Poppins',sans-serif; font-size:2.2rem;">
@@ -139,7 +273,7 @@
     </p>
   </div>
 
-  <div class="row justify-content-center text-center g-4">
+  <div class="row justify-content-center text-center g-3 g-md-4">
 
     <div class="col-6 col-md-4 col-lg-2">
       <i class="fa-solid fa-bed fa-3x mb-3" style="color:#8b7355;"></i>
@@ -170,9 +304,9 @@
       <h5 class="fw-semibold">{% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Zona Giorno{% else %}Living Area{% endif %}</h5>
       <p style="font-size:0.95rem; color:#4a4a4a;">
         {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}
-          Open space con divano letto, TV, tavolo da pranzo e cucina attrezzata con forno, frigorifero, utensili e macchina da caffè.
+          Open space con divano letto, TV, tavolo da pranzo e cucina attrezzata.
         {% else %}
-          Open space with sofa bed, TV, dining table, and fully equipped kitchen with oven, fridge, utensils, and coffee machine.
+          Open space with sofa bed, TV, dining table, and fully equipped kitchen.
         {% endif %}
       </p>
     </div>
@@ -194,18 +328,17 @@
       <h5 class="fw-semibold">{% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Ampio balcone{% else %}Large balcony{% endif %}</h5>
       <p style="font-size:0.95rem; color:#4a4a4a;">
         {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}
-          Perfetto per colazioni o pranzi all'aperto e momenti di relax per fumatori.
+          Perfetto per colazioni o pranzi all'aperto e momenti di relax.
         {% else %}
-          Perfect for outdoor breakfasts or lunches and relaxation moments for smokers.
+          Perfect for outdoor breakfasts or lunches and relaxation moments.
         {% endif %}
       </p>
     </div>
 
   </div>
-
 </section>
 
-
+<!-- Photogallery -->
 <section class="container my-5">
   <h2 class="fw-bold text-center mb-4" style="color:#7a6652; font-family:'Poppins',sans-serif;">Photogallery</h2>
 
@@ -218,10 +351,10 @@
   </div>
 </section>
 
-
+<!-- Dove siamo -->
 <section class="container my-5">
   <div class="row align-items-center justify-content-center g-4">
-    <h2 class="fw-bold mb-5" style="font-family:'Poppins',sans-serif; color:#7a6652; text-align: center;">
+    <h2 class="fw-bold mb-4 mb-md-5 text-center" style="font-family:'Poppins',sans-serif; color:#7a6652;">
       {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Dove siamo{% else %}Where we are{% endif %}
     </h2>
 
@@ -238,29 +371,27 @@
       </div>
     </div>
 
-    <div class="col-12 col-md-5 text-center text-md-start">
-      <p class="mb-4 fs-5" style="text-align: center;">
-        📍 Traversa della III trav. a dx di Via Libertà n.5,
-        <p class="mb-4 fs-5" style="text-align: center;">Portici (NA)</p>
+    <div class="col-12 col-md-5 text-center">
+      <p class="mb-4 fs-5">
+        📍 Traversa della III trav. a dx di Via Libertà n.5, Portici (NA)
       </p>
      
       <a href="https://www.google.com/maps/place/Family+Home+Portici/@40.8154756,14.3434088,720m"
         target="_blank"
-        class="d-inline-flex flex-row align-items-center justify-content-center shadow text-decoration-none"
+        class="d-inline-flex flex-row align-items-center justify-content-center shadow text-decoration-none map-btn-mobile"
         style="width:500px; height:100px; background-color:#8b7355; color:white; border-radius:25px;
                 font-weight:600; font-size:1.1rem; gap:15px; white-space:nowrap;
-                transition:transform .2s ease, box-shadow .2s ease; align-items: center;">
+                transition:transform .2s ease, box-shadow .2s ease;">
         <i class="fa-solid fa-map-location-dot fa-2x"></i>
         <span>
-          {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Cerca Casa Vacanze Family Home su Maps{% else %}Search Family Home Holiday House on Maps{% endif %}
+          {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Cerca su Maps{% else %}Search on Maps{% endif %}
         </span>
       </a>
     </div>
   </div>
 </section>
 
-
-
+<!-- Call to Action -->
 <section class="py-5 text-center text-dark" style="background:linear-gradient(180deg, #f0e6d2, #e9dcc9);">
   <div class="container">
     <h2 class="fw-bold mb-3" style="font-family:'Poppins',sans-serif; color:#6b573d;">
@@ -271,7 +402,7 @@
     </p>
 
     <a href="tel:+393929093515"
-       class="btn shadow-lg d-inline-flex align-items-center justify-content-center gap-2"
+       class="btn shadow-lg d-inline-flex align-items-center justify-content-center gap-2 cta-btn-mobile"
        style="background-color:#8b7355; color:white; font-weight:bold; font-size:1.3rem; padding:15px 45px; border-radius:50px;">
        <i class="fa-solid fa-phone-volume fa-lg"></i>
        392 9093515
@@ -282,7 +413,7 @@
     </p>
 
     <a href="https://wa.me/393929093515" target="_blank"
-       class="btn btn-outline-secondary mt-2 d-inline-flex align-items-center justify-content-center gap-2"
+       class="btn btn-outline-secondary mt-2 d-inline-flex align-items-center justify-content-center gap-2 cta-btn-mobile"
        style="font-weight:600; border-radius:50px; color:#6b573d; border-color:#8b7355;">
        <i class="fa-brands fa-whatsapp fa-lg text-success"></i>
        {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Chatta su WhatsApp{% else %}Chat on WhatsApp{% endif %}
@@ -291,7 +422,7 @@
 </section>
 
 {% if request.GET.checkin and request.GET.checkout %}
-  <div class="alert alert-light mt-4" style="border:1px solid #e6dccb; color:#6b573d;">
+  <div class="alert alert-light mt-4 mx-3" style="border:1px solid #e6dccb; color:#6b573d;">
     <strong>{% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Date selezionate:{% else %}Selected dates:{% endif %}</strong> 
     {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}dal{% else %}from{% endif %} {{ request.GET.checkin }} {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}al{% else %}to{% endif %} {{ request.GET.checkout }}
   </div>

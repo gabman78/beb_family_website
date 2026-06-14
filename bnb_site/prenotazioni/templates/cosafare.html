@@ -3,7 +3,6 @@
 {% block content %}
 
 <style>
-  /* Fissa l'altezza delle immagini e le adatta in automatico */
   .card-img-custom {
     height: 220px;
     width: 100%;
@@ -11,7 +10,6 @@
     transition: transform 0.4s ease;
   }
 
-  /* Effetto zoom al passaggio del mouse */
   .card-zoom:hover .card-img-custom {
     transform: scale(1.08);
   }
@@ -41,23 +39,108 @@
     z-index: 2;
   }
 
-  @media (max-width: 767px) {
-    .hero-blur-section { min-height: 35vh !important; }
-    h1 { font-size: 2rem !important; }
-    .card-img-custom { height: 180px !important; }
-    .carousel-inner { height: 250px !important; }
-    #carouselDintorni { height: 250px !important; }
-    .p-4 { padding: 1.2rem !important; }
-    .container { padding-left: 15px !important; padding-right: 15px !important; }
-  }
-
-  /* Piccola correzione per il testo in sovrimpressione */
   .hero-blur-section p {
     font-size: 1rem !important;
     padding: 8px !important;
   }
+
+  /* =========================================
+     MOBILE
+     ========================================= */
+  @media (max-width: 767.98px) {
+    .hero-blur-section {
+      min-height: 35vh !important;
+    }
+    
+    .hero-blur-section h1 {
+      font-size: 1.7rem !important;
+    }
+    
+    .card-img-custom {
+      height: 180px !important;
+    }
+    
+    .carousel-inner {
+      height: 250px !important;
+    }
+    
+    #carouselDintorni {
+      height: 250px !important;
+    }
+    
+    .card-body.p-4, 
+    .p-4 {
+      padding: 1rem !important;
+    }
+    
+    .p-5 {
+      padding: 1.5rem !important;
+    }
+    
+    .container {
+      padding-left: 12px !important;
+      padding-right: 12px !important;
+    }
+    
+    /* Hero text */
+    .hero-blur-section .lead {
+      font-size: 0.9rem !important;
+      padding: 6px 10px !important;
+      background: rgba(207, 244, 243, 0.4) !important;
+    }
+    
+    /* Immagine Vesuvio */
+    .vesuvio-img {
+      height: 250px !important;
+    }
+    
+    /* Card trasporti */
+    .card.h-100.p-4 {
+      padding: 1rem !important;
+    }
+    
+    /* Sezioni con padding grandi */
+    .my-5 {
+      margin-top: 2rem !important;
+      margin-bottom: 2rem !important;
+    }
+    
+    .py-5 {
+      padding-top: 2rem !important;
+      padding-bottom: 2rem !important;
+    }
+    
+    /* Titoli */
+    h2 {
+      font-size: 1.4rem !important;
+    }
+    
+    h5.card-title {
+      font-size: 1rem !important;
+    }
+    
+    /* Icone trasporti */
+    .fa-2x {
+      font-size: 1.5rem !important;
+    }
+    
+    /* Ordine colonne su mobile */
+    .order-2-mobile {
+      order: 2 !important;
+    }
+    
+    .order-1-mobile {
+      order: 1 !important;
+    }
+    
+    /* Sezione Vesuvio e Dintorni */
+    .rounded-5 {
+      border-radius: 20px !important;
+    }
+  }
 </style>
 
+<!-- Hero Section -->
 <section class="hero-blur-section d-flex align-items-center justify-content-center text-center py-5">
   <div class="container">
     <h1 class="fw-bold mb-3" 
@@ -75,6 +158,7 @@
   </div>
 </section>
 
+<!-- Scopri Napoli -->
 <section class="container my-5 py-4">
   <div class="text-center mb-5">
     <h2 class="fw-bold mb-3" style="color:#7a6652;">{% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Scopri Napoli{% else %}Discover Naples{% endif %}</h2>
@@ -116,7 +200,7 @@
         <img src="/media/napoli/napoli_san_carlo.jpg" class="card-img-top card-img-custom" alt="Teatro San Carlo">
         <div class="card-body p-4">
           <h5 class="card-title fw-bold">🎭 Teatro San Carlo</h5>
-          <p class="card-text text-muted">{% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Il teatro lirico più antico d’Europa ancora attivo.{% else %}The oldest active opera house in Europe.{% endif %}</p>
+          <p class="card-text text-muted">{% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Il teatro lirico più antico d'Europa ancora attivo.{% else %}The oldest active opera house in Europe.{% endif %}</p>
         </div>
       </div>
     </div>
@@ -145,8 +229,8 @@
       <div class="card card-zoom h-100 shadow-sm border-0 rounded-4 overflow-hidden">
         <img src="/media/napoli/napoli_mergellina.jpg" class="card-img-top card-img-custom" alt="Mergellina">
         <div class="card-body p-4">
-          <h5 class="card-title fw-bold">🌊 Mergellina & Castel dell’Ovo</h5>
-          <p class="card-text text-muted">{% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Uno dei lungomari più belli d’Italia, perfetto per passeggiate vista mare.{% else %}One of the most beautiful seafronts in Italy, perfect for sea-view walks.{% endif %}</p>
+          <h5 class="card-title fw-bold">🌊 Mergellina & Castel dell'Ovo</h5>
+          <p class="card-text text-muted">{% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Uno dei lungomari più belli d'Italia, perfetto per passeggiate vista mare.{% else %}One of the most beautiful seafronts in Italy, perfect for sea-view walks.{% endif %}</p>
         </div>
       </div>
     </div>
@@ -162,11 +246,11 @@
       {% endif %}
     </p>
   </div>
-
 </section>
 
+<!-- Vesuvio -->
 <section class="container my-5 py-5 rounded-5" style="background-color:#f8f3ed;">
-  <div class="row align-items-center g-5 justify-content-center p-4">
+  <div class="row align-items-center g-5 justify-content-center p-3 p-md-4">
     
     <div class="col-md-7 col-lg-6">
       <h2 class="fw-bold mb-4" style="color:#7a6652;">🌋 {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Vivi il Vesuvio da vicino{% else %}Experience Mount Vesuvius up close{% endif %}</h2>
@@ -196,15 +280,16 @@
 
     <div class="col-md-5 col-lg-6 d-flex justify-content-center overflow-hidden rounded-5 shadow-lg p-0 card-zoom">
       <img src="/media/napoli/parco_vesuvio.jpg"
-           class="img-fluid w-100"
+           class="img-fluid w-100 vesuvio-img"
            style="object-fit:cover; height: 400px; transition: transform 0.4s ease;" alt="Vesuvio">
     </div>
 
   </div>
 </section>
 
+<!-- Dintorni -->
 <section class="container my-5 py-5 rounded-5" style="background-color:#fff9f0;">
-  <div class="row align-items-center g-5 justify-content-center p-4">
+  <div class="row align-items-center g-5 justify-content-center p-3 p-md-4">
     
     <div class="col-md-5 col-lg-6 order-2 order-md-1 d-flex justify-content-center p-0">
       <div id="carouselDintorni" class="carousel slide carousel-fade rounded-5 shadow-lg overflow-hidden w-100" data-bs-ride="carousel" style="height: 400px;">
@@ -249,6 +334,7 @@
   </div>
 </section>
 
+<!-- Scopri Portici -->
 <section class="container my-5 py-4">
   <div class="text-center mb-5">
     <h2 class="fw-bold mb-3" style="color:#7a6652;">{% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Scopri Portici{% else %}Discover Portici{% endif %}</h2>
@@ -274,7 +360,7 @@
         <img src="/media/napoli/portici_bosco.jpg" class="card-img-top card-img-custom" alt="Bosco">
         <div class="card-body p-4">
           <h5 class="card-title fw-bold">🌳 {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Bosco della Reggia{% else %}Woods of the Palace{% endif %}</h5>
-          <p class="card-text text-muted">{% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Un’oasi verde ideale per passeggiate e jogging lontano dal caos.{% else %}A green oasis ideal for walks and jogging away from the chaos.{% endif %}</p>
+          <p class="card-text text-muted">{% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Un'oasi verde ideale per passeggiate e jogging lontano dal caos.{% else %}A green oasis ideal for walks and jogging away from the chaos.{% endif %}</p>
         </div>
       </div>
     </div>
@@ -294,7 +380,7 @@
         <img src="/media/napoli/portici_granatello.jpg" class="card-img-top card-img-custom" alt="Granatello">
         <div class="card-body p-4">
           <h5 class="card-title fw-bold">🌊 {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Porto del Granatello{% else %}Granatello Port{% endif %}</h5>
-          <p class="card-text text-muted">{% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Passeggiata sul mare con bar e ristoranti in un’atmosfera autentica.{% else %}Seaside walk with bars and restaurants in an authentic atmosphere.{% endif %}</p>
+          <p class="card-text text-muted">{% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Passeggiata sul mare con bar e ristoranti in un'atmosfera autentica.{% else %}Seaside walk with bars and restaurants in an authentic atmosphere.{% endif %}</p>
         </div>
       </div>
     </div>
@@ -322,6 +408,7 @@
   </div>
 </section>
 
+<!-- Esperienze & Tour -->
 <section class="py-5 text-center text-dark" style="background:linear-gradient(180deg, #f0e6d2, #e9dcc9);">
   <div class="container py-4">
     <h2 class="fw-bold mb-4" style="color:#6b573d;">{% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Esperienze & Tour{% else %}Experiences & Tours{% endif %}</h2>
@@ -343,8 +430,9 @@
   </div>
 </section>
 
+<!-- Come raggiungere Napoli -->
 <section class="container my-5 py-5">
-  <div class="p-5 rounded-5 shadow-lg text-center" style="background-color:#fff9f0; border:1px solid #eee;">
+  <div class="p-4 p-md-5 rounded-5 shadow-lg text-center" style="background-color:#fff9f0; border:1px solid #eee;">
 
     <h2 class="fw-bold mb-4" style="color:#7a6652;">
       {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Come raggiungere Napoli{% else %}How to reach Naples{% endif %}
@@ -361,7 +449,7 @@
     <div class="row row-cols-1 row-cols-md-3 g-4 mt-3 text-start">
 
       <div class="col">
-        <div class="card h-100 p-4 rounded-4 border-0 shadow-sm" style="background-color: #fbfbfb;">
+        <div class="card h-100 p-3 p-md-4 rounded-4 border-0 shadow-sm" style="background-color: #fbfbfb;">
             <div class="d-flex align-items-center mb-3">
               <i class="fa-solid fa-train fa-2x text-warning me-3"></i>
               <h5 class="fw-bold mb-0">🚆 Circumvesuviana</h5>
@@ -375,7 +463,7 @@
       </div>
 
       <div class="col">
-        <div class="card h-100 p-4 rounded-4 border-0 shadow-sm" style="background-color: #fbfbfb;">
+        <div class="card h-100 p-3 p-md-4 rounded-4 border-0 shadow-sm" style="background-color: #fbfbfb;">
             <div class="d-flex align-items-center mb-3">
               <i class="fa-solid fa-subway fa-2x text-warning me-3"></i>
               <h5 class="fw-bold mb-0">🚇 Metropolitana</h5>
@@ -389,7 +477,7 @@
       </div>
 
       <div class="col">
-        <div class="card h-100 p-4 rounded-4 border-0 shadow-sm" style="background-color: #fbfbfb;">
+        <div class="card h-100 p-3 p-md-4 rounded-4 border-0 shadow-sm" style="background-color: #fbfbfb;">
             <div class="d-flex align-items-center mb-3">
               <i class="fa-solid fa-car fa-2x text-warning me-3"></i>
               <h5 class="fw-bold mb-0">🚗 {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Auto{% else %}Car{% endif %}</h5>

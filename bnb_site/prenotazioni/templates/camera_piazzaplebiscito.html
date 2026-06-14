@@ -2,16 +2,115 @@
 {% load static %}
 {% block content %}
 
-<!-- Stili aggiuntivi specifici per ottimizzare questa pagina su Mobile -->
 <style>
-  @media (max-width: 768px) {
-    .hero-room-title { font-size: 2.2rem !important; }
-    .form-box { padding: 1.5rem !important; }
-    .carousel-img { height: 350px !important; }
-    .cta-btn-mobile { width: 100% !important; max-width: 300px !important; }
-  }
+  /* Stili base */
   @media (min-width: 769px) {
     .carousel-img { height: 750px !important; }
+  }
+
+  /* =========================================
+     MOBILE (solo sotto 768px)
+     ========================================= */
+  @media (max-width: 767.98px) {
+    .hero-room-title { 
+      font-size: 1.6rem !important; 
+    }
+    
+    .form-box { 
+      padding: 1rem !important; 
+      width: 100% !important;
+    }
+    
+    .carousel-img { 
+      height: 250px !important; 
+    }
+    
+    .cta-btn-mobile { 
+      width: 100% !important; 
+      max-width: 300px !important; 
+      font-size: 1rem !important;
+      padding: 12px 30px !important;
+    }
+    
+    /* Hero section */
+    section[style*="height: 60vh"] {
+      height: auto !important;
+      min-height: 100vh !important;
+      padding: 60px 0 40px !important;
+    }
+    
+    /* Form disponibilità */
+    .availability-form .col-12 {
+      padding: 0 8px !important;
+    }
+    
+    .availability-form .form-label {
+      font-size: 0.85rem !important;
+      margin-bottom: 4px !important;
+    }
+    
+    .availability-form .form-control {
+      font-size: 0.9rem !important;
+      padding: 8px 10px !important;
+    }
+    
+    .availability-form button {
+      font-size: 0.9rem !important;
+      padding: 8px 16px !important;
+    }
+    
+    /* Pulsante indietro */
+    a[href*="beb"].position-fixed {
+      width: 40px !important;
+      height: 40px !important;
+      margin: 8px !important;
+    }
+    
+    /* Pulsante scroll down */
+    #scroll-down-btn {
+      margin: 8px !important;
+    }
+    
+    #scroll-down-btn .btn {
+      width: 40px !important;
+      height: 40px !important;
+    }
+    
+    /* Calendario */
+    .bg-white.rounded-4 {
+      padding: 0.5rem !important;
+    }
+    
+    /* Galleria */
+    .carousel-indicators {
+      bottom: 5px !important;
+    }
+    
+    .carousel-indicators button {
+      width: 8px !important;
+      height: 8px !important;
+      border-radius: 50% !important;
+    }
+    
+    .carousel-control-prev,
+    .carousel-control-next {
+      width: 10% !important;
+    }
+    
+    /* Dettagli */
+    section[style*="background-color:#fff8f8"] h2 {
+      font-size: 1.5rem !important;
+    }
+    
+    section[style*="background-color:#fff8f8"] .lead {
+      font-size: 0.95rem !important;
+    }
+    
+    /* CTA buttons */
+    .btn[style*="font-size: 1.3rem"] {
+      font-size: 1.1rem !important;
+      padding: 12px 30px !important;
+    }
   }
 </style>
 
@@ -69,7 +168,7 @@
 <section class="text-dark text-center py-5 w-100"
          style="background: linear-gradient(180deg, #fff4f4 0%, #f9e3e3 100%);">
   
-  <div class="container d-flex flex-column align-items-center">
+  <div class="container d-flex flex-column align-items-center px-2 px-md-4">
     <div class="bg-white bg-opacity-90 rounded-4 shadow-lg p-2 p-md-4"
       style="width:100%; max-width:1250px; backdrop-filter: blur(6px);">
 
@@ -98,7 +197,7 @@
 <a href="#galleria-camera" 
    id="scroll-down-btn"
    class="d-flex position-fixed top-50 end-0 align-items-center shadow text-decoration-none m-2 m-md-4"
-   style="z-index:1000; transform: translateY(-50%); display:none;">
+   style="z-index:1000; transform: translateY(-50%);">
 
   <span class="d-none d-md-inline" style="color:#b23a48; font-weight:600; font-family:'Poppins',sans-serif; 
                margin-right:16px; white-space:nowrap;">
@@ -157,9 +256,9 @@
     <h2 class="fw-bold mb-4" style="font-family:'Poppins',sans-serif; color:#b23a48;">{% if request.LANGUAGE_CODE|slice:":2" == 'it' %}Dettagli della Camera{% else %}Room Details{% endif %}</h2>
     <p class="lead mx-auto" style="max-width:750px; color:#4a4a4a; font-size:1rem;">
       {% if request.LANGUAGE_CODE|slice:":2" == 'it' %}
-      La Camera Piazza Plebiscito è un confortevole ambiente dominato da tonalità calde di rosso che creano un’atmosfera intima e romantica.
+      La Camera Piazza Plebiscito è un confortevole ambiente dominato da tonalità calde di rosso che creano un'atmosfera intima e romantica.
       Pensata per coppie, offre un ampio letto matrimoniale e la possibilità di aggiungere un divano letto, ideale per rilassarsi o per ospitare anche una terza persona.
-      Il bagno privato e l’accesso diretto al giardino aggiungono comfort e riservatezza, mentre aria condizionata autonoma, Smart TV e WiFi gratuito garantiscono un soggiorno piacevole.
+      Il bagno privato e l'accesso diretto al giardino aggiungono comfort e riservatezza, mentre aria condizionata autonoma, Smart TV e WiFi gratuito garantiscono un soggiorno piacevole.
       {% else %}
       The Piazza Plebiscito Room is a comfortable environment dominated by warm shades of red that create an intimate and romantic atmosphere.
       Designed for couples, it offers a large double bed and the possibility of adding a sofa bed, ideal for relaxing or accommodating a third person.

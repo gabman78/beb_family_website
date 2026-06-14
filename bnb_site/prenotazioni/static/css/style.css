@@ -139,9 +139,9 @@ section {
 
   /* Navbar */
   .navbar-brand {
-    font-size: 0.9rem !important;
+    font-size: 0.8rem !important;
+    white-space: nowrap;
   }
-
   /* Footer centrato */
   footer {
     text-align: center;
@@ -253,5 +253,54 @@ section {
   .servizio-icon {
     width: 50px !important;
     height: 50px !important;
+  }
+    /* ========== B&B PAGE MOBILE ========== */
+  
+  /* Hero section */
+  section[style*="min-height:75vh"] {
+    min-height: auto !important;
+    padding: 80px 0 40px !important;
+  }
+  
+  h1[style*="font-size:2.8rem"] {
+    font-size: 1.8rem !important;
+  }
+  
+  /* Form disponibilità */
+  #check-availability-form .form-control-lg {
+    font-size: 0.9rem !important;
+    padding: 8px 12px !important;
+  }
+  
+  #check-availability-form label {
+    font-size: 0.8rem !important;
+  }
+  
+  /* Giardino slider */
+  .garden-slide {
+    height: 300px !important;
+  }
+  
+  .garden-img {
+    height: 100% !important;
+    width: auto !important;
+  }
+  
+  /* Mappa */
+  .map-box {
+    width: 100% !important;
+    max-width: 100% !important;
+    height: 250px !important;
+  }
+  
+  /* Bottone Maps link */
+  .maps-link-btn {
+    width: 100% !important;
+    max-width: 320px !important;
+    height: 55px !important;
+    font-size: 0.9rem !important;
+    gap: 10px !important;
+    padding: 0 16px !important;
+    border-radius: 15px !important;
   }
 }
