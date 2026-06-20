@@ -17,16 +17,16 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get("SECRET_KEY", "django-insecure-78%ogg87zcee3n!w59xg-qs5r)0w46e&pun64c*%j0uom635ie")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get("DEBUG", "True") == "True"
+DEBUG =  False
 
 ALLOWED_HOSTS = [
     "localhost",
     "127.0.0.1",
+    "94.177.199.80",
     "beb-family-website.onrender.com",
     "www.familyportici.it", 
     "familyportici.it",   
 ]
-
 
 # Application definition
 
