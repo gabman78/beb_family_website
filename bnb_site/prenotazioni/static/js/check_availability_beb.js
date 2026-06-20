@@ -195,7 +195,7 @@ document.addEventListener("DOMContentLoaded", function() {
                             <p style="color: #6c5b47; font-size: 1.1rem;">
                                 ${isEn 
                                     ? `${availableRooms.length} room${availableRooms.length > 1 ? 's' : ''} available for your dates:`
-                                    : `${availableRooms.length} camera${availableRooms.length > 1 ? 'e' : ''} disponibile${availableRooms.length > 1 ? 'i' : ''} per le tue date:`
+                                    : `${availableRooms.length} ${availableRooms.length === 1 ? 'camera disponibile' : 'camere disponibili'} per le tue date:`
                                 }
                             </p>
                             ${guests > maxGuestsPerRoom ? `
